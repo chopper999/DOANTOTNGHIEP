@@ -1,0 +1,39 @@
+{
+  "name": "shopping-online",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd frontend && npm install && npm run build",
+    "start": "nodemon --watch backend --exec babel-node backend/server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "jest-worker": "^26.6.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.10.15",
+    "multer": "^1.4.2",
+    "react-responsive-carousel": "^3.2.11",
+    "typescript": "^4.0.5"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.12.1",
+    "@babel/core": "^7.12.3",
+    "@babel/node": "^7.12.1",
+    "@babel/preset-env": "^7.12.1",
+    "eslint": "^7.15.0",
+    "eslint-plugin-react": "^7.21.5",
+    "nodemon": "^2.0.6"
+  },
+  "engines": {
+    "node": "12.18.3",
+    "npm": "6.14.8"
+  }
+}

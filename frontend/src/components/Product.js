@@ -19,7 +19,11 @@ export default function Product(props) {
         ></Rating>
         <div className="row">
           <div className="price">${product.price}</div>
-          
+          <div>
+            <Link to={`/seller/${product.seller._id}`}>{product.seller.seller.name}</Link> 
+            {/* seller.seller: seller thu 2 nam trong userModel */}
+            
+          </div>
 
           
         </div>

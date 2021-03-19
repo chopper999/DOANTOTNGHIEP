@@ -33,3 +33,6 @@ export const USER_UPDATE_REQUEST = 'USER_UPDATE_REQUEST';
 export const USER_UPDATE_SUCCESS = 'USER_UPDATE_SUCCESS';
 export const USER_UPDATE_FAIL = 'USER_UPDATE_FAIL';
 export const USER_UPDATE_RESET = 'USER_UPDATE_RESET';
+
+//for login with Google
+export const AUTH = 'AUTH';

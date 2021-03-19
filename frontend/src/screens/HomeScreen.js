@@ -7,6 +7,7 @@ import MessageBox from './../components/MessageBox';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router-dom';
+import { listTopProduct } from './../actions/productActions';
 
 
 export default function HomeScreen() {
@@ -14,33 +15,38 @@ export default function HomeScreen() {
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
-  
-  useEffect(() => {  
-    dispatch(listProducts({}));
 
+  //for Carousel
+  const productTopList = useSelector((state)=> state.productTopList);
+  const {loading: loadingTopProduct, error: errorTopProduct, products: productsTopList } = productTopList;
+
+  useEffect(() => {  
+    dispatch(listProducts({})); //truyen vao object rong de khong filter
+    dispatch(listTopProduct());
   }, [dispatch]);
 
   return (
     <div>
+    <h2>Top Products</h2>
+    {loadingTopProduct ? (
+        <LoadingBox></LoadingBox>
+      ) : errorTopProduct ? (
+        <MessageBox variant="danger">{errorTopProduct}</MessageBox>
+      ) : (
       <>
+      {productsTopList.length === 0 && <MessageBox>No Product Found</MessageBox>}
         <Carousel showArrows autoPlay showThumbs={false}>
-          <div>
-            <Link to="/">
-              <img src="./../../uploads/1609396321557.jpg" alt="" />
-            </Link>
-          </div>
-          <div>
-            <Link to="/">
-              <img src="./../../uploads/1609396387848.jpg" alt="" />
-            </Link>
-          </div>
-          <div>
-            <Link to="/">
-              <img src="./../../uploads/1609396804796.jpg" alt="" />
-            </Link>
-          </div>
+          {productsTopList.map(e => (
+            <div key={e._id}>
+              <Link to={`/product/${e._id}`}>
+                <img src={e.image} alt={e.name}></img>
+                <p className="legend">{e.name}</p>
+              </Link>
+            </div>
+          ))}
         </Carousel>
       </>
+      )}
 
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -49,6 +55,7 @@ export default function HomeScreen() {
       ) : (
         <>
           {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
+          <h2>All Products</h2>
           <div className="row center">
             {products.map(product => (
               <Product key={product._id} product={product}></Product>

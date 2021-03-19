@@ -6,6 +6,10 @@ import orderRouter from './routes/orderRouter';
 import productRouter from './routes/productRoute';
 import userRouter from './routes/userRoute';
 import uploadRouter from './routes/uploadRouter';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
+import fileUpload from 'express-fileupload';
+
 
 
 dotenv.config();
@@ -13,6 +17,11 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(cors());
+app.use(fileUpload({
+    useTempFiles: true
+}));
 
 const mongodbUrl = process.env.MONGODB_URL;
 mongoose.connect(mongodbUrl || 'mongodb+srv://dbUser:dbUser123@cluster0.nrpsz.mongodb.net/webshopping?retryWrites=true&w=majority', {
@@ -37,7 +46,8 @@ app.use('/api/config/paypal', (req, res) => {
 const __dirname = path.resolve();    //return current folder, save lai trong dirname
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  // su dung dirname de concat tu current folder to uploads folder
 app.use(express.static(path.join(__dirname, '/frontend/build')));
-app.get('*', (req, res) => res.sendFile(path.join(__dirname,'/frontend/build/index.html')));
+app.get('*', (req, res) => res.sendFile(path.join(__dirname)));
+//'/frontend/build/index.html'
 
 
 app.get('/', (req, res) => {

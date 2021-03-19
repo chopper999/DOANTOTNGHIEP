@@ -7,8 +7,12 @@ import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from '../constants/product
 import { deleteProduct } from './../actions/productActions';
 
 export default function ProductListScreen(props) {
+  const sellerMode = props.match.path.indexOf('/seller') >=0;
   const productList = useSelector((state) => state.productList);
   const { loading, error, products } = productList;
+
+  const userSignin = useSelector((state) => state.userSignin);
+  const { userInfo } = userSignin;
 
   const productCreate = useSelector(state=> state.productCreate);
   const {loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct} = productCreate; 
@@ -25,9 +29,9 @@ export default function ProductListScreen(props) {
     if (successDelete) {
       dispatch({type: PRODUCT_DELETE_RESET});
     }
-    dispatch(listProducts());
-  }, [createdProduct, dispatch, props.history, successCreate, successDelete]); //sau khi tao hoac xoa thanh cong, dispatch toi listProduct de reload lai 
-
+    dispatch(listProducts({ seller: sellerMode ? userInfo._id : '' }));  //truyen vao userId de filter
+  }, [createdProduct, dispatch, props.history, successCreate, successDelete, sellerMode, userInfo._id]); //sau khi tao hoac xoa thanh cong, dispatch toi listProduct de reload lai 
+    
 
   const deleteHandler = (product) => {
     if (window.confirm("Are you sure to delete this product?")) {

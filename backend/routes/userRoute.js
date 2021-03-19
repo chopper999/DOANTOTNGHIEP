@@ -5,6 +5,12 @@ import { generateToken, isAuth, isAdmin } from '../util.js';
 import bcrypt from 'bcryptjs';
 import userModel from './../models/userModel';
 import data from '../data';
+import sendMail from './../sendMail';
+
+import {google} from 'googleapis';
+
+const {OAuth2} = google.auth
+const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
 
 const userRouter = express.Router();
 
@@ -26,6 +32,7 @@ userRouter.post(
           name: user.name,
           email: user.email,
           isAdmin: user.isAdmin,
+          isSeller: user.isSeller,
           token: generateToken(user)  //lay token de authenticate next request, nhung request yeu cau authenticate se dung token, khong can dang nhap lai
         });
         return;
@@ -37,24 +44,79 @@ userRouter.post(
   
 
 // REGISTER ROUTE
+function validateEmail(email) {
+  const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(String(email).toLowerCase());
+}
+
 userRouter.post(
   '/register',
   expressAsyncHandler(async (req, res) => {
-    const user = new User({
-      name: req.body.name,
-      email: req.body.email,
-      password: bcrypt.hashSync(req.body.password, 8),
-    });
-    const createdUser = await user.save();
-    res.send({
-      _id: createdUser._id,
-      name: createdUser.name,
-      email: createdUser.email,
-      isAdmin: createdUser.isAdmin,
-      token: generateToken(createdUser),
-    });
+    if (!validateEmail(req.body.email)) {
+      res.status(500).send({message: "Invalid Email!"});
+    }
+    else if(req.body.password.length < 6) {
+      res.status(500).send({message: "Password must be at least 6 characters!"});
+    }
+    
+    else {
+      const user = new User({
+        name: req.body.name,
+        email: req.body.email,
+        password: bcrypt.hashSync(req.body.password, 8),
+      });
+      
+      const createdUser = await user.save();
+      res.send({
+        _id: createdUser._id,
+        name: createdUser.name,
+        email: createdUser.email,
+        isAdmin: createdUser.isAdmin,
+        isSeller: user.isSeller,
+        token: generateToken(createdUser),
+      });
+    }
   })
 );
+
+//forgot password
+userRouter.post("/forgot", expressAsyncHandler(async (req, res) => {
+  try {
+    const {email} = req.body;
+    const user = await User.findOne({email});
+    
+    if (!user) {
+      res.status(400).send({message: "This email is not exist !"});
+
+      const token = generateToken(user);
+      const url = `${process.env.CLIENT_URL}/user/reset/${token}`
+
+      sendMail(email,url, "Reset your password")
+        res.send({message: "Re-send your password, please check your mail"})
+    }
+    
+  } catch (err) {
+    res.status(500).send({message: err.message});
+  }
+}))
+
+//Login with google
+userRouter.post("/google_login", expressAsyncHandler (async (req, res) => {
+  // try {
+  //   const {tokenId} = req.body;
+  //   const verify = await client.verifyIdToken({tokenId: tokenId, audience: process.env.MAILING_SERVICE_CLIENT_ID});
+  //   const {email_verified, email, name, picture} = verify
+  //   //const password = email + process.env.GOO
+  //   console.log(verify);
+  // } catch (err) {
+  //   res.status(500).send({message: err.message});
+  // }
+
+
+  //
+  const {email, accountType} = req.body;
+  var account = await User.findOne({email});
+}))
 
 //user detail
 userRouter.get(
@@ -74,15 +136,22 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+
+    if (user.isSeller) {
+      user.seller.name = req.body.sellerName || user.seller.name;
+      user.seller.logo = req.body.sellerLogo || user.seller.logo;
+      user.seller.description = req.body.sellerDescription || user.seller.description;
+    }
     if (req.body.password){
       user.password = bcrypt.hashSync(req.body.password, 8);
     }
     const updatedUser = await user.save();
-    res.send({ //send data len frontend
+    res.send({ //send data to frontend
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      isSeller: updatedUser.isSeller,
       token: generateToken(updatedUser),
     });
   }

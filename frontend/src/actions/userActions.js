@@ -71,6 +71,8 @@ export const register = (name, email, password) => async dispatch => {
   }
 };
 
+
+
 export const detailsUser = (userId) => async (dispatch, getState) => {
   dispatch({ type: USER_DETAILS_REQUEST, payload: userId });
   const {

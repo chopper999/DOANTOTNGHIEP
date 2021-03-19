@@ -26,6 +26,9 @@ import SearchResultScreen from './screens/SearchResultScreen';
 import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
+import SellerRoute from './components/SellerRoute';
+import SellerScreen from './screens/SellerScreen';
+
 
 
 function App() {
@@ -33,6 +36,9 @@ function App() {
   const cart = useSelector((state) => state.cart);
   const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const {cartItems} = cart;
+  
+  
+  //const [user, setUser] = useState(JSON.parse(localStorage.getItem('userInfo')));
   const userSignin = useSelector((state)=>state.userSignin);
   const {userInfo} = userSignin;
   const dispatch = useDispatch();
@@ -42,8 +48,9 @@ function App() {
 
   const productCategoryList = useSelector(state => state.productCategoryList);
   const { loading: loadingCategory, error: errorCategory, categories } = productCategoryList;
-
   useEffect(() =>{
+    
+
     dispatch(listProductCategories());
   },[dispatch]);
                     
@@ -74,7 +81,7 @@ function App() {
             {userInfo ? (
               <div className="dropdown">
                 <Link to="#">
-                  {userInfo.name} <i className="fa fa-caret-down"></i>{" "}
+                  {userInfo.name } <i className="fa fa-caret-down"></i>{" "}
                 </Link>
                 <ul className="dropdown-content">
                   <li>
@@ -92,6 +99,28 @@ function App() {
               </div>
             ) : (
               <Link to="/signin">Sign In</Link>
+            )}
+
+            {userInfo && userInfo.isSeller && (
+              <div className="dropdown">
+                <Link to="#admin">
+                  Seller <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                  <li>
+                    <Link to="/productlist/seller">Products</Link>
+                  </li>
+                  <li>
+                    <Link to="/orderlist/seller">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/userlist">Users</Link>
+                  </li>
+                </ul>
+              </div>
             )}
 
             {userInfo && userInfo.isAdmin && (
@@ -151,6 +180,7 @@ function App() {
 
         <main className="main">
           <div className="content">
+            <Route path="/seller/:id" component={SellerScreen}/>
             <Route path="/shipping" component={ShippingAddressScreen} />
             <Route path="/payment" component={PaymentMethodScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />
@@ -168,9 +198,12 @@ function App() {
             <Route path="/search/category/:category/name/:name" exact={true} component={SearchResultScreen} />
 
             <AdminRoute path="/productlist" component={ProductListScreen} exact />
-            <AdminRoute path="/orderlist" component={OrderListScreen}/>
+            <AdminRoute path="/orderlist" component={OrderListScreen} exact/>
             <AdminRoute path="/userlist" component={UserListScreen}/>
             <AdminRoute path="/user/:id/edit" component={UserEditScreen}/>
+
+            <SellerRoute path="/productlist/seller" component={ProductListScreen}></SellerRoute>
+            <SellerRoute path="/orderlist/seller" component={OrderListScreen}></SellerRoute>
 
           </div>
         </main>

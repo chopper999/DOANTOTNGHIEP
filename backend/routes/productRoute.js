@@ -1,6 +1,6 @@
 import express from 'express';
 import Product from '../models/productModel';
-import { isAuth, isAdmin } from '../util.js';
+import { isAuth, isAdmin, isSellerOrAdmin } from '../util.js';
 import data from '../data.js';
 import expressAsyncHandler from 'express-async-handler';
 
@@ -9,15 +9,29 @@ const productRouter = express.Router();
 productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
+    const seller = req.query.seller || '';
+    const sellerFilter = seller ? {seller} : {};
     const name = req.query.name || '';  //req.query trả về {name: "name"}
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {}; //options: 'i' : match chữ hoa chữ thường
-
+    
     const category = req.query.category || '';
     const categoryFilter = category ? {category} :{};
-    const products = await Product.find({...nameFilter, ...categoryFilter});
+    const products = await Product.find({
+      ...sellerFilter,
+      ...nameFilter,
+      ...categoryFilter,
+    }).populate("seller", "seller.name seller.logo");
     res.send(products);
   })
 );  
+
+
+//api for top product has best Rating
+productRouter.get("/top", expressAsyncHandler(async (req, res) => {
+  const topProducts = await Product.find().sort({'product.rating':-1}).limit(3);
+  res.send(topProducts);
+}));
+
 
 productRouter.get(
   "/seed",
@@ -36,7 +50,7 @@ productRouter.get('/categories', expressAsyncHandler(async(req,res) => {
 productRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(req.params.id).populate("seller", "seller.name seller.logo seller.rating seller.numReviews");;
     if (product) {
       res.send(product);
     } else {
@@ -49,10 +63,11 @@ productRouter.get(
 productRouter.post(
   "/",
   isAuth,
-  isAdmin,
+  isSellerOrAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
       name: 'product ' + Date.now(), // tránh tạo 2 tên trùng nhau
+      seller: req.user._id,
       image: '/images/img1.jpg',
       price: 0,
       category: 'category',
@@ -67,7 +82,7 @@ productRouter.post(
   })
 );
 //create API for update product
-productRouter.put("/:id",isAuth, isAdmin, expressAsyncHandler(async (req,res) => {
+productRouter.put("/:id",isAuth, isSellerOrAdmin, expressAsyncHandler(async (req,res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
     if (product) {

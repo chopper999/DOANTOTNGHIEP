@@ -25,7 +25,8 @@ import {
   USER_UPDATE_SUCCESS,
   USER_UPDATE_FAIL,
   USER_UPDATE_RESET,
-  USER_DETAILS_RESET
+  USER_DETAILS_RESET,
+  AUTH
 } from "./../constants/userConstants";
 
 export const userSigninReducer = (state={}, action) => {
@@ -41,7 +42,17 @@ export const userSigninReducer = (state={}, action) => {
         default: return state;
     }
 }
-
+export const authReducer = (state= {}, action) => {
+    switch(action.type){
+        case AUTH:
+            localStorage.setItem('userInfo', JSON.stringify({...action.payload}));
+            return { ...state, userInfo: action.payload, loading: false};
+        case USER_SIGNOUT:
+            return {};
+        default:
+            return state;
+    }
+}
 export const userRegisterReducer = (state={}, action) => {
     switch(action.type){
         case USER_REGISTER_REQUEST:

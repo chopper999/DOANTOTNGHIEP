@@ -1,5 +1,5 @@
 html {
-  font-size: 62.5%; /* 16px x 62.5 = 10px = 1rem */
+  font-size: 62.5%; 
   box-sizing: border-box;
 }
 body {
@@ -18,26 +18,33 @@ body {
 .grid-container {
   display: grid;
   grid-template-areas:
-    'header'
+    'menuTop'
+    'navbar'
     'main'
     'footer';
   grid-template-columns: 1fr;
-  grid-template-rows: 5rem 1fr 5rem;
+  grid-template-rows: 10em 4.3rem 1fr 5rem;
   height: 100%;
 }
-header {
-  grid-area: header;
-  background-color: #F55302;
+menuTop {
+  grid-area: menuTop;
+
+}
+.navbar{
+  grid-area: navbar;
+  height: 8rem;
+  background-color: black;
 }
 main {
   grid-area: main;
   padding: 1rem;
+  background-color: #2C2C24;
 }
 footer {
   grid-area: footer;
   text-align: center;
   
-  background-color: #F55302;
+  background-color: black;
   color: #ffffff;
 }
 /* Common */
@@ -106,7 +113,7 @@ a.brand {
   font-weight: bold;
 }
 .badge {
-  background-color: #f02020;
+  background-color: transparent;
   color: #ffffff;
   border-radius: 50%;
   padding: 0.2rem 0.7rem;
@@ -265,7 +272,7 @@ img.large {
   display: inline-block;
   position: relative;
 }
-.dropdown-content {
+/* .dropdown-content {
   position: absolute;
   display: none;
   right: 0;
@@ -276,7 +283,8 @@ img.large {
   margin: 0;
   margin-top: 0.4rem;
   border-radius: 0.5rem;
-}
+  color: #2020a0 !important;
+} */
 .dropdown:hover .dropdown-content {
   display: block;
 }
@@ -368,4 +376,62 @@ img.large {
 /* Carousel */
 .carousel .slide img {
   max-width: 30rem;
+}
+
+/* Header segment */
+.segmentHeader{
+  height: 10rem;
+  max-width: 1519px;
+  
+}
+
+.brandName{
+  margin-left: 0.5em;
+  color:#FBC21B !important;
+  font-family: fantasy;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px red;
+}
+.brandName:hover{
+  color: white !important;
+  cursor: pointer;
+}
+.menuHeader{
+  max-width: 1519px;
+
+}
+
+.btnSignin{
+  position: absolute;
+  left: 135px;
+  /* width: 130px; */
+}
+.btnSignin1{
+  position: absolute;
+  left: 170px;
+  width: 150px;
+}
+.iconCart{
+  position: absolute;
+  left: 150px;
+}
+
+.inputSearch{
+  position: absolute;
+  width: 500px;
+}
+.inputSearchContainer{
+  width: 500px;
+}
+.dropdownItem{
+  color: black !important;
+}
+.categoryDropdown{
+  width: 200px !important; 
+}
+.topProduct{
+  color: #efefef;
+  text-align: center;
+  text-shadow: 2px 2px 5px yellow;
 }

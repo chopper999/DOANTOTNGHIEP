@@ -27,14 +27,14 @@ export default function HomeScreen() {
 
   return (
     <div>
-    <h2>Top Products</h2>
+    <h2 className="topProduct">Top Products</h2>
     {loadingTopProduct ? (
         <LoadingBox></LoadingBox>
       ) : errorTopProduct ? (
         <MessageBox variant="danger">{errorTopProduct}</MessageBox>
       ) : (
       <>
-      {productsTopList.length === 0 && <MessageBox>No Product Found</MessageBox>}
+      {productsTopList.length === 0 && <MessageBox className="topProduct">No Product Found</MessageBox>}
         <Carousel showArrows autoPlay showThumbs={false}>
           {productsTopList.map(e => (
             <div key={e._id}>
@@ -54,8 +54,8 @@ export default function HomeScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          {products.length === 0 && <MessageBox>No Product Found</MessageBox>}
-          <h2>All Products</h2>
+          {products.length === 0 && <MessageBox className="topProduct">No Product Found</MessageBox>}
+          <h2 className="topProduct">All Products</h2>
           <div className="row center">
             {products.map(product => (
               <Product key={product._id} product={product}></Product>

@@ -29,16 +29,18 @@ import MessageBox from './components/MessageBox';
 import SellerRoute from './components/SellerRoute';
 import SellerScreen from './screens/SellerScreen';
 
+//UI
+import { Menu, Button, Segment, Icon, Dropdown } from 'semantic-ui-react';
+
+
+
 
 
 function App() {
 
   const cart = useSelector((state) => state.cart);
-  const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
   const {cartItems} = cart;
   
-  
-  //const [user, setUser] = useState(JSON.parse(localStorage.getItem('userInfo')));
   const userSignin = useSelector((state)=>state.userSignin);
   const {userInfo} = userSignin;
   const dispatch = useDispatch();
@@ -53,134 +55,221 @@ function App() {
 
     dispatch(listProductCategories());
   },[dispatch]);
-                    
+       
+  //UI
+  const [activeItem, setActiveItem] = useState('');
+  const handleItemClick = ({name} ) => setActiveItem({ activeItem: name});
+  
   return (
     <BrowserRouter>
+      {/* UI */}
       <div className="grid-container">
-        <header className="row">
-          <div>
-            <button
-              type="button"
-              className="open-sidebar"
-              onClick={() => setSidebarIsOpen(true)}
-            >
-              <i className="fa fa-bars"></i>
-            </button>
-            <Link className="brand" to="/">
-              Shopping
-            </Link>
-          </div>
-            <Route render={({history}) => <SearchBox history={history}></SearchBox>}></Route> 
-          <div>
-            <Link to="/cart">
-              Cart
-              {cartItems.length > 0 && (
-                <span className="badge">{cartItems.length}</span>
-              )}
-            </Link>
-            {userInfo ? (
-              <div className="dropdown">
-                <Link to="#">
-                  {userInfo.name } <i className="fa fa-caret-down"></i>{" "}
+        <div className="menuTop">
+          <Segment inverted className="segmentHeader">
+            <Menu inverted secondary className="menuHeader">
+              <img
+                src="/logoChopper.jpg"
+                className="ui tiny circular image"
+                alt="Chopper"
+              />
+              <Link to="/">
+                <Menu.Item
+                  className="brandName"
+                  name="CHOPPER SHOP"
+                  as="h1"
+                  active={activeItem === "CHOPPER SHOP"}
+                  onClick={handleItemClick}
+                />
+              </Link>
+              <Menu.Item className="inputSearchContainer">
+                <Route
+                  render={({ history }) => (
+                    <SearchBox history={history}></SearchBox>
+                  )}
+                ></Route>
+              </Menu.Item>
+
+              <Menu.Item className="iconCart">
+                <Link to="/cart">
+                  <Icon color="yellow" name="cart" link size="big"></Icon>
+                  {cartItems.length > 0 && (
+                    <span className="badge">{cartItems.length}</span>
+                  )}
                 </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/profile">User Profile</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderhistory">Order History</Link>
-                  </li>
-                  <li>
-                    <Link to="#signout" onClick={signoutHandler}>
-                      Sign Out
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              <Link to="/signin">Sign In</Link>
-            )}
+              </Menu.Item>
+              <Menu.Item className="btnSignin">
+                <Segment inverted>
+                  <Menu inverted pointing secondary>
+                    <Menu.Item>
+                      {userInfo ? (
+                        <Dropdown text={userInfo.name}>
+                          <Dropdown.Menu>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link className="dropdownItem" to="/profile">
+                                  User Profile
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link
+                                  className="dropdownItem"
+                                  to="/orderhistory"
+                                >
+                                  Order History
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link
+                                  className="dropdownItem"
+                                  to="#signout"
+                                  onClick={signoutHandler}
+                                >
+                                  Sign Out
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      ) : (
+                        <Link to="/signin" className="btnSignin1">
+                          <Button inverted color="yellow">
+                            <Icon name="sign-in"></Icon>
+                            Sign In
+                          </Button>
+                        </Link>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {userInfo && userInfo.isSeller && (
+                        <Dropdown text="Seller">
+                          <Dropdown.Menu>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link className="dropdownItem" to="/dashboard">
+                                  Dashboard
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link
+                                  className="dropdownItem"
+                                  to="/productlist/seller"
+                                >
+                                  Products
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link
+                                  className="dropdownItem"
+                                  to="/orderlist/seller"
+                                >
+                                  Orders
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      )}
+                    </Menu.Item>
+                    <Menu.Item>
+                      {userInfo && userInfo.isAdmin && (
+                        <Dropdown text="Admin">
+                          <Dropdown.Menu>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link className="dropdownItem" to="/dashboard">
+                                  Dashboard
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link
+                                  className="dropdownItem"
+                                  to="/productlist"
+                                >
+                                  Products
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link className="dropdownItem" to="/orderlist">
+                                  Orders
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                            <Dropdown.Item>
+                              <Dropdown.Text>
+                                <Link className="dropdownItem" to="/userlist">
+                                  Users
+                                </Link>
+                              </Dropdown.Text>
+                            </Dropdown.Item>
+                          </Dropdown.Menu>
+                        </Dropdown>
+                      )}
+                    </Menu.Item>
+                  </Menu>
+                </Segment>
+              </Menu.Item>
+            </Menu>
+          </Segment>
+        </div>
 
-            {userInfo && userInfo.isSeller && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Seller <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/productlist/seller">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist/seller">Orders</Link>
-                  </li>
-                  <li>
-                    <Link to="/userlist">Users</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
+        <div className="navbar">
+          <Menu color={"yellow"} inverted size='huge'>
+          <Menu.Menu>
+          <Dropdown item text='Category'>
+          <Dropdown.Menu>
+                  {loadingCategory ? (
+                    <LoadingBox></LoadingBox>
+                  ) : errorCategory ? (
+                    <MessageBox variant="danger">{errorCategory}</MessageBox>
+                  ) : (
+                    categories.map((c) => (
+                      <Dropdown.Item  key={c}>
+                        <Link className="dropdownItem"
+                          to={`/search/category/${c}`}
+                          // onClick={() => setSidebarIsOpen(false)}
+                        >
+                          {c}
+                        </Link>
+                        </Dropdown.Item>
+                    ))
+                  )}
+                </Dropdown.Menu>
+          </Dropdown>
+        </Menu.Menu>
+        
+          <Link to="/">
+          <Menu.Item name="HOME"
+                  active={activeItem === "HOME"}
+                  onClick={handleItemClick}
+        />
+          </Link>
+          <Link to="">
+          <Menu.Item name="Introduction"
+                  active={activeItem === "Introduction"}
+                  onClick={handleItemClick}
+        />
+          </Link>
 
-            {userInfo && userInfo.isAdmin && (
-              <div className="dropdown">
-                <Link to="#admin">
-                  Admin <i className="fa fa-caret-down"></i>
-                </Link>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/dashboard">Dashboard</Link>
-                  </li>
-                  <li>
-                    <Link to="/productlist">Products</Link>
-                  </li>
-                  <li>
-                    <Link to="/orderlist">Orders</Link>
-                  </li>
-                  <li>
-                    <Link to="/userlist">Users</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
-        </header>
+        
+      </Menu>
+        </div>
 
-        <aside className={sidebarIsOpen ? 'open' : ''}>
-          <ul className="categories">
-            <li>
-              <strong>Categories</strong>
-              <button
-                onClick={() => setSidebarIsOpen(false)}
-                className="close-sidebar"
-                type="button"
-              >
-                <i className="fa fa-close"></i>
-              </button>
-            </li>
-            {loadingCategory ? (
-              <LoadingBox></LoadingBox>
-            ) : errorCategory ? (
-              <MessageBox variant="danger">{errorCategory}</MessageBox>
-            ) : (
-              categories.map((c) => (
-                <li key={c}>
-                  <Link
-                    to={`/search/category/${c}`}
-                    onClick={() => setSidebarIsOpen(false)}
-                  >
-                    {c}
-                  </Link>
-                </li>
-              ))
-            )}
-          </ul>
-        </aside>
-
+        
         <main className="main">
           <div className="content">
-            <Route path="/seller/:id" component={SellerScreen}/>
+            <Route path="/seller/:id" component={SellerScreen} />
             <Route path="/shipping" component={ShippingAddressScreen} />
             <Route path="/payment" component={PaymentMethodScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />
@@ -189,22 +278,47 @@ function App() {
             <PrivateRoute path="/profile" component={ProfileScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/register" component={RegisterScreen} />
-            <Route path="/product/:id" component={ProductScreen}  exact/>
-            <Route path="/product/:id/edit" component={ProductEditScreen}  exact/>
+            <Route path="/product/:id" component={ProductScreen} exact />
+            <Route
+              path="/product/:id/edit"
+              component={ProductEditScreen}
+              exact
+            />
             <Route path="/cart/:id?" component={CartScreen} />
             <Route path="/" exact={true} component={HomeScreen} />
-            <Route path="/search/name/:name?" exact={true} component={SearchResultScreen} />
-            <Route path="/search/category/:category" exact={true} component={SearchResultScreen} />
-            <Route path="/search/category/:category/name/:name" exact={true} component={SearchResultScreen} />
+            <Route
+              path="/search/name/:name?"
+              exact={true}
+              component={SearchResultScreen}
+            />
+            <Route
+              path="/search/category/:category"
+              exact={true}
+              component={SearchResultScreen}
+            />
+            <Route
+              path="/search/category/:category/name/:name"
+              exact={true}
+              component={SearchResultScreen}
+            />
 
-            <AdminRoute path="/productlist" component={ProductListScreen} exact />
-            <AdminRoute path="/orderlist" component={OrderListScreen} exact/>
-            <AdminRoute path="/userlist" component={UserListScreen}/>
-            <AdminRoute path="/user/:id/edit" component={UserEditScreen}/>
+            <AdminRoute
+              path="/productlist"
+              component={ProductListScreen}
+              exact
+            />
+            <AdminRoute path="/orderlist" component={OrderListScreen} exact />
+            <AdminRoute path="/userlist" component={UserListScreen} />
+            <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
 
-            <SellerRoute path="/productlist/seller" component={ProductListScreen}></SellerRoute>
-            <SellerRoute path="/orderlist/seller" component={OrderListScreen}></SellerRoute>
-
+            <SellerRoute
+              path="/productlist/seller"
+              component={ProductListScreen}
+            ></SellerRoute>
+            <SellerRoute
+              path="/orderlist/seller"
+              component={OrderListScreen}
+            ></SellerRoute>
           </div>
         </main>
         <footer className="footer"></footer>

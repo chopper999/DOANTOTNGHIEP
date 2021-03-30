@@ -202,6 +202,10 @@ img.medium {
 img.large {
   width: 100%;
 }
+.small {
+  max-width: 5rem !important;
+  width: 100% !important;
+} 
 
 /* Card */
 .card {
@@ -218,6 +222,7 @@ img.large {
 }
 .price {
   font-size: 2rem;
+  color: black !important;
 }
 /* Rating */
 .rating span {
@@ -225,7 +230,7 @@ img.large {
   margin: 0.1rem;
 }
 .rating span:last-child {
-  color: #404040;
+  color: #f0c040;
 }
 /* Alert */
 .loading {
@@ -334,13 +339,17 @@ img.large {
   margin-left: 0.5rem;
 }
 .active {
+  color: #f0c040 !important;
   font-weight: bold;
+  /* font-size: 2rem; */
 }
 
 /* Map */
 .full-container {
   margin: -1rem;
-  height: calc(100% + 2rem);
+  /* height: calc(100% + 2rem); */
+  height: 500px;
+  width: 500px; 
 }
 .map-input-box {
   box-sizing: border-box;
@@ -381,7 +390,7 @@ img.large {
 /* Header segment */
 .segmentHeader{
   height: 10rem;
-  max-width: 1519px;
+  max-width: 1540px;
   
 }
 
@@ -434,4 +443,149 @@ img.large {
   color: #efefef;
   text-align: center;
   text-shadow: 2px 2px 5px yellow;
+}
+
+.medium-image {
+  max-width: 29rem !important;
+  width: 100% !important;
+}
+
+.product{
+ margin: 2rem !important;
+}
+.contain-product{
+  margin-left: 3rem !important;
+}
+
+/* Cart Screen */
+.cart-Label{
+  text-align: center;
+  text-emphasis: unset;
+  color: yellow !important;
+  font-family: fantasy;
+  font-weight: bold;
+  text-shadow: 2px 2px 5px #ff8000;
+}
+
+.cartProductName{
+  color: white !important;
+}
+.selectItem{
+  position: absolute;
+  background-color: blanchedalmond;
+  right: 200px;
+  cursor: pointer;
+}
+
+.itemPrice{
+  position: absolute;
+  right: 120px;
+  color: #f0c040 !important;
+  font-weight: bold;
+}
+.goShopping{
+  color: #f08000 !important;
+}
+.labelResult{
+  color: #e0e0ff !important;
+}
+ /* SearchResultScreen */
+.nameCategory{
+  color: yellow !important;
+}
+.textCategory{
+  color: #e78e18;
+  font-weight: bolder;
+
+}
+.noProduct{
+  color: #e78e18 !important;
+  font-size: 3rem !important;
+
+  font-weight: bolder !important;
+}
+
+/* LoadingBox */
+.lds-facebook {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-facebook div {
+  display: inline-block;
+  position: absolute;
+  left: 8px;
+  width: 16px;
+  background: rgb(228, 198, 30);
+  animation: lds-facebook 1.2s cubic-bezier(0, 0.5, 0.5, 1) infinite;
+}
+.lds-facebook div:nth-child(1) {
+  left: 8px;
+  animation-delay: -0.24s;
+}
+.lds-facebook div:nth-child(2) {
+  left: 32px;
+  animation-delay: -0.12s;
+}
+.lds-facebook div:nth-child(3) {
+  left: 56px;
+  animation-delay: 0;
+}
+@keyframes lds-facebook {
+  0% {
+    top: 8px;
+    height: 64px;
+  }
+  50%, 100% {
+    top: 24px;
+    height: 32px;
+  }
+}
+
+/* ProductScreen */
+.description{
+  color:#f4f4f4;
+  font-size: 1.5rem;
+}
+.reviewMess{
+  margin: 1rem !important;
+}
+.reviewForm{
+  width: 1000px !important;
+  margin: auto !important;
+  width: 50% !important;
+  border: 3px solid white !important;
+  padding: 10px !important;
+}
+.pt-1{
+  padding-top: 1rem !important;
+}
+.userReview{
+  color: #e0e0ff !important;
+  font-size: 1rem;
+  font-weight: bold;
+}
+.lighterText{
+  color: #a4a4a4 !important;
+  font-size: 0.8rem !important;
+}
+.hoverBtn:hover{
+  background-color  : #f0c040 !important;
+}
+.textAlign{
+  text-align:right !important;
+}
+.colorLink{
+  color: #e78e18 !important;
+  font-weight: bold !important;
+}
+.textCenter{
+  text-align: center !important;
+}
+.btnSubmit{
+  width: 100px !important;
+  margin: auto !important;
+  width: 50% !important;
+  
 }

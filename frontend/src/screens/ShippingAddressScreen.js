@@ -7,6 +7,11 @@ function ShippingAddressScreen(props) {
     //Check if user sign in before enter shipping info 
   const userSignin = useSelector((state)=>state.userSignin);
   const {userInfo} =userSignin;
+
+  const userAddressMap = useSelector((state)=>state.userAddressMap);
+
+
+  const {address: addressMap} = userAddressMap;
   if (!userInfo) {
       props.history.push('/signin');
   }
@@ -14,6 +19,8 @@ function ShippingAddressScreen(props) {
   //get info
   const cart = useSelector(state => state.cart);
   const {shippingAddress}= cart;
+  const [lat, setLat] = useState(shippingAddress.lat);
+  const [lng, setLng] = useState(shippingAddress.lng);
 
 
   const [fullName, setFullName] = useState(shippingAddress.fullName);
@@ -25,10 +32,37 @@ function ShippingAddressScreen(props) {
   const dispatch = useDispatch();
   const submitHandler = (e) => {
       e.preventDefault();   // to prevent freshing screen when user click this button
-      dispatch(saveShippingAddress({fullName, address, city, postalCode, country}));
-      props.history.push('payment'); //after save shipping address, direct to Payment
 
-  }
+      const newLat = addressMap ? addressMap.lat : lat;
+      const newLng = addressMap ? addressMap.lng : lng;
+      if (addressMap) {
+        setLat(addressMap.lat);
+        setLng(addressMap.lng);
+      }
+      let moveOn = true;
+      if(!newLat || !newLng) {
+        moveOn = window.confirm("You did not set your location on map. Do you want to continue?");
+      }
+      // Neu nhan continue thi moveOn = true
+      if (moveOn){
+        dispatch(saveShippingAddress({fullName, address, city, postalCode, country, lat:newLat, lng:newLng}));
+        props.history.push('payment'); //after save shipping address, direct to Payment
+      }
+  };
+  const chooseOnMap = () => {
+    dispatch(
+      saveShippingAddress({
+        fullName,
+        address,
+        city,
+        postalCode,
+        country,
+        lat,
+        lng,
+      })
+    );
+    props.history.push('/map');
+  };
   return (
     <div>
       <CheckoutSteps step1 step2></CheckoutSteps>
@@ -93,6 +127,12 @@ function ShippingAddressScreen(props) {
             onChange={e => setCountry(e.target.value)}
             required
           ></input>
+        </div>
+        <div>
+          <label htmlFor="chooseOnMap">Location</label>
+          <button type="button" onClick={chooseOnMap}>
+            Choose On Map
+          </button>
         </div>
         <div>
             <label/>

@@ -8,7 +8,8 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { Link } from 'react-router-dom';
 import { listTopProduct } from './../actions/productActions';
-
+import { Grid, Transition } from 'semantic-ui-react';
+ 
 
 export default function HomeScreen() {
   
@@ -27,25 +28,27 @@ export default function HomeScreen() {
 
   return (
     <div>
-    <h2 className="topProduct">Top Products</h2>
-    {loadingTopProduct ? (
+      <h2 className="topProduct">Top Products</h2>
+      {loadingTopProduct ? (
         <LoadingBox></LoadingBox>
       ) : errorTopProduct ? (
         <MessageBox variant="danger">{errorTopProduct}</MessageBox>
       ) : (
-      <>
-      {productsTopList.length === 0 && <MessageBox className="topProduct">No Product Found</MessageBox>}
-        <Carousel showArrows autoPlay showThumbs={false}>
-          {productsTopList.map(e => (
-            <div key={e._id}>
-              <Link to={`/product/${e._id}`}>
-                <img src={e.image} alt={e.name}></img>
-                <p className="legend">{e.name}</p>
-              </Link>
-            </div>
-          ))}
-        </Carousel>
-      </>
+        <>
+          {productsTopList.length === 0 && (
+            <MessageBox className="topProduct">No Product Found</MessageBox>
+          )}
+          <Carousel showArrows autoPlay showThumbs={false}>
+            {productsTopList.map((e) => (
+              <div key={e._id}>
+                <Link to={`/product/${e._id}`}>
+                  <img src={e.image} alt={e.name}></img>
+                  <p className="legend">{e.name}</p>
+                </Link>
+              </div>
+            ))}
+          </Carousel>
+        </>
       )}
 
       {loading ? (
@@ -54,13 +57,21 @@ export default function HomeScreen() {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <>
-          {products.length === 0 && <MessageBox className="topProduct">No Product Found</MessageBox>}
+          {products.length === 0 && (
+            <MessageBox className="topProduct">No Product Found</MessageBox>
+          )}
           <h2 className="topProduct">All Products</h2>
-          <div className="row center">
-            {products.map(product => (
-              <Product key={product._id} product={product}></Product>
-            ))}
-          </div>
+          <Grid className="contain-product" columns={2} divided>
+            <Grid.Row>
+              {/* <Grid.Column> */}
+                {products.map((product) => (
+                  
+                  <Product  key={product._id} product={product}></Product>
+                  
+                ))}
+              {/* </Grid.Column> */}
+            </Grid.Row>
+          </Grid>
         </>
       )}
     </div>

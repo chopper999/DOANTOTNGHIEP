@@ -36,3 +36,6 @@ export const USER_UPDATE_RESET = 'USER_UPDATE_RESET';
 
 //for login with Google
 export const AUTH = 'AUTH';
+
+//for Google Map
+ export const USER_ADDRESS_MAP_CONFIRM = 'USER_ADDRESS_MAP_CONFIRM';

@@ -59,6 +59,7 @@ export default function Rating(props) {
           }
         ></i>
       </span>
+      &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
       {caption ? (
         <span>{caption}</span>
       ) : (

@@ -9,6 +9,11 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstants';
 
+import Zoom from 'react-medium-image-zoom'
+import 'react-medium-image-zoom/dist/styles.css'
+import { Image, Label, Icon, Message,  Button, Form, Segment,Dropdown, TextArea, Card } from 'semantic-ui-react'
+
+
 export default function ProductScreen(props) {
 
   const dispatch = useDispatch();
@@ -48,6 +53,29 @@ export default function ProductScreen(props) {
   const addToCartHandler = () => {
     props.history.push(`/cart/${productId}?qty=${qty}`);
   };
+  const ratingOptions = [
+    {
+      key: '1',
+      text: '1- Poor',
+      value: '1'},
+    {
+      key: '2',
+      text: '2- Fair',
+      value: '2',},
+    {
+      key: '3',
+      text: '3- Good',
+      value: '3'},
+    {
+      key: '4',
+      text: '4- Very good',
+      value: '4'},
+    {
+      key: '5',
+      text: '5- Excelent',
+      value: '5'},
+  ]
+  
 
   return (
     <div>
@@ -57,19 +85,21 @@ export default function ProductScreen(props) {
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
         <div>
-          <Link to="/">Back to result</Link>
+          {/* <Link to="/">Back to result</Link> */}
           <div className="row top">
             <div className="col-2">
-              <img
-                className="large"
-                src={product.image}
-                alt={product.name}
-              ></img>
+              <Zoom>
+                <Image size="massive" src={product.image} alt={product.name} />
+              </Zoom>
             </div>
-            <div className="col-1">
+            <div className="col-1 p-1">
               <ul>
                 <li>
-                  <h1>{product.name}</h1>
+                  <h1>
+                    <Label size="massive" color="black">
+                      {product.name}
+                    </Label>
+                  </h1>
                 </li>
                 <li>
                   <Rating
@@ -77,23 +107,31 @@ export default function ProductScreen(props) {
                     numReviews={product.numReviews}
                   ></Rating>
                 </li>
-                <li>Pirce : ${product.price}</li>
                 <li>
+                  {" "}
+                  <Label color="black" size="big">
+                    Price: &nbsp;<Icon name="dollar">{product.price}</Icon>{" "}
+                  </Label>
+                </li>
+                <li className="description">
                   Description: {product.description}
                 </li>
               </ul>
             </div>
             <div className="col-1">
-              <div className="card card-body">
+              {/* <div className="card card-body">
                 <ul>
                   <li>
-                    Seller <h2><Link to={`/seller/${product.seller._id}`}>
-                      {product.seller.seller.name}
-                    </Link></h2>
+                    Seller{" "}
+                    <h2>
+                      <Link to={`/seller/${product.seller._id}`}>
+                        {product.seller.seller.name}
+                      </Link>
+                    </h2>
                     <Rating
                       rating={product.seller.seller.rating}
-                      numReviews = {product.seller.seller.numReviews}>
-                    </Rating>
+                      numReviews={product.seller.seller.numReviews}
+                    ></Rating>
                   </li>
                   <li>
                     <div className="row">
@@ -122,10 +160,10 @@ export default function ProductScreen(props) {
                           <div>
                             <select
                               value={qty}
-                              onChange={e => setQty(e.target.value)}
+                              onChange={(e) => setQty(e.target.value)}
                             >
                               {[...Array(product.countInStock).keys()].map(
-                                x => (
+                                (x) => (
                                   <option key={x + 1} value={x + 1}>
                                     {x + 1}
                                   </option>
@@ -146,65 +184,135 @@ export default function ProductScreen(props) {
                     </>
                   )}
                 </ul>
-              </div>
+              </div> */}
+              <Card>
+                <Card.Content>
+                  <Card.Header>
+                    <div className="row price p-1">
+                      <div> Seller:</div>{" "}
+                      <div>
+                        <Link className="colorLink" to={`/seller/${product.seller._id}`}>
+                          {product.seller.seller.name}
+                        </Link>{" "}
+                      </div>
+                    </div>
+                  </Card.Header>
+                  <Card.Meta>
+                    <div className="row price p-1">
+                      <div> Price</div>
+                      <div>${product.price}</div>
+                    </div>
+                  </Card.Meta>
+                  <div className="row price p-1">
+                    <div>Status</div>
+                    <div>
+                      {product.countInStock > 0 ? (
+                        <span className="success">In Stock</span>
+                      ) : (
+                        <span className="danger">Unavailable</span>
+                      )}
+                    </div>
+                  </div>
+                </Card.Content>
+                <Card.Content extra>
+                  {product.countInStock > 0 && (
+                    <div>
+                      <div className="row price p-1">
+                        <div>Qty</div>
+                        <div>
+                          <select
+                            value={qty}
+                            onChange={(e) => setQty(e.target.value)}
+                          >
+                            {[...Array(product.countInStock).keys()].map(
+                              (x) => (
+                                <option key={x + 1} value={x + 1}>
+                                  {x + 1}
+                                </option>
+                              )
+                            )}
+                          </select>
+                        </div>
+                      </div>
+                      <Button
+                        onClick={addToCartHandler}
+                        className="block"
+                        inverted color='orange'
+                      >
+                        Add to Cart
+                      </Button>
+                    </div>
+                  )}
+                </Card.Content>
+              </Card>
             </div>
           </div>
           <div>
-            <h2 id="reviews">Reviews</h2>
-            {product.reviews.length ===0 && (<MessageBox>There is no review</MessageBox>)}
+            <h2 id="reviews">
+              <Label color="black" size="massive" className="reviewMess">
+                Reviews
+              </Label>
+            </h2>
+            {product.reviews.length === 0 && (
+              <MessageBox>
+                <Message compact warning size="huge" color="yellow">
+                  <Message.Header>There is no review. </Message.Header>
+                </Message>
+              </MessageBox>
+            )}
             <ul>
               {product.reviews.map((review) => (
-                <li key = {review._id}>
+                <li className="userReview" key={review._id}>
                   <strong>{review.name}</strong>
                   <Rating rating={review.rating} caption=" "></Rating>
-                  <p>{review.createdAt.substring(0,10)}</p>
+                  <p className="lighterText">
+                    {" "}
+                    <i> at &nbsp;{review.createdAt.substring(0, 10)}</i>
+                  </p>
                   <p>{review.comment}</p>
                 </li>
               ))}
               <li>
                 {userInfo ? (
-                  <form className="form" onSubmit={submitHandler}>
-                    <div>
-                      <h2>Write a customer review</h2>
-                    </div>
-                    <div>
-                      <label htmlFor="rating">Rating</label>
-                      <select
-                        id="rating"
-                        value={rating}
-                        onChange={(e) => setRating(e.target.value)}
-                      >
-                        <option value="">Select...</option>
-                        <option value="1">1- Poor</option>
-                        <option value="2">2- Fair</option>
-                        <option value="3">3- Good</option>
-                        <option value="4">4- Very good</option>
-                        <option value="5">5- Excelent</option>
-                      </select>
-                    </div>
-                    <div>
-                      <label htmlFor="comment">Comment</label>
-                      <textarea
-                        id="comment"
-                        value={comment}
-                        onChange={(e) => setComment(e.target.value)}
-                      ></textarea>
-                    </div>
-                    <div>
-                      <label />
-                      <button className="primary" type="submit">
+                  <Segment inverted className="reviewForm">
+                    <Form inverted onSubmit={submitHandler}>
+                      <h2 className="textCenter">Write your review</h2>
+                      <Form.Field>
+                        <label htmlFor="rating">Rating</label>
+                        <Dropdown
+                          fluid
+                          selection
+                          id="rating"
+                          value={rating}
+                          onChange={(e, data) => setRating(data.value)}
+                          options={ratingOptions}
+                          placeholder="Select..."
+                        ></Dropdown>
+                      </Form.Field>
+                      <Form.Field>
+                        <label>Comment</label>
+                        <TextArea
+                          id="comment"
+                          value={comment}
+                          rows={3}
+                          placeholder="Enter your comment..."
+                          onChange={(e, data) => setComment(data.value)}
+                        ></TextArea>
+                      </Form.Field>
+                    <div className="btnSubmit"><Button size='big' color="white" type="submit" className="hoverBtn">
                         Submit
-                      </button>
-                    </div>
-                    <div>
-                      {loadingReviewCreate && <LoadingBox></LoadingBox>}
-                      {errorReviewCreate && (
-                        <MessageBox variant="danger">
-                          {errorReviewCreate}
-                        </MessageBox>
-                      )}
-                    </div>
-                  </form>
+                      </Button></div>
+                      
+                      <Form.Field className="pt-1">
+                        {loadingReviewCreate && <LoadingBox></LoadingBox>}
+                        {errorReviewCreate && (
+                          <MessageBox variant="danger">
+                            {errorReviewCreate}
+                          </MessageBox>
+                        )}
+                      </Form.Field>
+                    </Form>
+                  </Segment>
                 ) : (
                   <MessageBox>
                     Please <Link to="/signin">Sign In</Link> to write a review

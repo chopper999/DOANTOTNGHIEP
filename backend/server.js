@@ -39,10 +39,12 @@ app.use('/api/uploads', uploadRouter); //app.use được sử dụng để cấ
 app.use("/api/users", userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
-app.use('/api/config/paypal', (req, res) => {
+app.get('/api/config/paypal', (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
-})
-
+});
+app.get('/api/config/google', (req, res) => {
+    res.send(process.env.GOOGLE_API_KEY || '');
+});
 const __dirname = path.resolve();    //return current folder, save lai trong dirname
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  // su dung dirname de concat tu current folder to uploads folder
 app.use(express.static(path.join(__dirname, '/frontend/build')));

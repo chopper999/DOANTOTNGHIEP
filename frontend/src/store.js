@@ -2,7 +2,7 @@ import { createStore,compose, combineReducers, applyMiddleware  } from 'redux';
 import thunk from 'redux-thunk'; 
 import { productListReducer, productDetailReducer, productCreateReducer, productUpdateReducer, productDeleteReducer, productCategoryListReducer, productTopListReducer, productReviewCreateReducer } from './reducers/productReducers';
 import {cartReducer} from './reducers/cartReducers';
-import { userSigninReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer, userDeleteReducer, userUpdateReducer, authReducer } from './reducers/userReducers';
+import { userSigninReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer, userDeleteReducer, userUpdateReducer, authReducer, userAddressMapReducer } from './reducers/userReducers';
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderMineListReducer, orderListReducer, orderDeleteReducer, orderDeliverReducer } from './reducers/orderReducer';
 
 
@@ -49,6 +49,7 @@ const reducer = combineReducers({
     userAuth: authReducer,
     productTopList: productTopListReducer,
     productReviewCreate: productReviewCreateReducer,
+    userAddressMap: userAddressMapReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;    //khai báo redux-dev-tool,
 const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));  //áp dụng middleware

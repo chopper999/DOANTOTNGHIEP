@@ -1,9 +1,8 @@
-import React from 'react'
+import React from 'react';
+import {Segment, Dimmer, Loader} from 'semantic-ui-react';
 
 export default function LoadingBox() {
     return (
-        <div>
-            <i className = "fa fa-spinner fa-spin"></i> Loading...
-        </div>
-    )
+        <div class="lds-facebook"><div></div><div></div><div></div></div>
+    );
 }

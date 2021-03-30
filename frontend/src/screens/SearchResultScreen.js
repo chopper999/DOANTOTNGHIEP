@@ -6,6 +6,7 @@ import { useParams, Link } from 'react-router-dom';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 import Product from './../components/Product';
+import {Label, List, Statistic, Icon} from 'semantic-ui-react';
 
 export default function SearchResultScreen(props) {
   const { name = "all", category= "all" } = useParams(); //hook
@@ -28,32 +29,58 @@ export default function SearchResultScreen(props) {
   }
   return (
     <div>
-      <div className="row">
+      <div className="row p-1">
         {loading ? (
           <LoadingBox></LoadingBox>
         ) : error ? (
           <MessageBox variant="danger">{error}</MessageBox>
         ) : (
-          <div>{products.length} Results</div>
+          <div>
+            {/* <Label basic color="yellow" tag size="big">
+              {products.length} Results
+            </Label> */}
+            <Statistic inverted>
+              <Statistic.Value>{products.length}</Statistic.Value>
+              <Statistic.Label className="labelResult">Results</Statistic.Label>
+            </Statistic>
+          </div>
         )}
       </div>
       <div className="row top">
         <div className="col-1">
-          <h3>Department</h3>
+            {" "}
+            <h1 className="textCategory">Categories</h1>
           {loadingCategory ? (
             <LoadingBox></LoadingBox>
           ) : errorCategory ? (
             <MessageBox variant="danger">{errorCategory}</MessageBox>
           ) : (
-            <ul>
-                {categories.map(c=>(
-                    <li key = {c}>
-                        <Link className={ c===category ? "active" : ''} to = {getFilterUrl({category:c})}>{c}</Link>
-                    </li>
-                ))}
-          </ul>
+            /* <ul>
+              {categories.map((c) => (
+                <li key={c}>
+                  <Link
+                    className={c === category ? "active" : ""}
+                    to={getFilterUrl({ category: c })}
+                  >
+                    {c}
+                  </Link>
+                </li>
+              ))}
+            </ul> */
+            <List animated verticalAlign="middle" size = 'big'>
+              {categories.map((c) => (
+                <List.Item key={c} >
+                  <Link
+                    className={c === category ? "active" : "nameCategory"}
+                    to={getFilterUrl({ category: c })}
+                  >
+                    <Icon name="arrow alternate circle right"></Icon>
+                    {c}
+                  </Link>
+                </List.Item>
+              ))}
+            </List>
           )}
-          
         </div>
         <div className="col-3">
           {loading ? (
@@ -63,10 +90,10 @@ export default function SearchResultScreen(props) {
           ) : (
             <>
               {products.length === 0 && (
-                <MessageBox>No Product Found</MessageBox>
+                <MessageBox ><h1 className="noProduct">No Product Found</h1></MessageBox>
               )}
               <div className="row center">
-                {products.map(product => (
+                {products.map((product) => (
                   <Product key={product._id} product={product}></Product>
                 ))}
               </div>

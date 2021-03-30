@@ -26,7 +26,8 @@ import {
   USER_UPDATE_FAIL,
   USER_UPDATE_RESET,
   USER_DETAILS_RESET,
-  AUTH
+  AUTH,
+  USER_ADDRESS_MAP_CONFIRM
 } from "./../constants/userConstants";
 
 export const userSigninReducer = (state={}, action) => {
@@ -137,3 +138,13 @@ export const userUpdateReducer = (state = {}, action) => {
             return state;
     }
 };
+
+//Google Map
+export const userAddressMapReducer = (state = {}, action) => {
+    switch (action.type) {
+      case USER_ADDRESS_MAP_CONFIRM:
+        return { address: action.payload };
+      default:
+        return state;
+    }
+  };

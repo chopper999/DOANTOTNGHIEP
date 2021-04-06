@@ -10,17 +10,34 @@ productRouter.get(
   "/",
   expressAsyncHandler(async (req, res) => {
     const seller = req.query.seller || '';
-    const sellerFilter = seller ? {seller} : {};
-    const name = req.query.name || '';  //req.query trả về {name: "name"}
-    const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {}; //options: 'i' : match chữ hoa chữ thường
-    
     const category = req.query.category || '';
+    const name = req.query.name || '';  //req.query trả về {name: "name"}
+    const order = req.query.order || '';
+    const min = req.query.min && Number(req.query.min) !==0 ? Number(req.query.min):0;
+    const max = req.query.max && Number(req.query.max) !==0 ? Number(req.query.max):0;
+    const rating = req.query.rating && Number(req.query.rating) !==0 ? Number(req.query.rating):0;
+
+    const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {}; //options: 'i' : match chữ hoa chữ thường
     const categoryFilter = category ? {category} :{};
+    const sellerFilter = seller ? {seller} : {};
+    const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
+    const ratingFilter = rating ? { rating: { $gte: rating } } : {};
+    const sortOrder =
+      order === 'lowest'
+        ? { price: 1 }
+        : order === 'highest'
+        ? { price: -1 }
+        : order === 'toprated'
+        ? { rating: -1 }
+        : { _id: -1 };
+
     const products = await Product.find({
       ...sellerFilter,
       ...nameFilter,
       ...categoryFilter,
-    }).populate("seller", "seller.name seller.logo");
+      ...priceFilter,
+      ...ratingFilter,
+    }).populate("seller", "seller.name seller.logo").sort(sortOrder);
     res.send(products);
   })
 );  
@@ -34,10 +51,22 @@ productRouter.get("/top", expressAsyncHandler(async (req, res) => {
 
 
 productRouter.get(
-  "/seed",
+  '/seed',
   expressAsyncHandler(async (req, res) => {
-    const createdProducts = await Product.insertMany(data.products);
-    res.send({ createdProducts });
+    // await Product.remove({});
+    const seller = await User.findOne({ isSeller: true });
+    if (seller) {
+      const products = data.products.map((product) => ({
+        ...product,
+        seller: seller._id,
+      }));
+      const createdProducts = await Product.insertMany(products);
+      res.send({ createdProducts });
+    } else {
+      res
+        .status(500)
+        .send({ message: 'No seller found!' });
+    }
   })
 );
 //category

@@ -129,12 +129,6 @@ function ShippingAddressScreen(props) {
           ></input>
         </div>
         <div>
-          <label htmlFor="chooseOnMap">Location</label>
-          <button type="button" onClick={chooseOnMap}>
-            Choose On Map
-          </button>
-        </div>
-        <div>
             <label/>
             <button className="primary" type="submit"> Continue</button>
         </div>

@@ -80,7 +80,7 @@ export const detailsUser = (userId) => async (dispatch, getState) => {
   } = getState();
   try {
     const { data } = await Axios.get(`/api/users/${userId}`, {
-      headers: { Authorization: `Bearer ${userInfo.token}` }
+      headers: { Authorization: `Bearer ${userInfo?.token}` }   //if userInfor exist, -> userInfo.token
     });
     dispatch({ type: USER_DETAILS_SUCCESS, payload: data });
   } catch (error) {

@@ -100,23 +100,6 @@ userRouter.post("/forgot", expressAsyncHandler(async (req, res) => {
   }
 }))
 
-//Login with google
-userRouter.post("/google_login", expressAsyncHandler (async (req, res) => {
-  // try {
-  //   const {tokenId} = req.body;
-  //   const verify = await client.verifyIdToken({tokenId: tokenId, audience: process.env.MAILING_SERVICE_CLIENT_ID});
-  //   const {email_verified, email, name, picture} = verify
-  //   //const password = email + process.env.GOO
-  //   console.log(verify);
-  // } catch (err) {
-  //   res.status(500).send({message: err.message});
-  // }
-
-
-  //
-  const {email, accountType} = req.body;
-  var account = await User.findOne({email});
-}))
 
 //user detail
 userRouter.get(
@@ -130,7 +113,7 @@ userRouter.get(
     }
   })
 );
-//API cho user update
+//API for user update
 userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id);
   if (user) {
@@ -187,8 +170,8 @@ userRouter.put("/:id",isAuth, isAdmin, expressAsyncHandler(async (req,res) => {
   if (user) {
       user.name = req.body.name || user.name;
       user.email = req.body.email || user.email;
-      user.isSeller = req.body.isSeller || user.isSeller;
-      user.isAdmin = req.body.isAdmin || user.isAdmin;
+      user.isSeller = Boolean(req.body.isSeller);
+      user.isAdmin = Boolean(req.body.isAdmin);
       const updatedUser = await user.save();
       if(updatedUser) {
           return res.send({message: 'User Updated', user: updatedUser});  

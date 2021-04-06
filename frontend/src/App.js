@@ -31,7 +31,6 @@ import SellerScreen from './screens/SellerScreen';
 
 //UI
 import { Menu, Button, Segment, Icon, Dropdown } from 'semantic-ui-react';
-import MapScreen from './screens/MapScreen';
 
 
 
@@ -277,7 +276,6 @@ function App() {
             <Route path="/order/:id" component={OrderScreen} />
             <Route path="/orderhistory" component={OrderHistoryScreen} />
             <PrivateRoute path="/profile" component={ProfileScreen} />
-            <PrivateRoute path="/map" component={MapScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/register" component={RegisterScreen} />
             <Route path="/product/:id" component={ProductScreen} exact />
@@ -300,6 +298,11 @@ function App() {
             />
             <Route
               path="/search/category/:category/name/:name"
+              exact={true}
+              component={SearchResultScreen}
+            />
+            <Route
+              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order"
               exact={true}
               component={SearchResultScreen}
             />

@@ -5,19 +5,22 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { deleteUser } from './../actions/userActions';
 import { USER_DETAILS_RESET } from './../constants/userConstants';
+import { useParams, Link } from 'react-router-dom';
 
 export default function UserListScreen(props) {
+
+  const { pageNumber = 1 } = useParams();
   const userList = useSelector((state) => state.userList);
-  const { loading, error, users } = userList;
+  const { loading, error, users, page, pages } = userList;
 
   const userDelete = useSelector((state)=> state.userDelete);
   const {loading: loadingDelete, error:errorDelete, success: successDelete}= userDelete;
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(listUsers());
+    dispatch(listUsers({pageNumber}));
     dispatch({type: USER_DETAILS_RESET});
-  }, [dispatch, successDelete]);    //xoa thanh cong thi refresh lai list user
+  }, [dispatch, successDelete, pageNumber]);    //xoa thanh cong thi refresh lai list user
   const deleteHandler = (user) =>{ 
       if(window.confirm('Are you sure to delete this User?')){
           dispatch(deleteUser(user._id));
@@ -36,6 +39,7 @@ export default function UserListScreen(props) {
       ) : error ? (
         <MessageBox variant="danger">{error}</MessageBox>
       ) : (
+        <>
         <table className="table">
           <thead>
             <tr>
@@ -63,6 +67,18 @@ export default function UserListScreen(props) {
             ))}
           </tbody>
         </table>
+        <div className="row center pagination">
+            {[...Array(pages).keys()].map((x) => (
+              <Link
+                className={x + 1 === page ? "active" : ""}
+                key={x + 1}
+                to={`/userlist/pageNumber/${x+1}`}
+              >
+                {x + 1}
+              </Link>
+            ))}
+          </div>
+          </>
       )}
     </div>
   );

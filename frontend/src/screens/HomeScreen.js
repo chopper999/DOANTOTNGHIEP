@@ -6,25 +6,28 @@ import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { listTopProduct } from './../actions/productActions';
-import { Grid, Transition } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
  
 
 export default function HomeScreen() {
+  const {
+    pageNumber = 1,
+  } = useParams(); //hook
   
   const dispatch = useDispatch();
   const productList = useSelector((state) => state.productList);
-  const { loading, error, products } = productList;
+  const { loading, error, products, page, pages } = productList;
 
   //for Carousel
   const productTopList = useSelector((state)=> state.productTopList);
   const {loading: loadingTopProduct, error: errorTopProduct, products: productsTopList } = productTopList;
 
   useEffect(() => {  
-    dispatch(listProducts({})); //truyen vao object rong de khong filter
+    dispatch(listProducts({pageNumber})); 
     dispatch(listTopProduct());
-  }, [dispatch]);
+  }, [dispatch,pageNumber]);
 
   return (
     <div>
@@ -72,6 +75,17 @@ export default function HomeScreen() {
               {/* </Grid.Column> */}
             </Grid.Row>
           </Grid>
+          <div className="row center pagination">
+            {[...Array(pages).keys()].map((x) => (
+              <Link
+                className={x + 1 === page ? "active" : ""}
+                key={x + 1}
+                to={`/pageNumber/${x+1}`}
+              >
+                {x + 1}
+              </Link>
+            ))}
+          </div>
         </>
       )}
     </div>

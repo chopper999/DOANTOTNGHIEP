@@ -225,48 +225,48 @@ function App() {
         </div>
 
         <div className="navbar">
-          <Menu color={"yellow"} inverted size='huge'>
-          <Menu.Menu>
-          <Dropdown item text='Category'>
-          <Dropdown.Menu>
+          <Menu color={"yellow"} inverted size="huge">
+            <Menu.Menu>
+              <Dropdown item text="Category">
+                <Dropdown.Menu>
                   {loadingCategory ? (
                     <LoadingBox></LoadingBox>
                   ) : errorCategory ? (
                     <MessageBox variant="danger">{errorCategory}</MessageBox>
                   ) : (
                     categories.map((c) => (
-                      <Dropdown.Item  key={c}>
-                        <Link className="dropdownItem"
+                      <Dropdown.Item key={c}>
+                        <Link
+                          className="dropdownItem"
                           to={`/search/category/${c}`}
                           // onClick={() => setSidebarIsOpen(false)}
                         >
                           {c}
                         </Link>
-                        </Dropdown.Item>
+                      </Dropdown.Item>
                     ))
                   )}
                 </Dropdown.Menu>
-          </Dropdown>
-        </Menu.Menu>
-        
-          <Link to="/">
-          <Menu.Item name="HOME"
-                  active={activeItem === "HOME"}
-                  onClick={handleItemClick}
-        />
-          </Link>
-          <Link to="">
-          <Menu.Item name="Introduction"
-                  active={activeItem === "Introduction"}
-                  onClick={handleItemClick}
-        />
-          </Link>
+              </Dropdown>
+            </Menu.Menu>
 
-        
-      </Menu>
+            <Link to="/">
+              <Menu.Item
+                name="HOME"
+                active={activeItem === "HOME"}
+                onClick={handleItemClick}
+              />
+            </Link>
+            <Link to="/">
+              <Menu.Item
+                name="Introduction"
+                active={activeItem === "Introduction"}
+                onClick={handleItemClick}
+              />
+            </Link>
+          </Menu>
         </div>
 
-        
         <main className="main">
           <div className="content">
             <Route path="/seller/:id" component={SellerScreen} />
@@ -274,7 +274,8 @@ function App() {
             <Route path="/payment" component={PaymentMethodScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />
             <Route path="/order/:id" component={OrderScreen} />
-            <Route path="/orderhistory" component={OrderHistoryScreen} />
+            <Route path="/orderhistory" component={OrderHistoryScreen} exact />
+            <Route path="/orderhistory/pageNumber/:pageNumber" component={OrderHistoryScreen} exact />
             <PrivateRoute path="/profile" component={ProfileScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/register" component={RegisterScreen} />
@@ -286,6 +287,7 @@ function App() {
             />
             <Route path="/cart/:id?" component={CartScreen} />
             <Route path="/" exact={true} component={HomeScreen} />
+            <Route path="/pageNumber/:pageNumber" exact={true} component={HomeScreen} />
             <Route
               path="/search/name/:name?"
               exact={true}
@@ -302,7 +304,7 @@ function App() {
               component={SearchResultScreen}
             />
             <Route
-              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order"
+              path="/search/category/:category/name/:name/min/:min/max/:max/rating/:rating/order/:order/pageNumber/:pageNumber"
               exact={true}
               component={SearchResultScreen}
             />
@@ -312,8 +314,15 @@ function App() {
               component={ProductListScreen}
               exact
             />
+            <AdminRoute
+              path="/productlist/pageNumber/:pageNumber"
+              component={ProductListScreen}
+              exact
+            />
             <AdminRoute path="/orderlist" component={OrderListScreen} exact />
-            <AdminRoute path="/userlist" component={UserListScreen} />
+            <AdminRoute path="/orderlist/pageNumber/:pageNumber" component={OrderListScreen} exact />
+            <AdminRoute path="/userlist" component={UserListScreen} exact />
+            <AdminRoute path="/userlist/pageNumber/:pageNumber" component={UserListScreen} exact />
             <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
 
             <SellerRoute
@@ -323,6 +332,7 @@ function App() {
             <SellerRoute
               path="/orderlist/seller"
               component={OrderListScreen}
+              exact
             ></SellerRoute>
           </div>
         </main>

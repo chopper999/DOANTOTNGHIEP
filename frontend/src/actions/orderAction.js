@@ -93,13 +93,13 @@ export const payOrder = (order, paymentResult) => async (
   }
 };
 
-export const listOrderMine = () => async (dispatch, getState) => {
+export const listOrderMine = ({pageNumber = " "}) => async (dispatch, getState) => {
   dispatch({ type: ORDER_MINE_LIST_REQUEST });
   const {
     userSignin: { userInfo }
   } = getState();
   try {
-    const {data} = await Axios.get('/api/orders/mine', {
+    const {data} = await Axios.get(`/api/orders/mine?pageNumber=${pageNumber}`, {
       headers: {
         Authorization: `Bearer ${userInfo.token}`,
       },
@@ -122,6 +122,7 @@ export const listOrders = ({seller=''}) => async (dispatch, getState) => {
     const {data} = await Axios.get(`/api/orders?seller=${seller}`, {
       headers: {Authorization: `Bearer ${userInfo.token}`},
     });
+    
     dispatch({type: ORDER_LIST_SUCCESS, payload: data});
   } catch (error) {
     const message = 

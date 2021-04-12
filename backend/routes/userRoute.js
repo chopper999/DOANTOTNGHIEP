@@ -8,6 +8,7 @@ import data from '../data';
 import sendMail from './../sendMail';
 
 import {google} from 'googleapis';
+import Order from '../models/orderModel';
 
 const {OAuth2} = google.auth
 const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID)
@@ -142,8 +143,11 @@ userRouter.put('/profile', isAuth, expressAsyncHandler(async (req, res) => {
 
 //API for list user
 userRouter.get('/', isAuth, isAdmin, expressAsyncHandler(async(req, res) => {
-  const users = await User.find({});  //return all users
-  res.send(users);
+  const pageSize = 8;
+  const page = Number(req.query.pageNumber) || 1;
+  const count = await User.countDocuments({});
+  const users = await User.find({}).sort({_id: -1}).skip(pageSize*(page-1)).limit(pageSize);  //return all users
+  res.send({users, page, pages: Math.ceil(count/pageSize)});
 }));
 
 //API delete User by Admin

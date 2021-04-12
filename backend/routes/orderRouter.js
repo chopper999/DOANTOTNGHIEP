@@ -1,13 +1,16 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from './../models/orderModel.js';
-import { isAuth, isAdmin, isSellerOrAdmin } from '../util.js';
+import { isAuth, isAdmin, isSellerOrAdmin, payOrderEmailTemplate, mailGun } from '../util.js';
 
 const orderRouter = express.Router();
 
 orderRouter.get('/mine', isAuth, expressAsyncHandler(async (req, res) => {
-  const orders  = await Order.find({user: req.user._id});
-  res.send(orders);
+  const pageSize = 8;
+  const page = Number(req.query.pageNumber) || 1;
+  const count = await Order.countDocuments({user: req.user._id});
+  const orders  = await Order.find({user: req.user._id}).sort({_id: -1}).skip(pageSize*(page-1)).limit(pageSize);
+  res.send({orders, page, pages: Math.ceil(count / pageSize) });
 }));
 
 //create order
@@ -53,7 +56,10 @@ orderRouter.put(
   '/:id/pay',
   isAuth,
   expressAsyncHandler(async (req, res) => {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate(
+      'user',
+      'email name'
+    );
     if (order) {
       order.isPaid = true;
       order.paidAt = Date.now();
@@ -64,6 +70,23 @@ orderRouter.put(
         email_address: req.body.email_address,
       };
       const updatedOrder = await order.save();
+      mailGun()
+      .messages()
+      .send(
+        {
+          from: 'Chopper Shop <Chopper@mg.yourdomain.com>',
+          to: `${order.user.name} <${order.user.email}>`,
+          subject: `New order ${order._id}`,
+          html: payOrderEmailTemplate(order),
+        },
+        (error, body) => {
+          if (error) {
+            console.log(error);
+          } else {
+            console.log(body);
+          }
+        }
+      );
       res.send({message: 'Order Paid' , order: updatedOrder});
     } else{
       res.status(404).send({message: 'Order not found'});
@@ -72,14 +95,16 @@ orderRouter.put(
   })
 );
 
-//API get orderlist order list
+//API get orderlist
 orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler (async(req, res) => {
   const seller = req.query.seller || '';
   const sellerFilter = seller ? {seller} : {};
-  
-  const orders = await Order.find({...sellerFilter}).populate('user', 'name');  //get all oder item, dung populate de lay name cua user (user la field cua Oder model) trong order list vao hang orders
-  res.send(orders);
-})
+  const orders = await Order.find({...sellerFilter}).populate(
+    'user',
+    'name'
+  );; //get all oder item, dung populate de lay name cua user (user la field cua Oder model) trong order list vao hang orders
+  res.send({orders});
+})    
 );
 
 //API  delete orderlist
@@ -98,7 +123,7 @@ orderRouter.delete(
   })
 );
 
-//API cho deliver 
+//API for deliver 
 orderRouter.put(
   '/:id/deliver',
   isAuth,

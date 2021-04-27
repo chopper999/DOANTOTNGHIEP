@@ -4,11 +4,14 @@ import { listProducts } from '../actions/productActions';
 import Product from './../components/Product';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
-import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import { Carousel } from 'react-responsive-carousel';
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 import { Link, useParams } from 'react-router-dom';
 import { listTopProduct } from './../actions/productActions';
-import { Grid } from 'semantic-ui-react';
+import { Grid, Divider } from 'semantic-ui-react';
  
 
 export default function HomeScreen() {
@@ -29,29 +32,39 @@ export default function HomeScreen() {
     dispatch(listTopProduct());
   }, [dispatch,pageNumber]);
 
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1
+  };
   return (
     <div>
-      <h2 className="topProduct">Top Products</h2>
       {loadingTopProduct ? (
         <LoadingBox></LoadingBox>
       ) : errorTopProduct ? (
         <MessageBox variant="danger">{errorTopProduct}</MessageBox>
       ) : (
-        <>
+        <div className = "carousel">
           {productsTopList.length === 0 && (
             <MessageBox className="topProduct">No Product Found</MessageBox>
           )}
-          <Carousel showArrows autoPlay showThumbs={false}>
+          {
+            <Slider {...settings}>
             {productsTopList.map((e) => (
-              <div key={e._id}>
-                <Link to={`/product/${e._id}`}>
-                  <img src={e.image} alt={e.name}></img>
-                  <p className="legend">{e.name}</p>
-                </Link>
-              </div>
-            ))}
-          </Carousel>
-        </>
+                <div key={e._id} className="imgCRS">
+                  <Link to={`/product/${e._id}`}>
+                    <img className="imgCarousel" src={e.image} alt={e.name}></img>
+                    <p className="nameProductCarousel">{e.name}</p>
+                  </Link>
+                </div>
+              ))}
+            </Slider>
+              
+          }
+          
+        </div>
       )}
 
       {loading ? (
@@ -63,15 +76,17 @@ export default function HomeScreen() {
           {products.length === 0 && (
             <MessageBox className="topProduct">No Product Found</MessageBox>
           )}
+         
+          <Divider className="dividerAllProduct"></Divider>
+          
           <h2 className="topProduct">All Products</h2>
+          
           <Grid className="contain-product" columns={2} divided>
             <Grid.Row>
               {/* <Grid.Column> */}
-                {products.map((product) => (
-                  
-                  <Product  key={product._id} product={product}></Product>
-                  
-                ))}
+              {products.map((product) => (
+                <Product key={product._id} product={product}></Product>
+              ))}
               {/* </Grid.Column> */}
             </Grid.Row>
           </Grid>
@@ -80,7 +95,7 @@ export default function HomeScreen() {
               <Link
                 className={x + 1 === page ? "active" : ""}
                 key={x + 1}
-                to={`/pageNumber/${x+1}`}
+                to={`/pageNumber/${x + 1}`}
               >
                 {x + 1}
               </Link>

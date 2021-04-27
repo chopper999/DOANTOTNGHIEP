@@ -53,20 +53,22 @@ export default function ProductEditScreen(props) {
 
   const userSignin = useSelector((state) => state.userSignin);
   const {userInfo} = userSignin;
-  const uploadFileHandler = async e => {
+  const uploadFileHandler = async (e) => {
     const file = e.target.files[0];
     const bodyFormData = new FormData(); //khi gửi req để upload file thi cần tạo 1 object từ class FormData
-    bodyFormData.append("image", file);
+
+    bodyFormData.append('image', file);
+    
     setLoadingUpload(true);
     try {
-      const { data } = await Axios.post("/api/uploads", bodyFormData, {
+      const { data } = await Axios.post('/api/uploads', bodyFormData, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${userInfo.token}`,
         },
       });
       setImage(data);
-      setLoadingUpload(false); //khi upload thanh cong thi khong show LoadingBox
+      setLoadingUpload(false);
     } catch (error) {
       setErrorUpload(error.message);
       setLoadingUpload(false);
@@ -118,10 +120,16 @@ export default function ProductEditScreen(props) {
             </div>
             <div>
               <label htmlFor="imageFile"> Image File</label>
-              <input type="file" id= "imageFile" label="Choose Image"
-              onChange = {uploadFileHandler}></input>
+              <input
+                type="file"
+                id="imageFile"
+                label="Choose Image"
+                onChange={uploadFileHandler}
+              ></input>
               {loadingUpload && <LoadingBox></LoadingBox>}
-              {errorUpload && <MessageBox variant="danger">{errorUpload}</MessageBox>}
+              {errorUpload && (
+                <MessageBox variant="danger">{errorUpload}</MessageBox>
+              )}
             </div>
 
             <div>

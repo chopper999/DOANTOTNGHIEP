@@ -6,7 +6,6 @@ import { listOrders, deleteOrder } from './../actions/orderAction';
 import { ORDER_DELETE_RESET } from '../constants/orderConstants';
 
 export default function OrderListScreen(props) {
-  const sellerMode = props.match.path.indexOf('/seller') >=0;
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
 
@@ -19,9 +18,9 @@ export default function OrderListScreen(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({type: ORDER_DELETE_RESET});
-    dispatch(listOrders({ seller: sellerMode ? userInfo._id : '' }));
+    dispatch(listOrders());
     
-  }, [dispatch, sellerMode, successDelete, userInfo._id]);    //khi xoa thanh cong, refresh lai listOrder
+  }, [dispatch, successDelete, userInfo._id]);    //khi xoa thanh cong, refresh lai listOrder
   const deleteHandler = (order) => {
     if (window.confirm('Are you sure to delete this order')) {
         dispatch(deleteOrder(order._id));

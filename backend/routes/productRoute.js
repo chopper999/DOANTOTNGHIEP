@@ -1,6 +1,6 @@
 import express from 'express';
 import Product from '../models/productModel';
-import { isAuth, isAdmin, isSellerOrAdmin } from '../util.js';
+import { isAuth, isAdmin } from '../util.js';
 import data from '../data.js';
 import expressAsyncHandler from 'express-async-handler';
 
@@ -11,7 +11,7 @@ productRouter.get(
   expressAsyncHandler(async (req, res) => {
     const pageSize = 8;
     const page = Number(req.query.pageNumber) || 1;
-    const seller = req.query.seller || '';
+    
     const category = req.query.category || '';
     const name = req.query.name || '';  //req.query trả về {name: "name"}
     const order = req.query.order || '';
@@ -21,7 +21,7 @@ productRouter.get(
 
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {}; //options: 'i' : match chữ hoa chữ thường
     const categoryFilter = category ? {category} :{};
-    const sellerFilter = seller ? {seller} : {};
+    
     const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
     const sortOrder =
@@ -33,19 +33,17 @@ productRouter.get(
         ? { rating: -1 }
         : { _id: -1 };
     const count = await Product.countDocuments({
-      ...sellerFilter,
       ...nameFilter,
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
     });
     const products = await Product.find({
-      ...sellerFilter,
       ...nameFilter,
       ...categoryFilter,
       ...priceFilter,
       ...ratingFilter,
-    }).populate("seller", "seller.name seller.logo").sort(sortOrder).skip(pageSize * (page - 1)).limit(pageSize);
+    }).sort(sortOrder).skip(pageSize * (page - 1)).limit(pageSize);
     res.send({products, page, pages: Math.ceil(count / pageSize)});
   })
 );  
@@ -59,22 +57,11 @@ productRouter.get("/top", expressAsyncHandler(async (req, res) => {
 
 
 productRouter.get(
-  '/seed',
+  "/seed",
   expressAsyncHandler(async (req, res) => {
     // await Product.remove({});
-    const seller = await User.findOne({ isSeller: true });
-    if (seller) {
-      const products = data.products.map((product) => ({
-        ...product,
-        seller: seller._id,
-      }));
-      const createdProducts = await Product.insertMany(products);
-      res.send({ createdProducts });
-    } else {
-      res
-        .status(500)
-        .send({ message: 'No seller found!' });
-    }
+    const createdProducts = await Product.insertMany(products);
+    res.send({ createdProducts });
   })
 );
 //category
@@ -87,7 +74,7 @@ productRouter.get('/categories', expressAsyncHandler(async(req,res) => {
 productRouter.get(
   "/:id",
   expressAsyncHandler(async (req, res) => {
-    const product = await Product.findById(req.params.id).populate("seller", "seller.name seller.logo seller.rating seller.numReviews");;
+    const product = await Product.findById(req.params.id);
     if (product) {
       res.send(product);
     } else {
@@ -100,11 +87,10 @@ productRouter.get(
 productRouter.post(
   "/",
   isAuth,
-  isSellerOrAdmin,
+  isAdmin,
   expressAsyncHandler(async (req, res) => {
     const product = new Product({
       name: 'product ' + Date.now(), // tránh tạo 2 tên trùng nhau
-      seller: req.user._id,
       image: '/images/img1.jpg',
       price: 0,
       category: 'category',
@@ -119,7 +105,7 @@ productRouter.post(
   })
 );
 //create API for update product
-productRouter.put("/:id",isAuth, isSellerOrAdmin, expressAsyncHandler(async (req,res) => {
+productRouter.put("/:id",isAuth, isAdmin, expressAsyncHandler(async (req,res) => {
     const productId = req.params.id;
     const product = await Product.findById(productId);
     if (product) {
@@ -142,7 +128,7 @@ productRouter.put("/:id",isAuth, isSellerOrAdmin, expressAsyncHandler(async (req
 })
 );
 //create API for delete product
-productRouter.delete("/:id",isAuth, isSellerOrAdmin, expressAsyncHandler(async (req, res) => {
+productRouter.delete("/:id",isAuth, isAdmin, expressAsyncHandler(async (req, res) => {
     const product = await Product.findById(req.params.id);
     if(product) {
         const deleteProduct = await product.remove();

@@ -15,11 +15,6 @@ export default function ProfileScreen() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
-    // Seller
-    const [sellerName, setSellerName] = useState('');
-    const [sellerLogo, setSellerLogo] = useState('');
-    const [sellerDescription, setSellerDescription] = useState('');
-
     const userSignin = useSelector((state) => state.userSignin);
     const { userInfo } = userSignin;
     const userDetails = useSelector((state) => state.userDetails);
@@ -36,12 +31,6 @@ export default function ProfileScreen() {
       else{
         setName(user.name);
         setEmail(user.email);
-        if (user.seller)
-        {
-          setSellerName(user.seller.name);
-          setSellerLogo(user.seller.logo);
-          setSellerDescription(user.seller.description);
-        }
       }
       
     }, [dispatch, userInfo._id, user]);
@@ -51,7 +40,7 @@ export default function ProfileScreen() {
       if (password !== confirmPassword){
           alert('Password and Confirm Password are not matched!');
       } else{
-          dispatch(updateUserProfile({userId: user._id, name, email, password, sellerName, sellerLogo, sellerDescription}));
+          dispatch(updateUserProfile({userId: user._id, name, email, password}));
       }
     };
     return (
@@ -109,46 +98,6 @@ export default function ProfileScreen() {
                   onChange={e => setConfirmPassword(e.target.value)}
                 ></input>
               </div>
-
-              {/* Seller */}
-             {
-               userInfo.isSeller && 
-               <>
-               <h2>Seller</h2>
-                <div>
-                <label htmlFor="sellerName">Seller Name</label>
-                <input
-                  id="sellerName"
-                  type="text"
-                  placeholder="Enter Seller Name"
-                  value={sellerName}
-                  onChange={e => setSellerName(e.target.value)}
-                ></input>
-                </div>
-
-                <div>
-                <label htmlFor="logo">Logo</label>
-                <input
-                  id="logo"
-                  type="text"
-                  placeholder="Enter Seller Logo"
-                  value={sellerLogo}
-                  onChange={e => setSellerLogo(e.target.value)}
-                ></input>
-                </div>
-
-                <div>
-                <label htmlFor="description">Description</label>
-                <input
-                  id="sellerName"
-                  type="text"
-                  placeholder="Description"
-                  value={sellerDescription}
-                  onChange={e => setSellerDescription(e.target.value)}
-                ></input>
-                </div>
-             </> 
-             }
 
               <div>
                 <label />

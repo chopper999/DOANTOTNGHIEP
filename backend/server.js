@@ -1,8 +1,8 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import path from 'path';
 import mongoose from 'mongoose';
 import orderRouter from './routes/orderRouter';
+import path from 'path';
 import productRouter from './routes/productRoute';
 import userRouter from './routes/userRoute';
 import uploadRouter from './routes/uploadRouter';
@@ -45,12 +45,11 @@ app.get('/api/config/paypal', (req, res) => {
 app.get('/api/config/google', (req, res) => {
     res.send(process.env.GOOGLE_API_KEY || '');
 });
-const __dirname = path.resolve();    //return current folder, save lai trong dirname
+const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  // su dung dirname de concat tu current folder to uploads folder
-app.use(express.static(path.join(__dirname, '/frontend/build')));
-app.get('*', (req, res) => res.sendFile(path.join(__dirname)));
+// app.use(express.static(path.join(__dirname, '/frontend/build')));
+// app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/build/index.html')));
 //'/frontend/build/index.html'
-
 
 app.get('/', (req, res) => {
     res.send('Server is ready');

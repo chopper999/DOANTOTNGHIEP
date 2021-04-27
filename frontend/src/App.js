@@ -26,11 +26,9 @@ import SearchResultScreen from './screens/SearchResultScreen';
 import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
-import SellerRoute from './components/SellerRoute';
-import SellerScreen from './screens/SellerScreen';
 
 //UI
-import { Menu, Button, Segment, Icon, Dropdown } from 'semantic-ui-react';
+import { Menu, Button, Segment, Icon, Dropdown, Image, Divider } from 'semantic-ui-react';
 
 
 
@@ -59,6 +57,27 @@ function App() {
   //UI
   const [activeItem, setActiveItem] = useState('');
   const handleItemClick = ({name} ) => setActiveItem({ activeItem: name});
+
+  // chating
+  // const [messageList, setMessageList] = useState({messageList: []});
+  // // const [author, setAuthor] = useState('');
+  // // const [type, setType] = useState('')
+  // // const [data, setData] = useState();
+  // const onMessageWasSent = (message) => {
+  //   setMessageList({messageList: [...messageList, message]})
+  // }
+  // const sendMessage = (text) => {
+  //   if (text.length > 0) {
+  //     setMessageList({
+  //       messageList: [...messageList, {
+  //         author: 'them',
+  //         type: 'text',
+  //         data: { text }
+  //       }]
+  //     })
+  //   }
+  // };
+
   
   return (
     <BrowserRouter>
@@ -66,13 +85,12 @@ function App() {
       <div className="grid-container">
         <div className="menuTop">
           <Segment inverted className="segmentHeader">
-            <Menu inverted secondary className="menuHeader">
-              <img
-                src="/logoChopper.jpg"
-                className="ui tiny circular image"
-                alt="Chopper"
-              />
+            <Menu pointing inverted secondary className="menuHeader">
+            <Menu.Item>
+              <Image className="imgLogo" src='/logoChopper.jpg' size='tiny' circular />
+              </Menu.Item>
               <Link to="/">
+              
                 <Menu.Item
                   className="brandName"
                   name="CHOPPER SHOP"
@@ -91,142 +109,104 @@ function App() {
 
               <Menu.Item className="iconCart">
                 <Link to="/cart">
-                  <Icon color="yellow" name="cart" link size="big"></Icon>
+                  <Icon className = "iconCart1" name="cart" link size="huge"></Icon>
                   {cartItems.length > 0 && (
                     <span className="badge">{cartItems.length}</span>
                   )}
                 </Link>
               </Menu.Item>
               <Menu.Item className="btnSignin">
-                <Segment inverted>
-                  <Menu inverted pointing secondary>
-                    <Menu.Item>
-                      {userInfo ? (
-                        <Dropdown text={userInfo.name}>
-                          <Dropdown.Menu>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link className="dropdownItem" to="/profile">
-                                  User Profile
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link
-                                  className="dropdownItem"
-                                  to="/orderhistory"
-                                >
-                                  Order History
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link
-                                  className="dropdownItem"
-                                  to="#signout"
-                                  onClick={signoutHandler}
-                                >
-                                  Sign Out
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      ) : (
-                        <Link to="/signin" className="btnSignin1">
-                          <Button inverted color="yellow">
-                            <Icon name="sign-in"></Icon>
-                            Sign In
-                          </Button>
-                        </Link>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {userInfo && userInfo.isSeller && (
-                        <Dropdown text="Seller">
-                          <Dropdown.Menu>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link className="dropdownItem" to="/dashboard">
-                                  Dashboard
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link
-                                  className="dropdownItem"
-                                  to="/productlist/seller"
-                                >
-                                  Products
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link
-                                  className="dropdownItem"
-                                  to="/orderlist/seller"
-                                >
-                                  Orders
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {userInfo && userInfo.isAdmin && (
-                        <Dropdown text="Admin">
-                          <Dropdown.Menu>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link className="dropdownItem" to="/dashboard">
-                                  Dashboard
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link
-                                  className="dropdownItem"
-                                  to="/productlist"
-                                >
-                                  Products
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link className="dropdownItem" to="/orderlist">
-                                  Orders
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                            <Dropdown.Item>
-                              <Dropdown.Text>
-                                <Link className="dropdownItem" to="/userlist">
-                                  Users
-                                </Link>
-                              </Dropdown.Text>
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
-                      )}
-                    </Menu.Item>
-                  </Menu>
-                </Segment>
+                {/* <Segment inverted> */}
+                <Menu pointing secondary>
+                  <Menu.Item>
+                    {userInfo ? (
+                      <Dropdown text={userInfo.name} className="txtDropdown">
+                        <Dropdown.Menu>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/profile">
+                                User Profile
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/orderhistory">
+                                Order History
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link
+                                className="dropdownItem"
+                                to="#signout"
+                                onClick={signoutHandler}
+                              >
+                                Sign Out
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    ) : (
+                      <Link to="/signin" className="btnSignin1">
+                        <Button inverted>
+                          <Icon name="sign-in"></Icon>
+                          Sign In
+                        </Button>
+                      </Link>
+                    )}
+                  </Menu.Item>
+                  
+                  <Menu.Item>
+                    {userInfo && userInfo.isAdmin && (
+                      <Dropdown className="txtDropdown" text="Admin">
+                        <Dropdown.Menu>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/dashboard">
+                                Dashboard
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/productlist">
+                                Products
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/orderlist">
+                                Orders
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/userlist">
+                                Users
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                    )}
+                  </Menu.Item>
+                </Menu>
+                {/* </Segment> */}
               </Menu.Item>
             </Menu>
           </Segment>
         </div>
-
+        
         <div className="navbar">
-          <Menu color={"yellow"} inverted size="huge">
-            <Menu.Menu>
+        <Divider fitted className='dividerLine'/>
+        <Segment className="colorNavbar" inverted>
+          <Menu className='containerNavbar' inverted secondary pointing size="huge">
+            
               <Dropdown item text="Category">
                 <Dropdown.Menu>
                   {loadingCategory ? (
@@ -248,8 +228,6 @@ function App() {
                   )}
                 </Dropdown.Menu>
               </Dropdown>
-            </Menu.Menu>
-
             <Link to="/">
               <Menu.Item
                 name="HOME"
@@ -257,25 +235,36 @@ function App() {
                 onClick={handleItemClick}
               />
             </Link>
+            <Link to="/search/name/">
+              <Menu.Item
+                name="SHOP"
+                active={activeItem === "SHOP"}
+                onClick={handleItemClick}
+              />
+            </Link>
             <Link to="/">
               <Menu.Item
-                name="Introduction"
-                active={activeItem === "Introduction"}
+                name="CONTACT"
+                active={activeItem === "CONTACT"}
                 onClick={handleItemClick}
               />
             </Link>
           </Menu>
+          </Segment>
         </div>
 
         <main className="main">
           <div className="content">
-            <Route path="/seller/:id" component={SellerScreen} />
             <Route path="/shipping" component={ShippingAddressScreen} />
             <Route path="/payment" component={PaymentMethodScreen} />
             <Route path="/placeorder" component={PlaceOrderScreen} />
             <Route path="/order/:id" component={OrderScreen} />
             <Route path="/orderhistory" component={OrderHistoryScreen} exact />
-            <Route path="/orderhistory/pageNumber/:pageNumber" component={OrderHistoryScreen} exact />
+            <Route
+              path="/orderhistory/pageNumber/:pageNumber"
+              component={OrderHistoryScreen}
+              exact
+            />
             <PrivateRoute path="/profile" component={ProfileScreen} />
             <Route path="/signin" component={SigninScreen} />
             <Route path="/register" component={RegisterScreen} />
@@ -287,7 +276,11 @@ function App() {
             />
             <Route path="/cart/:id?" component={CartScreen} />
             <Route path="/" exact={true} component={HomeScreen} />
-            <Route path="/pageNumber/:pageNumber" exact={true} component={HomeScreen} />
+            <Route
+              path="/pageNumber/:pageNumber"
+              exact={true}
+              component={HomeScreen}
+            />
             <Route
               path="/search/name/:name?"
               exact={true}
@@ -320,26 +313,39 @@ function App() {
               exact
             />
             <AdminRoute path="/orderlist" component={OrderListScreen} exact />
-            <AdminRoute path="/orderlist/pageNumber/:pageNumber" component={OrderListScreen} exact />
-            <AdminRoute path="/userlist" component={UserListScreen} exact />
-            <AdminRoute path="/userlist/pageNumber/:pageNumber" component={UserListScreen} exact />
-            <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
-
-            <SellerRoute
-              path="/productlist/seller"
-              component={ProductListScreen}
-            ></SellerRoute>
-            <SellerRoute
-              path="/orderlist/seller"
+            <AdminRoute
+              path="/orderlist/pageNumber/:pageNumber"
               component={OrderListScreen}
               exact
-            ></SellerRoute>
+            />
+            <AdminRoute path="/userlist" component={UserListScreen} exact />
+            <AdminRoute
+              path="/userlist/pageNumber/:pageNumber"
+              component={UserListScreen}
+              exact
+            />
+            <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
+
+            
           </div>
         </main>
         <footer className="footer"></footer>
+        {/* chat */}
+
+        {/* <Launcher
+        agentProfile={{
+          teamName: 'react-chat-window',
+          imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+        }}
+        onMessageWasSent={onMessageWasSent}
+        messageList={messageList}
+        showEmoji
+      /> */}
+
       </div>
     </BrowserRouter>
   );
 }
+
 
 export default App;

@@ -7,7 +7,6 @@ const generateToken = user => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      isSeller: user.isSeller,
     },
     process.env.JWT_SECRET, //jwt_secret nhu la key de encrypt data va de tao token, nen duoc bao mat
     {
@@ -49,24 +48,6 @@ const isAdmin = (req, res, next) => {
   }
   
 };
-
-
-
-const isSeller = (req, res, next) => {
-  if (req.user && req.user.isSeller) {
-    next();
-  } else {
-    res.status(401).send({ message: "Invalid Seller Token" });
-  }
-};
-const isSellerOrAdmin = (req, res, next) => {
-  if (req.user && (req.user.isSeller || req.user.isAdmin)) {
-    next();
-  } else {
-    res.status(401).send({ message: "Invalid Admin or Seller Token" });
-  }
-};
-
 const mailGun = () => mg({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN});
 
 const payOrderEmailTemplate = (order) => {
@@ -131,5 +112,5 @@ const payOrderEmailTemplate = (order) => {
   </p>
   `;
 };
-export { isAuth, isAdmin, generateToken, isSeller, isSellerOrAdmin, mailGun, payOrderEmailTemplate };
+export { isAuth, isAdmin, generateToken, mailGun, payOrderEmailTemplate };
 

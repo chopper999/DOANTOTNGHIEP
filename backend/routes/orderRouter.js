@@ -1,7 +1,7 @@
 import express from 'express';
 import expressAsyncHandler from 'express-async-handler';
 import Order from './../models/orderModel.js';
-import { isAuth, isAdmin, isSellerOrAdmin, payOrderEmailTemplate, mailGun } from '../util.js';
+import { isAuth, isAdmin, payOrderEmailTemplate, mailGun } from '../util.js';
 
 const orderRouter = express.Router();
 
@@ -23,10 +23,8 @@ orderRouter.post(
       
     }
     else{
-        console.log(req.body.orderItems[0].seller);
+        
         const order = new Order({
-            
-            seller: req.body.orderItems[0].seller,
             orderItems: req.body.orderItems,
             shippingAddress: req.body.shippingAddress,
             paymentMethod: req.body.paymentMethod,
@@ -96,13 +94,8 @@ orderRouter.put(
 );
 
 //API get orderlist
-orderRouter.get('/', isAuth, isSellerOrAdmin, expressAsyncHandler (async(req, res) => {
-  const seller = req.query.seller || '';
-  const sellerFilter = seller ? {seller} : {};
-  const orders = await Order.find({...sellerFilter}).populate(
-    'user',
-    'name'
-  );; //get all oder item, dung populate de lay name cua user (user la field cua Oder model) trong order list vao hang orders
+orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler (async(req, res) => {
+  const orders = await Order.find({}).populate('user', 'name');
   res.send({orders});
 })    
 );

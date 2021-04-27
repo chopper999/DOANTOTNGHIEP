@@ -11,7 +11,6 @@ export default function ProductListScreen(props) {
   const {
     pageNumber = 1,
   } = useParams(); //hook
-  const sellerMode = props.match.path.indexOf('/seller') >=0;
   const productList = useSelector((state) => state.productList);
   const { loading, error, products, page, pages } = productList;
 
@@ -33,8 +32,8 @@ export default function ProductListScreen(props) {
     if (successDelete) {
       dispatch({type: PRODUCT_DELETE_RESET});
     }
-    dispatch(listProducts({ seller: sellerMode ? userInfo._id : '', pageNumber }));  //truyen vao userId de filter
-  }, [createdProduct, dispatch, props.history, successCreate, successDelete, sellerMode, userInfo._id, pageNumber]); //sau khi tao hoac xoa thanh cong, dispatch toi listProduct de reload lai 
+    dispatch(listProducts({ pageNumber }));  //truyen vao userId de filter
+  }, [createdProduct, dispatch, props.history, successCreate, successDelete, userInfo._id, pageNumber]); //sau khi tao hoac xoa thanh cong, dispatch toi listProduct de reload lai 
     
 
   const deleteHandler = (product) => {

@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { ORDER_CREATE_RESET } from '../constants/orderConstants';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
-
+import { Button } from 'semantic-ui-react';
 export default function PlaceOrderScreen(props) {
   const cart = useSelector((state) => state.cart);
   if (!cart.paymentMethod) {
@@ -43,7 +43,7 @@ export default function PlaceOrderScreen(props) {
         <div className="col-2">
           <ul>
             <li>
-              <div className="card card-body">
+              <div className=" card-placeorder card-body-placeorder">
                 <h2>Shipping</h2>
                 <p>
                   <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
@@ -54,7 +54,7 @@ export default function PlaceOrderScreen(props) {
               </div>
             </li>
             <li>
-              <div className="card card-body">
+              <div className="card-placeorder card-body-placeorder">
                 <h2>Payment</h2>
                 <p>
                   <strong>Method:</strong> {cart.paymentMethod}
@@ -62,7 +62,7 @@ export default function PlaceOrderScreen(props) {
               </div>
             </li>
             <li>
-              <div className="card card-body">
+              <div className="card-placeorder card-body-placeorder">
                 <h2>Order Items</h2>
                 <ul>
                   {cart.cartItems.map((item) => (
@@ -92,11 +92,11 @@ export default function PlaceOrderScreen(props) {
             </li>
           </ul>
         </div>
-        <div className="col-1">
+        <div className="col-1 ml-30">
           <div className="card card-body">
             <ul>
               <li>
-                <h2>Order Summary</h2>
+                <h2 className="textLb">Order Summary</h2>
               </li>
               <li>
                 <div className="row">
@@ -127,14 +127,15 @@ export default function PlaceOrderScreen(props) {
                 </div>
               </li>
               <li>
-                <button
+                <Button
+                  color="red"
                   type="button"
                   onClick={placeOrderHandler}
-                  className="primary block"
+                  className="block"
                   disabled={cart.cartItems.length === 0}
                 >
                   Place Order
-                </button>
+                </Button>
               </li>
               {
                 loading && <LoadingBox></LoadingBox>

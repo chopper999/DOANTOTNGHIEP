@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {useSelector, useDispatch} from 'react-redux';
 import {saveShippingAddress} from '../actions/cartActions';
 import CheckoutSteps from "../components/CheckoutSteps";
+import { Button} from 'semantic-ui-react'
 
 function ShippingAddressScreen(props) {
     //Check if user sign in before enter shipping info 
@@ -33,10 +34,10 @@ function ShippingAddressScreen(props) {
   return (
     <div>
       <CheckoutSteps step1 step2></CheckoutSteps>
-      <form className="form" onSubmit={submitHandler}>
+      <form className="form containerForm" onSubmit={submitHandler}>
         <div>
-          <h1>Shipping Address</h1>
-        </div>
+          <h1 className="centerText">Shipping Address</h1>
+        </div>  
         <div>
           <label htmlFor="fullName">Full Name</label>
           <input
@@ -97,7 +98,13 @@ function ShippingAddressScreen(props) {
         </div>
         <div>
             <label/>
-            <button className="primary" type="submit"> Continue</button>
+            <Button
+                  color="red"
+                  type="submit"
+                  className="block"
+                >
+                  Continue
+                </Button>
         </div>
       </form>
     </div>

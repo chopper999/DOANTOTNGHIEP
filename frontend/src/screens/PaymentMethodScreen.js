@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePaymentMethod } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
+import { Button, Label } from 'semantic-ui-react';
 
 export default function PaymentMethodScreen(props) {
   const cart = useSelector((state) => state.cart);
@@ -21,11 +22,12 @@ export default function PaymentMethodScreen(props) {
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1>Payment Method</h1>
+          <h1 className="centerText">Payment Method</h1>
         </div>
         <div>
-          <div>
+          <div className="centerItem">
             <input
+              className="radioBt"
               type="radio"
               id="paypal"
               value="PayPal"
@@ -34,12 +36,10 @@ export default function PaymentMethodScreen(props) {
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></input>
-            <label htmlFor="paypal">PayPal</label>
-          </div>
-        </div>
-        <div>
-          <div>
+            <label className="namePayMethod" htmlFor="paypal">PayPal</label>
+            <label className="textWhite">--------------------------</label>
             <input
+              className="radioBt"
               type="radio"
               id="stripe"
               value="Stripe"
@@ -47,14 +47,18 @@ export default function PaymentMethodScreen(props) {
               required
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></input>
-            <label htmlFor="stripe">Stripe</label>
+            <label className="namePayMethod" htmlFor="stripe">Stripe</label>
           </div>
         </div>
         <div>
           <label />
-          <button className="primary" type="submit">
-            Continue
-          </button>
+          <Button
+                  color="red"
+                  type="submit"
+                  className="block"
+                >
+                  Continue
+                </Button>
         </div>
       </form>
     </div>

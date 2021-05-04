@@ -17,15 +17,15 @@ export default function Product(props) {
       <Link to={`/product/${product._id}`} onMouseEnter ={toggleVisibility}   >
       <Image src={product.image} wrapped ui={true} alt={product.name} />
       </Link>
-      <Card.Content>
+      <Card.Content className="alignCenter">
         <Link to={`/product/${product._id}`}>
-          <Card.Header>{product.name}</Card.Header>
+          <Card.Header className="productNameCard">{product.name}</Card.Header>
         </Link>
-        <Card.Meta>
+        <Card.Meta className="priceCard">
           <Icon name="dollar" />
           {product.price}
         </Card.Meta>
-        <Rating
+        <Rating 
           rating={product.rating}
           numReviews={product.numReviews}
         ></Rating>

@@ -39,7 +39,7 @@ function CartScreen(props) {
         <Grid.Column width={10}>
           {cartItems.length === 0 ? (
             <MessageBox>
-              <Message warning size="huge" color="yellow">
+              <Message warning size="huge">
                 <Message.Header>
                   Cart is empty.{" "}
                   <Link className="goShopping" to="/">
@@ -86,12 +86,10 @@ function CartScreen(props) {
                       </div>
                       <div>
                         <Button
-                          inverted
-                          color="yellow"
+                        color="red"
+                        circular icon='delete'
                           onClick={() => removeFromCartHandler(item.product)}
-                        >
-                          Delete
-                        </Button>
+                        />
                         
                       </div>
                     </div>
@@ -113,10 +111,9 @@ function CartScreen(props) {
               </li>
               <li>
                 <Button
-                inverted
-                  color="orange"
+                  color="red"
                   onClick={checkoutHandler}
-                  className=" block"
+                  className="block"
                   disabled={cartItems.length === 0}
                 >
                   Proceed to Checkout

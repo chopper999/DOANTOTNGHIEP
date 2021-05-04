@@ -58,35 +58,6 @@ export default function SearchResultScreen(props) {
 
   return (
     <div>
-      <div className="row p-1">
-        {loading ? (
-          <LoadingBox></LoadingBox>
-        ) : error ? (
-          <MessageBox variant="danger">{error}</MessageBox>
-        ) : (
-          <div>
-            <Statistic inverted>
-              <Statistic.Value>{products.length}</Statistic.Value>
-              <Statistic.Label className="labelResult">Results</Statistic.Label>
-            </Statistic>
-          </div>
-        )}
-        <div>
-          Sort by {""}
-          <select
-            value={order}
-            onChange={(e) => {
-              props.history.push(getFilterUrl({ order: e.target.value }));
-            }}
-          >
-            <option value="newest">Newest Arrivals</option>
-            <option value="lowest">Price: Low to High</option>
-            <option value="highest">Price: High to Low</option>
-            <option value="toprated">Avg. Customer Reviews</option>
-          </select>
-        </div>
-      </div>
-
       <div className="row top">
         <div className="col-1">
           <div>
@@ -100,7 +71,9 @@ export default function SearchResultScreen(props) {
               <List animated verticalAlign="middle" size="big">
                 <List.Item>
                   <Link
-                    className={"all" === category ? "active" : "nameCategory"}
+                    className={
+                      "all" === category ? "activeName" : "nameCategory"
+                    }
                     to={getFilterUrl({ category: "all" })}
                   >
                     <Icon name="arrow alternate circle right"></Icon>
@@ -110,7 +83,7 @@ export default function SearchResultScreen(props) {
                 {categories.map((c) => (
                   <List.Item key={c}>
                     <Link
-                      className={c === category ? "active" : "nameCategory"}
+                      className={c === category ? "activeName" : "nameCategory"}
                       to={getFilterUrl({ category: c })}
                     >
                       <Icon name="arrow alternate circle right"></Icon>
@@ -121,40 +94,75 @@ export default function SearchResultScreen(props) {
               </List>
             )}
           </div>
-          <div>
+          <div className="mt-20">
             <h1>Price</h1>
-            <ul>
-              {prices.map((p) => (
-                <li key={p.name}>
+            {prices.map((p) => (
+              <List animated verticalAlign="middle" size="big">
+                <List.Item>
                   <Link
                     to={getFilterUrl({ min: p.min, max: p.max })}
                     className={
-                      `${p.min}-${p.max}` === `${min}-${max}` ? "active" : ""
+                      `${p.min}-${p.max}` === `${min}-${max}`
+                        ? "activeName"
+                        : "namePrice"
                     }
                   >
                     {p.name}
                   </Link>
-                </li>
-              ))}
-            </ul>
+                </List.Item>
+              </List>
+            ))}
           </div>
-          <div>
+
+          <div className="mt-20">
             <h1>Customer Review</h1>
-            <ul>
-              {ratings.map((r) => (
-                <li key={r.name}>
+            {ratings.map((r) => (
+              <List animated verticalAlign="middle" size="big">
+                <List.Item>
                   <Link
                     to={getFilterUrl({ rating: r.rating })}
                     className={`${r.rating}` === `${rating}` ? "active" : ""}
                   >
                     <Rating caption={"& up"} rating={r.rating}></Rating>
                   </Link>
-                </li>
-              ))}
-            </ul>
+                </List.Item>
+              </List>
+            ))}
           </div>
         </div>
-        <div className="col-3">
+        <div className="col-3 row">
+          {loading ? (
+            <LoadingBox></LoadingBox>
+          ) : error ? (
+            <MessageBox variant="danger">{error}</MessageBox>
+          ) : (
+            <div className="ml-60">
+              <Statistic inverted>
+                <Statistic.Value className="numProduct">
+                  {products.length}
+                </Statistic.Value>
+                <Statistic.Label className="labelResult">
+                  Results
+                </Statistic.Label>
+              </Statistic>
+            </div>
+          )}
+          <div className="mr-60 numProduct textSort">
+            <div className="box">
+              Sort by {""}
+              <select
+                value={order}
+                onChange={(e) => {
+                  props.history.push(getFilterUrl({ order: e.target.value }));
+                }}
+              >
+                <option value="newest">Newest Arrivals</option>
+                <option value="lowest">Price: Low to High</option>
+                <option value="highest">Price: High to Low</option>
+                <option value="toprated">Avg. Customer Reviews</option>
+              </select>
+            </div>
+          </div>
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
@@ -170,8 +178,12 @@ export default function SearchResultScreen(props) {
                 {products.map((product) => (
                   <Product key={product._id} product={product}></Product>
                 ))}
+                
               </div>
-              <div className="row center pagination">
+              
+            </>
+          )}
+          <div className="row centerItem pagination ">
                 {[...Array(pages).keys()].map((x) => (
                   <Link
                   className={x + 1 === page ? "active" : ""} 
@@ -180,8 +192,6 @@ export default function SearchResultScreen(props) {
                   </Link> 
                 ))}
               </div>
-            </>
-          )}
         </div>
       </div>
     </div>

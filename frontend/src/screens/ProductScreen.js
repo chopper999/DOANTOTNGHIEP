@@ -92,36 +92,23 @@ export default function ProductScreen(props) {
                 <Image size="massive" src={product.image} alt={product.name} />
               </Zoom>
             </div>
-            <div className="col-1 p-1">
+            <div className="col-2 p-3 mr-3">
+              <h1>{product.name}</h1>
               <ul>
-                <li>
-                  <h1>
-                    <Label size="massive" color="black">
-                      {product.name}
-                    </Label>
-                  </h1>
-                </li>
                 <li>
                   <Rating
                     rating={product.rating}
                     numReviews={product.numReviews}
                   ></Rating>
                 </li>
-                <li>
-                  {" "}
-                  <Label color="black" size="big">
-                    Price: &nbsp;<Icon name="dollar">{product.price}</Icon>{" "}
-                  </Label>
-                </li>
                 <li className="description">
                   Description: {product.description}
                 </li>
+                <li></li>
               </ul>
-            </div>
-            <div className="col-1">
+
               <Card>
                 <Card.Content>
-                  
                   <Card.Meta>
                     <div className="row price p-1">
                       <div> Price</div>
@@ -139,7 +126,7 @@ export default function ProductScreen(props) {
                     </div>
                   </div>
                 </Card.Content>
-                <Card.Content extra>
+                <Card.Content>
                   {product.countInStock > 0 && (
                     <div>
                       <div className="row price p-1">
@@ -159,28 +146,29 @@ export default function ProductScreen(props) {
                           </select>
                         </div>
                       </div>
-                      <Button
-                        onClick={addToCartHandler}
-                        className="block"
-                        inverted color='orange'
-                      >
-                        Add to Cart
-                      </Button>
                     </div>
                   )}
+                </Card.Content>
+                <Card.Content extra>
+                {product.countInStock > 0 && (
+                  <Button
+                    onClick={addToCartHandler}
+                    className="btnAddtoCart"
+                    color="red"
+                  >Add to Cart
+                  </Button>
+                )}
                 </Card.Content>
               </Card>
             </div>
           </div>
-          <div>
+          <div className="reviewArea">
             <h2 id="reviews">
-              <Label color="black" size="massive" className="reviewMess">
                 Reviews
-              </Label>
             </h2>
             {product.reviews.length === 0 && (
               <MessageBox>
-                <Message compact warning size="huge" color="yellow">
+                <Message compact warning size="huge" color="red">
                   <Message.Header>There is no review. </Message.Header>
                 </Message>
               </MessageBox>
@@ -194,16 +182,16 @@ export default function ProductScreen(props) {
                     {" "}
                     <i> at &nbsp;{review.createdAt.substring(0, 10)}</i>
                   </p>
-                  <p>{review.comment}</p>
+                  <p className="reviewContent">{review.comment}</p>
                 </li>
               ))}
               <li>
                 {userInfo ? (
-                  <Segment inverted className="reviewForm">
+                  <Segment color='grey' secondary padded piled tertiary className="reviewForm">
                     <Form inverted onSubmit={submitHandler}>
                       <h2 className="textCenter">Write your review</h2>
                       <Form.Field>
-                        <label htmlFor="rating">Rating</label>
+                        <label className="textRating" htmlFor="rating">Rating</label>
                         <Dropdown
                           fluid
                           selection
@@ -215,7 +203,7 @@ export default function ProductScreen(props) {
                         ></Dropdown>
                       </Form.Field>
                       <Form.Field>
-                        <label>Comment</label>
+                        <label className="textRating">Comment</label>
                         <TextArea
                           id="comment"
                           value={comment}
@@ -224,10 +212,17 @@ export default function ProductScreen(props) {
                           onChange={(e, data) => setComment(data.value)}
                         ></TextArea>
                       </Form.Field>
-                    <div className="btnSubmit"><Button size='big' color="white" type="submit" className="hoverBtn">
-                        Submit
-                      </Button></div>
-                      
+                      <div className="btnSubmit">
+                        <Button
+                          size="big"
+                          color="red"
+                          type="submit"
+                          className="hoverBtn"
+                        >
+                          Submit
+                        </Button>
+                      </div>
+
                       <Form.Field className="pt-1">
                         {loadingReviewCreate && <LoadingBox></LoadingBox>}
                         {errorReviewCreate && (

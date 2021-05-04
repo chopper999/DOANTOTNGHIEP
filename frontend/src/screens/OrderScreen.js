@@ -10,6 +10,7 @@ import Axios from 'axios';
 import {PayPalButton} from 'react-paypal-button-v2';
 import { ORDER_PAY_RESET } from '../constants/orderConstants';
 import { ORDER_DELIVER_RESET } from './../constants/orderConstants';
+import { Button } from 'semantic-ui-react';
 
 export default function OrderScreen(props) {
   const orderId = props.match.params.id; //lay id tu url
@@ -76,12 +77,12 @@ export default function OrderScreen(props) {
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div>
-      <h1>Order {order._id}</h1>
+      <h1 className="nameOrder">Order {order._id}</h1>
       <div className="row top">
         <div className="col-2">
           <ul>
             <li>
-              <div className="card card-body">
+              <div className="card-placeorder card-body-placeorder">
                 <h2>Shipping</h2>
                 <p>
                   <strong>Name:</strong> {order.shippingAddress.fullName} <br />
@@ -100,7 +101,7 @@ export default function OrderScreen(props) {
               </div>
             </li>
             <li>
-              <div className="card card-body">
+              <div className="card-placeorder card-body-placeorder">
                 <h2>Payment</h2>
                 <p>
                   <strong>Method:</strong> {order.paymentMethod}
@@ -115,7 +116,7 @@ export default function OrderScreen(props) {
               </div>
             </li>
             <li>
-              <div className="card card-body">
+              <div className="card-placeorder card-body-placeorder">
                 <h2>Order Items</h2>
                 <ul>
                   {order.orderItems.map(item => (
@@ -145,11 +146,11 @@ export default function OrderScreen(props) {
             </li>
           </ul>
         </div>
-        <div className="col-1">
+        <div className="col-1 ml-30">
           <div className="card card-body">
             <ul>
               <li>
-                <h2>Order Summary</h2>
+                <h2 className="textLb">Order Summary</h2>
               </li>
               <li>
                 <div className="row">
@@ -201,7 +202,14 @@ export default function OrderScreen(props) {
                 <li>
                   {loadingDeliver && <LoadingBox></LoadingBox>}
                   {errorDeliver && <MessageBox variant="danger">{errorDeliver}</MessageBox>}
-                  <button type="button" className="primary block" onClick={deliverHandler}>Deliver Order</button>
+                  <Button
+                  color="red"
+                  type="button"
+                  onClick={deliverHandler}
+                  className="block"
+                >
+                  Deliver Order
+                </Button>
                 </li>
               )}           
 

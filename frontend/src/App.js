@@ -109,14 +109,13 @@ function App() {
 
               <Menu.Item className="iconCart">
                 <Link to="/cart">
-                  <Icon className = "iconCart1" name="cart" link size="huge"></Icon>
+                  <Icon className = "iconCart1" name="cart" link size="huge" color='red'></Icon>
                   {cartItems.length > 0 && (
                     <span className="badge">{cartItems.length}</span>
                   )}
                 </Link>
               </Menu.Item>
               <Menu.Item className="btnSignin">
-                {/* <Segment inverted> */}
                 <Menu pointing secondary>
                   <Menu.Item>
                     {userInfo ? (
@@ -151,7 +150,7 @@ function App() {
                       </Dropdown>
                     ) : (
                       <Link to="/signin" className="btnSignin1">
-                        <Button inverted>
+                        <Button  color = {"red"}>
                           <Icon name="sign-in"></Icon>
                           Sign In
                         </Button>

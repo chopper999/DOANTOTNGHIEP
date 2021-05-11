@@ -6,6 +6,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { GoogleLogin } from 'react-google-login';
 import { AUTH } from '../constants/userConstants';
+import { Button } from 'semantic-ui-react';
 
 export default function SigninScreen(props) {
   const [email, setEmail] = useState('');
@@ -55,9 +56,9 @@ export default function SigninScreen(props) {
 
   return (
     <div>
-      <form className="form" onSubmit={submitHandler}>
+      <form className="form containerForm" onSubmit={submitHandler}>
         <div>
-          <h1>Sign In</h1>
+          <h1 className="centerText">Sign In</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
@@ -83,32 +84,23 @@ export default function SigninScreen(props) {
         </div>
         <div>
           <label />
-          <button className="primary" type="submit">
-            Sign In
-          </button>
+          <Button
+                  color="red"
+                  type="submit"
+                  className="block"
+                >
+                  Sign In
+                </Button>
         </div>
         <div>
           <label />
-          <div>
+          <div className="textCenter">
             New customer?{" "}
-            <Link to={`/register?redirect=${redirect}`}>
+            <Link to={`/register?redirect=${redirect}`} className="linkText">
               Create your account
             </Link>
           </div>
         </div>
-
-        {/* login with GG */}
-        <div className="hr"> Or Login With</div>
-        <div className="social">
-          <GoogleLogin
-            clientId="813268287245-7jut81suakt5ujgoubec0gjj3i3ej7o5.apps.googleusercontent.com"
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            cookiePolicy={"single_host_origin"}
-          />
-        </div>
-
-        
       </form>
     </div>
   );

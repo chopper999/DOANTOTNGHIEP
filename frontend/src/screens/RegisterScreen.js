@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { register } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { Button } from 'semantic-ui-react';
 
 export default function RegisterScreen(props) {
   const [name, setName] = useState('');
@@ -33,10 +34,10 @@ export default function RegisterScreen(props) {
     }
   }, [props.history, redirect, userInfo]);
   return (
-    <div>
-      <form className="form" onSubmit={submitHandler}>
+    <div className="containerNavbar">
+      <form className="form containerForm" onSubmit={submitHandler}>
         <div>
-          <h1>Create Account</h1>
+          <h1 className="centerText">Create Account</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
@@ -82,15 +83,19 @@ export default function RegisterScreen(props) {
         </div>
         <div>
           <label />
-          <button className="primary" type="submit">
-            Register
-          </button>
+          <Button
+                  color="red"
+                  type="submit"
+                  className="block"
+                >
+                  Register
+                </Button>
         </div>
         <div>
           <label />
           <div>
-            Already have an account?{' '}
-            <Link to={`/signin?redirect=${redirect}`}>Sign-In</Link>
+            Already have an account? &nbsp; &nbsp; 
+            <Link to={`/signin?redirect=${redirect}`} className="linkText" >Sign-In</Link>
           </div>
         </div>
       </form>

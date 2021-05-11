@@ -5,6 +5,7 @@ import MessageBox from "../components/MessageBox";
 import { listOrderMine } from "../actions/orderAction";
 import { useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 export default function OrderHistoryScreen(props) {
   const {
@@ -19,8 +20,8 @@ export default function OrderHistoryScreen(props) {
 
 
   return (
-    <div>
-      <h1>Order History</h1>
+    <div className="containerNavbar">
+      <h1 className="centerText ">Order History</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -51,15 +52,12 @@ export default function OrderHistoryScreen(props) {
                     : "No"}
                 </td>
                 <td>
-                  <button
+                <Button
+                    primary
                     type="button"
-                    className="small"
                     onClick={() => {
                       props.history.push(`/order/${order._id}`);
-                    }}
-                  >
-                    Details
-                  </button>
+                    }}>Details</Button>
                 </td>
               </tr>
             ))}

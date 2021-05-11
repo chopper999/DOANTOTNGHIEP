@@ -6,6 +6,7 @@ import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 import { updateUserProfile } from './../actions/userActions';
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants';
+import { Button } from 'semantic-ui-react';
 
 export default function ProfileScreen() {
     //HOOK
@@ -45,9 +46,9 @@ export default function ProfileScreen() {
     };
     return (
       <div>
-        <form className="form" onSubmit={submitHandler}>
+        <form className="form containerForm " onSubmit={submitHandler}>
           <div>
-            <h1>User Profile</h1>
+            <h1 className="centerText">User Profile</h1>
           </div>
           {loading ? (
             <LoadingBox></LoadingBox>
@@ -90,7 +91,7 @@ export default function ProfileScreen() {
                 ></input>
               </div>
               <div>
-                <label htmlFor="confirmPassword">confirm Password</label>
+                <label htmlFor="confirmPassword">Confirm Password</label>
                 <input
                   id="confirmPassword"
                   type="password"
@@ -101,9 +102,13 @@ export default function ProfileScreen() {
 
               <div>
                 <label />
-                <button className="primary" type="submit">
+                <Button
+                  color="red"
+                  type="submit"
+                  className="block"
+                >
                   Update
-                </button>
+                </Button>
               </div>
             </>
           )}

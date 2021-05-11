@@ -95,8 +95,11 @@ orderRouter.put(
 
 //API get orderlist
 orderRouter.get('/', isAuth, isAdmin, expressAsyncHandler (async(req, res) => {
-  const orders = await Order.find({}).populate('user', 'name');
-  res.send({orders});
+  const pageSize = 8;
+  const page = Number(req.query.pageNumber) || 1;
+  const count = await Order.countDocuments({});
+  const orders = await Order.find({}).populate('user', 'name').sort({_id: -1}).skip(pageSize*(page-1)).limit(pageSize);
+  res.send({orders, page, pages: Math.ceil(count / pageSize)});
 })    
 );
 

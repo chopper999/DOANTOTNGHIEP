@@ -4,10 +4,18 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { listOrders, deleteOrder } from './../actions/orderAction';
 import { ORDER_DELETE_RESET } from '../constants/orderConstants';
+import { Button } from 'semantic-ui-react';
+import { useParams, Link } from 'react-router-dom';
 
 export default function OrderListScreen(props) {
+
+  const {
+    pageNumber = 1,
+  } = useParams(); //hook
+
+
   const orderList = useSelector((state) => state.orderList);
-  const { loading, error, orders } = orderList;
+  const { loading, error, orders,page, pages } = orderList;
 
   const orderDelete = useSelector((state)=> state.orderDelete);
   const {loading: loadingDelete, error: errorDelete, success: successDelete} = orderDelete;
@@ -18,17 +26,17 @@ export default function OrderListScreen(props) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch({type: ORDER_DELETE_RESET});
-    dispatch(listOrders());
+    dispatch(listOrders({pageNumber}));
     
-  }, [dispatch, successDelete, userInfo._id]);    //khi xoa thanh cong, refresh lai listOrder
+  }, [dispatch, successDelete, userInfo._id,pageNumber]);    //khi xoa thanh cong, refresh lai listOrder
   const deleteHandler = (order) => {
     if (window.confirm('Are you sure to delete this order')) {
         dispatch(deleteOrder(order._id));
     }
   };
   return (
-    <div>
-      <h1>Orders</h1>
+    <div className="containerNavbar mt-20">
+      <h1 className="centerText">Orders</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loading ? (
@@ -63,27 +71,32 @@ export default function OrderListScreen(props) {
                       : "No"}
                   </td>
                   <td>
-                    <button
-                      type="button"
-                      className="small"
-                      onClick={() => {
+                    <Button
+                    primary
+                    type="button"
+                    onClick={() => {
                         props.history.push(`/order/${order._id}`); // redirect toi trang detail order
-                      }}
-                    >
-                      Details
-                    </button>
-                    <button
-                      type="button"
-                      className="small"
-                      onClick={() => deleteHandler(order)}
-                    >
-                      Delete
-                    </button>
+                      }}>Details</Button>
+                      <Button
+                    color = 'red'
+                    type="button"
+                    onClick={() => deleteHandler(order)}>Delete</Button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          <div className="row center pagination">
+            {[...Array(pages).keys()].map((x) => (
+              <Link
+                className={x + 1 === page ? "active" : ""}
+                key={x + 1}
+                to={`/orderlist/pageNumber/${x + 1}`}
+              >
+                {x + 1}
+              </Link>
+            ))}
+          </div>
         </>
       )}
     </div>

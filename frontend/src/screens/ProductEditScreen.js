@@ -5,6 +5,7 @@ import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { PRODUCT_UPDATE_RESET } from '../constants/productConstants';
 import Axios from 'axios';
+import { Button } from 'semantic-ui-react';
 
 export default function ProductEditScreen(props) {
   const productId = props.match.params.id;
@@ -76,9 +77,9 @@ export default function ProductEditScreen(props) {
   };
   return (
     <div>
-      <form className="form" onSubmit={submitHandler}>
+      <form className="form containerForm" onSubmit={submitHandler}>
         <div>
-          <h1>Edit Product {productId}</h1>
+          <h1 className="centerText">Edit Product {productId}</h1>
         </div>
         {loadingUpdate && <LoadingBox></LoadingBox>}
         {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
@@ -120,7 +121,7 @@ export default function ProductEditScreen(props) {
             </div>
             <div>
               <label htmlFor="imageFile"> Image File</label>
-              <input
+              <input className="inputChooseImg"
                 type="file"
                 id="imageFile"
                 label="Choose Image"
@@ -175,9 +176,13 @@ export default function ProductEditScreen(props) {
             </div>
             <div>
               <label></label>
-              <button className="primary" type="submit">
-                Update
-              </button>
+              <Button
+                  color="red"
+                  type="submit"
+                  className="block"
+                >
+                  Update
+                </Button>
             </div>
           </>
         )}

@@ -6,6 +6,7 @@ import MessageBox from '../components/MessageBox';
 import { PRODUCT_CREATE_RESET, PRODUCT_DELETE_RESET } from '../constants/productConstants';
 import { deleteProduct } from './../actions/productActions';
 import { Link, useParams } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 export default function ProductListScreen(props) {
   const {
@@ -47,12 +48,16 @@ export default function ProductListScreen(props) {
       dispatch(createProduct());
   };
   return (
-    <div>
-      <div className="row">
-        <h1>Products</h1>
-        <button type="button" className="primary" onClick={createHandler}>
-          Create Product
-        </button>
+    <div className="containerNavbar">
+      <h1 className="centerText mt-20 mb4">Products</h1>
+      <div className="btnCreateProduct">
+          <Button
+            color="green"
+            type="button"
+            onClick={createHandler}
+          >
+            Create Product
+          </Button>
       </div>
       {loadingDetele && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
@@ -86,22 +91,17 @@ export default function ProductListScreen(props) {
                   <td>{product.category}</td>
                   <td>{product.brand}</td>
                   <td>
-                    <button
-                      type="button"
-                      className="small"
-                      onClick={() =>
-                        props.history.push(`/product/${product._id}/edit`)
-                      }
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      className="small"
-                      onClick={() => deleteHandler(product)}
-                    >
-                      Delete
-                    </button>
+                    <Button 
+                    primary
+                    type="button"
+                    onClick={() =>
+                        props.history.push(`/product/${product._id}/edit`)}
+                    >Edit</Button>
+                    <Button 
+                    color="red"
+                    type="button"
+                    onClick={() => deleteHandler(product)}
+                    >Delete</Button>
                   </td>
                 </tr>
               ))}
@@ -112,7 +112,7 @@ export default function ProductListScreen(props) {
               <Link
                 className={x + 1 === page ? "active" : ""}
                 key={x + 1}
-                to={`/productlist/pageNumber/${x+1}`}
+                to={`/productlist/pageNumber/${x + 1}`}
               >
                 {x + 1}
               </Link>

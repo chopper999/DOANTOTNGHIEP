@@ -6,6 +6,7 @@ import MessageBox from '../components/MessageBox';
 import { deleteUser } from './../actions/userActions';
 import { USER_DETAILS_RESET } from './../constants/userConstants';
 import { useParams, Link } from 'react-router-dom';
+import { Button } from 'semantic-ui-react';
 
 export default function UserListScreen(props) {
 
@@ -27,8 +28,8 @@ export default function UserListScreen(props) {
       }
   };
   return (
-    <div>
-      <h1>Users</h1>
+    <div className="containerNavbar">
+      <h1 className="centerText mt-20">Users</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {successDelete && (
@@ -58,8 +59,14 @@ export default function UserListScreen(props) {
                 <td>{user.email}</td>
                 <td>{user.isAdmin ? 'YES' : 'NO'}</td>
                 <td>
-                  <button type="button" className="small" onClick={() => props.history.push(`/user/${user._id}/edit`)}>Edit</button>
-                  <button type="button" className="small" onClick={() => deleteHandler(user)}>Delete</button>
+                  <Button
+                    primary
+                    type="button"
+                    onClick={() => props.history.push(`/user/${user._id}/edit`)}>Edit</Button>
+                    <Button
+                    color='red'
+                    type="button"
+                    onClick={() => deleteHandler(user)}>Delete</Button>
                 </td>
               </tr>
             ))}

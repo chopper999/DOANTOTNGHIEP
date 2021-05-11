@@ -11,7 +11,7 @@ export default function SearchBox(props) {
     return (
         <form className="search" onSubmit={submitHandler}>
             <Input inverted className='inputSearch' 
-            action={{ icon: 'search', color:'white' }} 
+            action={{ icon: 'search', color:'red' }} 
             size='big' 
             placeholder='Search...'
             onChange={(e)=>setName(e.target.value)} />

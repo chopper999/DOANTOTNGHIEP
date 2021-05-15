@@ -480,7 +480,7 @@ img.large {
   color: wheat;
 }
 .linkText{
-  color: wheat;
+  color: #a02020;
   font-size: 1.5rem;
   font-weight: bold;
 }
@@ -578,7 +578,7 @@ img.large {
   color: #a02020 !important;
 }
 .activeName{
-  color: #a02020 !important;
+  color: #790000 !important;
   font-weight: bolder;
 }
 .namePrice{
@@ -820,4 +820,105 @@ img.large {
   margin-right: 20px;
   width: 20px;
   height: 18px;
+}
+
+/* Chatbox */
+.chatbox {
+  color: #000000;
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+}
+.chatbox ul {
+  overflow: scroll;
+  max-height: 20rem;
+}
+.chatbox li {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+.chatbox input {
+  width: calc(100% - 9rem);
+}
+
+.support-users {
+  background: #f0f0f0;
+  height: 100%;
+  
+}
+.support-users li {
+  background-color: #f8f8f8;
+}
+.support-users button {
+  background-color: transparent;
+  border: none;
+  text-align: left;
+}
+.support-users li {
+  margin: 0;
+  background-color: #f0f0f0;
+  border-bottom: 0.1rem #c0c0c0 solid;
+}
+
+.support-users li:hover {
+  background-color: #f0f0f0;
+}
+.support-users li.selected {
+  background-color: #c0c0c0;
+}
+.support-messages {
+  padding: 1rem;
+  border-left:1px solid #f02020;
+  margin-left: 5px;
+}
+.support-messages input {
+  width: calc(100% - 9rem);
+}
+.support-messages ul {
+  height: calc(100vh - 18rem);
+  max-height: calc(100vh - 18rem);
+  overflow: scroll;
+}
+.support-messages li {
+  margin-bottom: 1rem;
+}
+
+.support-users span {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  position: absolute;
+  margin-left: 140px;
+  /* margin-top: 10px; */
+}
+.support-users .offline {
+  background-color: #808080;
+}
+.support-users .online {
+  background-color: #20a020;
+}
+.support-users .unread {
+  background-color: #f02020;
+}
+.iconMess{
+  padding-left: 10px;
+  color: #f02020;
+  cursor: pointer;
+}
+.iconClose{
+  color: #f02020;
+  cursor: pointer;
+}
+.supportLabel{
+  color: #a02020;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.inputMessAdmin{
+  width: calc(100% - 9rem);
+}
+.btnSelectUser{
+  background-color: transparent;
+  text-align: left;
+  border-radius: 5px;
 }

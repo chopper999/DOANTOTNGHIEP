@@ -29,6 +29,8 @@ import MessageBox from './components/MessageBox';
 
 //UI
 import { Menu, Button, Segment, Icon, Dropdown, Image, Divider } from 'semantic-ui-react';
+import SupportMessScreen from './screens/SupportMessScreen';
+import ChatBox from './components/ChatBox';
 
 
 
@@ -57,26 +59,6 @@ function App() {
   //UI
   const [activeItem, setActiveItem] = useState('');
   const handleItemClick = ({name} ) => setActiveItem({ activeItem: name});
-
-  // chating
-  // const [messageList, setMessageList] = useState({messageList: []});
-  // // const [author, setAuthor] = useState('');
-  // // const [type, setType] = useState('')
-  // // const [data, setData] = useState();
-  // const onMessageWasSent = (message) => {
-  //   setMessageList({messageList: [...messageList, message]})
-  // }
-  // const sendMessage = (text) => {
-  //   if (text.length > 0) {
-  //     setMessageList({
-  //       messageList: [...messageList, {
-  //         author: 'them',
-  //         type: 'text',
-  //         data: { text }
-  //       }]
-  //     })
-  //   }
-  // };
 
   
   return (
@@ -187,6 +169,13 @@ function App() {
                             <Dropdown.Text>
                               <Link className="dropdownItem" to="/userlist">
                                 Users
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/support">
+                                Support
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
@@ -324,22 +313,16 @@ function App() {
               exact
             />
             <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
+            <AdminRoute path="/support" component={SupportMessScreen} />
 
             
           </div>
         </main>
-        <footer className="footer"></footer>
-        {/* chat */}
-
-        {/* <Launcher
-        agentProfile={{
-          teamName: 'react-chat-window',
-          imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
-        }}
-        onMessageWasSent={onMessageWasSent}
-        messageList={messageList}
-        showEmoji
-      /> */}
+        <footer className="row center footer"> 
+        {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo}></ChatBox>}
+        <div>Footer</div>{' '}
+        </footer>
+        
 
       </div>
     </BrowserRouter>

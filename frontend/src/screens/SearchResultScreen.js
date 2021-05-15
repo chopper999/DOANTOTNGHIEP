@@ -6,7 +6,7 @@ import { useParams, Link } from 'react-router-dom';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 import Product from './../components/Product';
-import { List, Statistic, Icon} from 'semantic-ui-react';
+import { List, Statistic, Icon, Divider } from 'semantic-ui-react';
 import { prices, ratings } from './../utils';
 import Rating from './../components/Rating';
 
@@ -130,7 +130,8 @@ export default function SearchResultScreen(props) {
             ))}
           </div>
         </div>
-        <div className="col-3 row">
+        <div className="col-3">
+          <div className='row'>
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
@@ -163,6 +164,7 @@ export default function SearchResultScreen(props) {
               </select>
             </div>
           </div>
+          </div>
           {loading ? (
             <LoadingBox></LoadingBox>
           ) : error ? (
@@ -178,20 +180,20 @@ export default function SearchResultScreen(props) {
                 {products.map((product) => (
                   <Product key={product._id} product={product}></Product>
                 ))}
-                
               </div>
-              
             </>
           )}
-          <div className="row centerItem pagination ">
-                {[...Array(pages).keys()].map((x) => (
-                  <Link
-                  className={x + 1 === page ? "active" : ""} 
-                  key={x + 1} to={getFilterUrl({ page: x + 1 })}>
-                    {x + 1}
-                  </Link> 
-                ))}
-              </div>
+          <div className="row center pagination">
+            {[...Array(pages).keys()].map((x) => (
+              <Link
+                className={x + 1 === page ? "active" : ""}
+                key={x + 1}
+                to={getFilterUrl({ page: x + 1 })}
+              >
+                {x + 1}
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

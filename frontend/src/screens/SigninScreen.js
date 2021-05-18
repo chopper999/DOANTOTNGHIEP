@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { signin } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
-import { GoogleLogin } from 'react-google-login';
-import { AUTH } from '../constants/userConstants';
 import { Button } from 'semantic-ui-react';
 
 export default function SigninScreen(props) {
@@ -21,7 +19,6 @@ export default function SigninScreen(props) {
 
 
   const dispatch = useDispatch();
-  const history = useHistory();
 
   
   const submitHandler = (e) => {
@@ -29,22 +26,6 @@ export default function SigninScreen(props) {
     dispatch(signin(email, password));
   };
 
-  const responseGoogle = async (res) => {
-    const _id = res.profileObj.googleId;
-    const name = res.profileObj.name;
-    const email = res.profileObj.email;
-    const isAdmin = false;
-    
-    const token = res?.tokenId;
-
-
-    try {
-      dispatch({type: AUTH, payload: {_id, name, email, isAdmin, token}});
-      history.push('/');
-    } catch (error) {
-      console.log(error);
-    }
-  }
   
   useEffect(() => {
     if (userInfo) {

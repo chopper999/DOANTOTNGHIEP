@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import { useSelector } from 'react-redux';
 import MessageBox from '../components/MessageBox';
-import { Input, Button, Divider } from 'semantic-ui-react';
+import { Input, Button } from 'semantic-ui-react';
 
 
 let allUsers = [];

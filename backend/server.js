@@ -21,9 +21,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
-app.use(fileUpload({
-    useTempFiles: true
-}));
+// app.use(fileUpload({
+//     useTempFiles: true
+// }));
 
 const mongodbUrl = process.env.MONGODB_URL;
 mongoose.connect(mongodbUrl || 'mongodb+srv://dbUser:dbUser123@cluster0.nrpsz.mongodb.net/webshopping?retryWrites=true&w=majority', {
@@ -49,8 +49,8 @@ app.get('/api/config/google', (req, res) => {
 });
 const __dirname = path.resolve();
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  // su dung dirname de concat tu current folder to uploads folder
-app.use(express.static(path.join(__dirname, '/frontend/build')));
-app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/build/index.html')));
+// app.use(express.static(path.join(__dirname, '/frontend/build')));
+// app.get('*', (req, res) => res.sendFile(path.join(__dirname, '/frontend/build/index.html')));
 // '/frontend/build/index.html'
 
 app.get('/', (req, res) => {

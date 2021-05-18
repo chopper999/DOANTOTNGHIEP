@@ -45,7 +45,7 @@ export default function ProductEditScreen(props) {
   }, [product, dispatch, productId, successUpdate, props.history]);
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateProduct({_id: productId, name, price, image,category,brand, countInStock, description}))
+    dispatch(updateProduct({_id: productId, name, price,image,category,brand, countInStock, description}))
   };
 
 
@@ -68,6 +68,7 @@ export default function ProductEditScreen(props) {
           Authorization: `Bearer ${userInfo.token}`,
         },
       });
+      console.log(data);
       setImage(data);
       setLoadingUpload(false);
     } catch (error) {

@@ -922,3 +922,12 @@ img.large {
   text-align: left;
   border-radius: 5px;
 }
+
+.imgFix img{
+
+  width: 100%;
+
+  height: 348px !important; 
+  min-height: 348px !important;
+  object-fit: cover;
+}

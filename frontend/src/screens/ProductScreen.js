@@ -11,7 +11,7 @@ import { PRODUCT_REVIEW_CREATE_RESET } from '../constants/productConstants';
 
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
-import { Image, Label, Icon, Message,  Button, Form, Segment,Dropdown, TextArea, Card } from 'semantic-ui-react'
+import { Image, Message,  Button, Form, Segment,Dropdown, TextArea, Card } from 'semantic-ui-react'
 
 
 export default function ProductScreen(props) {

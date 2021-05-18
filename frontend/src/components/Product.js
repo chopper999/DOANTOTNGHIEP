@@ -15,7 +15,7 @@ export default function Product(props) {
     <Transition animation = {'pulse'} duration = {500} visible= {visi}>
     <Card className="product">
       <Link to={`/product/${product._id}`} onMouseEnter ={toggleVisibility}   >
-      <Image src={product.image} wrapped ui={true} alt={product.name} />
+      <Image className='imgFix' src={product.image} wrapped ui={true} alt={product.name} />
       </Link>
       <Card.Content className="alignCenter">
         <Link to={`/product/${product._id}`}>

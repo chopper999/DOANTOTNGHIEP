@@ -11,6 +11,7 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload';
 import http from 'http';
 import {Server} from 'socket.io';
+import favicon from 'express-favicon';
 
 
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors());
+
 // app.use(fileUpload({
 //     useTempFiles: true
 // }));
@@ -53,6 +55,7 @@ app.use(express.static(path.join(__dirname, '/frontend/build')));
 app.get('*', (req, res) =>
   res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
 );
+app.use(favicon(__dirname + '/frontend/public/favicon.ico'));
 const port = process.env.PORT || 5000;
 // app.get('/', (req, res) => {
 //     res.send('Server is ready');

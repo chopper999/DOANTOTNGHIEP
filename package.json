@@ -7,7 +7,6 @@
   "scripts": {
     "build": "cd frontend && npm install && npm run build",
     "start": "nodemon --watch backend --exec node --experimental-modules --es-module-specifier-resolution=node backend/server.js"
-
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +20,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-handler": "^1.1.4",
+    "express-favicon": "^2.0.1",
     "express-fileupload": "^1.2.1",
     "googleapis": "^67.1.1",
     "jest-worker": "^26.6.2",

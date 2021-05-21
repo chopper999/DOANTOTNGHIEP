@@ -1,5 +1,4 @@
 import express from 'express';
-import favicon from 'express-favicon';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import orderRouter from './routes/orderRouter';
@@ -11,7 +10,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import http from 'http';
 import {Server} from 'socket.io';
-
+import favicon from 'serve-favicon';
 
 
 
@@ -45,9 +44,6 @@ app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
 app.get('/api/config/paypal', (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
-});
-app.get('/api/config/google', (req, res) => {
-    res.send(process.env.GOOGLE_API_KEY || '');
 });
 const __dirname = path.resolve();
 app.use(favicon(__dirname + '/frontend/public/favicon.ico'));

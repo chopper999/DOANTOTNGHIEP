@@ -48,6 +48,7 @@ app.get('/api/config/google', (req, res) => {
     res.send(process.env.GOOGLE_API_KEY || '');
 });
 const __dirname = path.resolve();
+app.use('/', express.static(path.join(__dirname, 'public')))
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  // su dung dirname de concat tu current folder to uploads folder
 app.use(express.static(path.join(__dirname, '/frontend/build')));
 app.get('*', (req, res) =>

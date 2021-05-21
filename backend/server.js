@@ -1,4 +1,5 @@
 import express from 'express';
+import favicon from 'express-favicon';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import orderRouter from './routes/orderRouter';
@@ -8,10 +9,9 @@ import userRouter from './routes/userRoute';
 import uploadRouter from './routes/uploadRouter';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import fileUpload from 'express-fileupload';
 import http from 'http';
 import {Server} from 'socket.io';
-import favicon from 'express-favicon';
+
 
 
 
@@ -50,12 +50,13 @@ app.get('/api/config/google', (req, res) => {
     res.send(process.env.GOOGLE_API_KEY || '');
 });
 const __dirname = path.resolve();
+app.use(favicon(__dirname + '/frontend/public/favicon.ico'));
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));  // su dung dirname de concat tu current folder to uploads folder
 app.use(express.static(path.join(__dirname, '/frontend/build')));
 app.get('*', (req, res) =>
   res.sendFile(path.join(__dirname, '/frontend/build/index.html'))
 );
-app.use(favicon(__dirname + '/frontend/public/favicon.ico'));
+
 const port = process.env.PORT || 5000;
 // app.get('/', (req, res) => {
 //     res.send('Server is ready');

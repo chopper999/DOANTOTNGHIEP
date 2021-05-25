@@ -16,6 +16,8 @@ body {
   height: 100%;
 }
 
+
+
 /* Layout */
 .grid-container {
   display: grid;
@@ -168,6 +170,12 @@ a.brand {
 }
 .row.start {
   justify-content: flex-start;
+}
+@media only screen and (min-width: 768px) {
+  /* For desktop: */
+  body{
+    
+  }
 }
 .col-1 {
   flex: 1 1 25rem;

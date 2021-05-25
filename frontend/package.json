@@ -20,6 +20,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "react-slick": "^0.28.1",
+    "react-speech-recognition": "^3.8.0",
     "redux": "^4.0.5",
     "redux-thunk": "github:reduxjs/redux-thunk#master",
     "semantic-ui-css": "^2.4.1",

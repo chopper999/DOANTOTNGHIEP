@@ -7,7 +7,21 @@ const ENDPOINT =
     ? 'http://127.0.0.1:5000'
     : window.location.host;
 
+// Mic
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const mic = new SpeechRecognition();
+mic.continuous = true;
+mic.interimResults = true;
+mic.lang = 'vi';
+
+
 export default function ChatBox(props) {
+  //Mic
+  const [isListening, setIsListening] = useState(false)
+  const [note, setNote] = useState(null)
+  //
+  const [isTime, setIsTime] = useState(false);
+
   const { userInfo } = props;
   const [socket, setSocket] = useState(null);
   const uiMessagesRef = useRef(null);
@@ -35,7 +49,62 @@ export default function ChatBox(props) {
         setMessages([...messages, { body: data.body, name: data.name }]);
       });
     }
-  }, [messages, isOpen, socket]);
+
+    handleListen();
+  }, [messages, isOpen, socket, isListening]);
+
+  
+  // Mic
+  const handleListen = () => {
+    
+
+    if(isListening){
+      mic.start()
+      mic.onend = () => {
+        console.log('continue...')
+        mic.start()
+      }
+    }
+    else {
+      mic.stop()
+      mic.onend = () => {
+        console.log('Stoped Mic on Click')
+      }
+    }
+    mic.onstart = () => {
+      console.log('mics on')
+    }
+
+    mic.onresult = event => {
+      const transcript = Array.from(event.results)
+      .map(result => result[0])
+      .map(result => result.transcript)
+      .join('')
+      //for mic
+      setMessageBody(transcript);
+      //
+      // setTimeout(() => {
+      //   console.log('isTime ' + isTime);
+      //   if (isTime)
+      //   {
+      //     setIsListening(false)
+      //   }
+      //   else{
+      //     setIsTime(false);
+      //   }
+      // }, 5000);
+      
+
+      console.log(transcript)
+      setNote(transcript)
+      mic.onerror = event => {
+        console.log(event.error)
+      }
+    }
+
+  }
+  //Mic
+
 
   const supportHandler = () => {
     setIsOpen(true);
@@ -66,13 +135,22 @@ export default function ChatBox(props) {
   return (
     <div className="chatbox">
       {!isOpen ? (
-        <Icon className='iconMess' name='facebook messenger' size='huge' onClick={supportHandler}></Icon>
-        
+        <Icon
+          className="iconMess"
+          name="facebook messenger"
+          size="huge"
+          onClick={supportHandler}
+        ></Icon>
       ) : (
         <div className="card card-body">
           <div className="row">
             <strong className="supportLabel">Support </strong>
-              <Icon className="iconClose" name="close" size='big' onClick={closeHandler}></Icon>
+            <Icon
+              className="iconClose"
+              name="close"
+              size="big"
+              onClick={closeHandler}
+            ></Icon>
           </div>
           <Divider></Divider>
           <ul ref={uiMessagesRef}>
@@ -83,14 +161,25 @@ export default function ChatBox(props) {
             ))}
           </ul>
           <div>
-            <form onSubmit={submitHandler} className="row">
+            <form className="row" onSubmit={submitHandler}>
               <Input
                 value={messageBody}
-                onChange={(e) => setMessageBody(e.target.value)}
+                onChange={(e) => {
+                  setMessageBody(e.target.value);
+                }}
                 type="text"
                 placeholder="type message"
               />
-              <Button color='red' type="submit">Send</Button>
+              <Button
+                color="green"
+                onClick={() => setIsListening((prevState) => !prevState)}
+                type='button'
+              >
+                <Icon name= {isListening===false?"microphone slash":"microphone"}></Icon>
+              </Button>
+              <Button color="red" type="summit">
+                Send
+              </Button>
             </form>
           </div>
         </div>

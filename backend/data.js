@@ -33,6 +33,12 @@ export default {
     },
     
 
-]
+],
+qandas: [
+    {
+      question: 'Toi muon mua vay',
+      answer: 'Ok ban doi ti',
+      },
+  ],
 
 }

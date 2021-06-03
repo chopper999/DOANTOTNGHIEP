@@ -4,6 +4,7 @@ import { productListReducer, productDetailReducer, productCreateReducer, product
 import {cartReducer} from './reducers/cartReducers';
 import { userSigninReducer, userRegisterReducer, userDetailsReducer, userUpdateProfileReducer, userListReducer, userDeleteReducer, userUpdateReducer, authReducer, userAddressMapReducer } from './reducers/userReducers';
 import { orderCreateReducer, orderDetailsReducer, orderPayReducer, orderMineListReducer, orderListReducer, orderDeleteReducer, orderDeliverReducer } from './reducers/orderReducer';
+import { qandaCreateReducer, qandaListReducer, qandaDeleterReducer, qandaUpdateReducer, qandaDetailReducer } from './reducers/qandaReducers';
 
 
 
@@ -50,6 +51,11 @@ const reducer = combineReducers({
     productTopList: productTopListReducer,
     productReviewCreate: productReviewCreateReducer,
     userAddressMap: userAddressMapReducer,
+    qandaList: qandaListReducer,
+    qandaCreate: qandaCreateReducer,
+    qandaUpdate: qandaUpdateReducer,
+    qandaDelete: qandaDeleterReducer,
+    qandaDetail: qandaDetailReducer,
 });
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;    //khai báo redux-dev-tool,
 const store = createStore(reducer, initialState, composeEnhancer(applyMiddleware(thunk)));  //áp dụng middleware

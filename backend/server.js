@@ -11,6 +11,7 @@ import cors from 'cors';
 import http from 'http';
 import {Server} from 'socket.io';
 import favicon from 'serve-favicon';
+import qandaRoute from './routes/qandaRoute';
 
 
 
@@ -42,6 +43,7 @@ app.use('/api/uploads', uploadRouter); //app.use được sử dụng để cấ
 app.use("/api/users", userRouter);
 app.use('/api/products', productRouter);
 app.use('/api/orders', orderRouter);
+app.use('/api/qanda', qandaRoute);
 app.get('/api/config/paypal', (req, res) => {
     res.send(process.env.PAYPAL_CLIENT_ID || 'sb');
 });

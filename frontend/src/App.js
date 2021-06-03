@@ -31,6 +31,8 @@ import MessageBox from './components/MessageBox';
 import { Menu, Button, Segment, Icon, Dropdown, Image, Divider } from 'semantic-ui-react';
 import SupportMessScreen from './screens/SupportMessScreen';
 import ChatBox from './components/ChatBox';
+import QandAScreen from './screens/QandaScreen';
+import QandaEditScreen from './screens/QandaEditScreen';
 
 
 
@@ -179,6 +181,13 @@ function App() {
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/qanda">
+                                Q&A
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
                     )}
@@ -314,8 +323,8 @@ function App() {
             />
             <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
             <AdminRoute path="/support" component={SupportMessScreen} />
-
-            
+            <AdminRoute path="/qanda" component={QandAScreen} exact/>
+            <AdminRoute path="/qanda/:id/edit" component={QandaEditScreen} exact />
           </div>
         </main>
         <footer className="row center footer"> 

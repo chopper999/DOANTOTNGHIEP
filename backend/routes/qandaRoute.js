@@ -68,4 +68,12 @@ qandaRoute.get(
     })
   );
 
+qandaRoute.post("/newQuestion",expressAsyncHandler(async (req, res)=>{
+    const qanda = new Qanda({
+        question: req.body.question,
+        answer: '',
+    });
+    const createdQanda = await qanda.save();
+    res.send({message: 'New Question Created', qanda: createdQanda});
+}))
 export default qandaRoute;

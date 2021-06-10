@@ -1,5 +1,6 @@
 import Axios from 'axios';
-import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_REQUEST, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_REQUEST, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL } from '../constants/qandaConstans';
+import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_REQUEST, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_REQUEST, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL } from '../constants/qandaConstans';
+import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS } from './../constants/qandaConstans';
 
 export const listQandas = ({}) =>async (dispatch) =>{
     try {
@@ -13,7 +14,7 @@ export const listQandas = ({}) =>async (dispatch) =>{
 };
 
 
-export const createQanda = qanda => async (dispatch, getState) => {
+export const createQanda = (qanda) => async (dispatch, getState) => {
     dispatch({type: QANDA_CREATE_REQUEST, payload: qanda});
     const {userSignin: {userInfo}} = getState();
     try {
@@ -87,5 +88,74 @@ export const deleteQanda = (qandaId) => async(dispatch, getState)=>{
           ? error.response.data.message
           : error.message;
         dispatch({type:QANDA_DELETE_FAIL, payload: message});
+    }
+}
+
+
+// Chat bot API reply message
+const api = `http://35.220.150.192:4200/chatbot/chat-run`;
+export const replyMess = (userMail, name, request_question) => async(dispatch) =>{
+    const dataAPI = {
+        user: userMail,
+        name: name,
+        request_question: request_question
+    };
+    try {
+        const {data} = await Axios.post(api, dataAPI);
+        if (data){
+                dispatch({
+                    type: MESS_REPLY_QUESTION_SUCCESS,
+                    payload: data,
+                })
+            }
+        return data;
+    } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
+      }
+      
+}
+
+// Text to speech API
+const apiTextToSpeech = `http://35.220.150.192:4200/texttospeech/soundAPI`;
+export const textToSpeech = (text) => async(dispatch) => {
+    const dataAPI = {text: text}
+    try {
+        const {data} = await Axios.post(apiTextToSpeech, dataAPI);
+        if (data) {
+            dispatch({
+                type: TEXT_TO_SPEECH_SUCCESS, payload: data
+            })
+        }
+        return data;
+    } catch (error) {
+        const message =
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message;
+      dispatch({ type: TEXT_TO_SPEECH_FAIL, payload: message });
+    }
+}
+
+//Create new Question
+export const createNewQ = (question) => async(dispatch) => {
+    try {
+        const {data} = await Axios.post("/api/qanda/newQuestion", {"question":question});
+        
+        if(data){
+            dispatch({type: CREATE_NEW_QUESTION_SUCCESS, payload: data});
+
+        }
+    } catch (error) {
+        dispatch({
+            type: CREATE_NEW_QUESTION_FAIL,
+            payload:
+              error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+          });
     }
 }

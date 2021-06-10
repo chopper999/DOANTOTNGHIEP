@@ -9,6 +9,8 @@ import MessageBox from './../components/MessageBox';
 
 
 
+
+
 export default function QandAScreen(props) {
   const qandaList = useSelector((state) => state.qandaList);
   const { loading, error, qandas } = qandaList;

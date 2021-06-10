@@ -64,7 +64,7 @@ export default function QandaEditScreen(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="answer">Price</label>
+              <label htmlFor="answer">Answer</label>
               <input
                 id="answer"
                 type="text"

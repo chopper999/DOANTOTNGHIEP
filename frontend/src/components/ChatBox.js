@@ -1,6 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import { Icon, Button, Input, Divider } from 'semantic-ui-react';
+import { useDispatch, useSelector } from 'react-redux';
+import { createNewQ, replyMess } from '../actions/qandaAction';
+import { textToSpeech } from './../actions/qandaAction';
 
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
@@ -17,94 +20,103 @@ mic.lang = 'vi';
 
 export default function ChatBox(props) {
   //Mic
-  const [isListening, setIsListening] = useState(false)
-  const [note, setNote] = useState(null)
+  const [isListening, setIsListening] = useState(false);
   //
-  const [isTime, setIsTime] = useState(false);
 
   const { userInfo } = props;
   const [socket, setSocket] = useState(null);
   const uiMessagesRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [messageBody, setMessageBody] = useState('');
+  const [messageBody, setMessageBody] = useState("");
   const [messages, setMessages] = useState([
-    { name: 'Admin', body: 'Hello there, Please ask your question.' },
+    { name: "Trợ lý", body: "Chào "+ userInfo.name},
   ]);
+  
+  
+
+  const dispatch = useDispatch();
+
+  const repMess = useSelector((state) => state.messReply);
+  const {mess} = repMess;
+  const textResult = useSelector((state)=> state.textToSpeechResult);
+  const {text} = textResult;
+
+  const [sound, setSound] = useState(text);
+
+  const soundPlay = (src) => {
+    let a = new Audio(src);
+    a.play();
+  }
+
 
   useEffect(() => {
+    // if (mess){
+    //   dispatch(textToSpeech(mess));
+    // };
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
         top: uiMessagesRef.current.clientHeight,
         left: 0,
-        behavior: 'smooth',
+        behavior: "smooth",
       });
     }
     if (socket) {
-      socket.emit('onLogin', {
+      socket.emit("onLogin", {
         _id: userInfo._id,
         name: userInfo.name,
         isAdmin: userInfo.isAdmin,
       });
-      socket.on('message', (data) => {
-        setMessages([...messages, { body: data.body, name: data.name }]);
+      socket.on("message", (data) => {
+        setMessages([...messages, { body: mess, name: data.name }]); //body:data.body
+        // setSound(text);
+        // console.log("Sound "+sound);
+        // console.log("useEfectsss "+mess);
+        // if (mess === "Tôi chưa hiểu, bạn hãy hỏi câu hỏi dài hơn một chút nhé!"){
+          
+        // }
+        if(mess!==undefined){
+          console.log(mess)
+        }
+        
       });
     }
-
+    
+    
     handleListen();
-  }, [messages, isOpen, socket, isListening]);
+  }, [messages, isOpen, socket, isListening, mess, dispatch, text, sound]);
 
   
+
   // Mic
   const handleListen = () => {
-    
-
-    if(isListening){
-      mic.start()
+    if (isListening) {
+      mic.start();
       mic.onend = () => {
-        console.log('continue...')
-        mic.start()
-      }
-    }
-    else {
-      mic.stop()
+        console.log("continue...");
+        mic.start();
+      };
+    } else {
+      mic.stop();
       mic.onend = () => {
-        console.log('Stoped Mic on Click')
-      }
+        console.log("Stoped Mic on Click");
+      };
     }
     mic.onstart = () => {
-      console.log('mics on')
-    }
+      console.log("mics on");
+    };
 
-    mic.onresult = event => {
+    mic.onresult = (event) => {
       const transcript = Array.from(event.results)
-      .map(result => result[0])
-      .map(result => result.transcript)
-      .join('')
+        .map((result) => result[0])
+        .map((result) => result.transcript)
+        .join("");
       //for mic
       setMessageBody(transcript);
-      //
-      // setTimeout(() => {
-      //   console.log('isTime ' + isTime);
-      //   if (isTime)
-      //   {
-      //     setIsListening(false)
-      //   }
-      //   else{
-      //     setIsTime(false);
-      //   }
-      // }, 5000);
-      
 
-      console.log(transcript)
-      setNote(transcript)
-      mic.onerror = event => {
-        console.log(event.error)
-      }
-    }
-
-  }
+      console.log(transcript);
+    };
+  };
   //Mic
-
 
   const supportHandler = () => {
     setIsOpen(true);
@@ -113,14 +125,35 @@ export default function ChatBox(props) {
     setSocket(sk);
   };
   const submitHandler = (e) => {
+    
     e.preventDefault();
+
+      dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
+      .then( mes =>{
+        if(mes!==undefined){
+          dispatch(textToSpeech(mes)).then(speech=>{
+            soundPlay(speech);
+          });
+        }
+      });
+    if (mess === "Tôi chưa hiểu, bạn hãy hỏi câu hỏi dài hơn một chút nhé!"){
+          console.log(" messageBody"+messageBody);
+          dispatch(createNewQ(messageBody));
+    }
+    // dispatch(textToSpeech(mess));
+    // console.log(text_URL_Sound);
+
+    
+    
+    
+
     if (!messageBody.trim()) {
-      alert('Error. Please type message.');
+      alert("Error. Please type message.");
     } else {
       setMessages([...messages, { body: messageBody, name: userInfo.name }]);
-      setMessageBody('');
+      setMessageBody("");
       setTimeout(() => {
-        socket.emit('onMessage', {
+        socket.emit("onMessage", {
           body: messageBody,
           name: userInfo.name,
           isAdmin: userInfo.isAdmin,
@@ -173,11 +206,15 @@ export default function ChatBox(props) {
               <Button
                 color="green"
                 onClick={() => setIsListening((prevState) => !prevState)}
-                type='button'
+                type="button"
               >
-                <Icon name= {isListening===false?"microphone slash":"microphone"}></Icon>
+                <Icon
+                  name={
+                    isListening === false ? "microphone slash" : "microphone"
+                  }
+                ></Icon>
               </Button>
-              <Button color="red" type="summit">
+              <Button color="red" type="summit" onClick={()=>setIsListening(false)}>
                 Send
               </Button>
             </form>

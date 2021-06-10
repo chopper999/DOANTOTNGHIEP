@@ -1,5 +1,5 @@
-import { QANDA_CREATE_FAIL, QANDA_CREATE_REQUEST, QANDA_DELETE_FAIL, QANDA_DELETE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_SUCCESS, QANDA_UPDATE_FAIL, QANDA_UPDATE_REQUEST } from "./../constants/qandaConstans";
-import { QANDA_DETAILS_FAIL, QANDA_DETAILS_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_CREATE_RESET, QANDA_DELETE_SUCCESS, QANDA_DELETE_RESET, QANDA_UPDATE_SUCCESS, QANDA_DETAILS_SUCCESS } from './../constants/qandaConstans';
+import { CREATE_NEW_QUESTION_FAIL, MESS_REPLY_QUESTION_FAIL, MESS_REPLY_QUESTION_SUCCESS, QANDA_CREATE_FAIL, QANDA_CREATE_REQUEST, QANDA_DELETE_FAIL, QANDA_DELETE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_SUCCESS, QANDA_UPDATE_FAIL, QANDA_UPDATE_REQUEST, TEXT_TO_SPEECH_FAIL } from "./../constants/qandaConstans";
+import { QANDA_DETAILS_FAIL, QANDA_DETAILS_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_CREATE_RESET, QANDA_DELETE_SUCCESS, QANDA_DELETE_RESET, QANDA_UPDATE_SUCCESS, QANDA_DETAILS_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS } from './../constants/qandaConstans';
 
 export const qandaListReducer = (state = {loading: true, qandas: []}, action) => {
     switch (action.type) {
@@ -71,3 +71,35 @@ export const qandaDeleterReducer = (state={}, action) =>{
             return state;
     }
 };
+
+export const messReplyReducer = (state={}, action)=> {
+    switch (action.type) {
+        case MESS_REPLY_QUESTION_SUCCESS:
+            return {loading: false, success: true, mess:action.payload};
+        case MESS_REPLY_QUESTION_FAIL:
+            return {loading: false, error: action.payload};
+        default:
+            return state;
+    }
+}
+export const textToSpeechReducer = (state={}, action) =>{
+    switch (action.type) {
+        case TEXT_TO_SPEECH_SUCCESS:
+            return {loading: false, success: true, text:action.payload};
+        case TEXT_TO_SPEECH_FAIL:
+            return {loading:false, error: action.payload};
+        default:
+            return state;
+    }
+}
+
+export const createNewQuestionReducer = (state={}, action) =>{
+    switch (action.type) {
+        case CREATE_NEW_QUESTION_SUCCESS:
+            return {loading: false, success: true, question: action.payload};
+        case CREATE_NEW_QUESTION_FAIL:
+            return {loading: false, error: action.payload};
+        default:
+            return state;
+    }
+}

@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
       } else {
         users.push(updatedUser);
       }
-      console.log('Online', user.name);
+      // console.log('Online', user.name);
       const admin = users.find((x) => x.isAdmin && x.online);
       if (admin) {
         io.to(admin.socketId).emit('updateUser', updatedUser);
@@ -127,7 +127,7 @@ io.on('connection', (socket) => {
           user.messages.push(message);
         } else {
           io.to(socket.id).emit('message', {
-            name: 'Admin',
+            name: 'Trợ lý',
             body: 'Sorry. I am not online right now',
           });
         }

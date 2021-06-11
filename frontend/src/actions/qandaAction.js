@@ -93,7 +93,7 @@ export const deleteQanda = (qandaId) => async(dispatch, getState)=>{
 
 
 // Chat bot API reply message
-const api = `http://35.220.150.192:4200/chatbot/chat-run`;
+const api = `https://quocdatit.tk/chatbot/chat-run`;
 export const replyMess = (userMail, name, request_question) => async(dispatch) =>{
     const dataAPI = {
         user: userMail,
@@ -120,7 +120,7 @@ export const replyMess = (userMail, name, request_question) => async(dispatch) =
 }
 
 // Text to speech API
-const apiTextToSpeech = `http://35.220.150.192:4200/texttospeech/soundAPI`;
+const apiTextToSpeech = `https://quocdatit.tk/texttospeech/soundAPI`;
 export const textToSpeech = (text) => async(dispatch) => {
     const dataAPI = {text: text}
     try {

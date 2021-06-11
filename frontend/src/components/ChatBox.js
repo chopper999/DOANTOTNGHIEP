@@ -41,8 +41,6 @@ export default function ChatBox(props) {
   const textResult = useSelector((state)=> state.textToSpeechResult);
   const {text} = textResult;
 
-  const [sound, setSound] = useState(text);
-
   const soundPlay = (src) => {
     let a = new Audio(src);
     a.play();
@@ -50,9 +48,6 @@ export default function ChatBox(props) {
 
 
   useEffect(() => {
-    // if (mess){
-    //   dispatch(textToSpeech(mess));
-    // };
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
         top: uiMessagesRef.current.clientHeight,
@@ -68,22 +63,13 @@ export default function ChatBox(props) {
       });
       socket.on("message", (data) => {
         setMessages([...messages, { body: mess, name: data.name }]); //body:data.body
-        // setSound(text);
-        // console.log("Sound "+sound);
-        // console.log("useEfectsss "+mess);
-        // if (mess === "Tôi chưa hiểu, bạn hãy hỏi câu hỏi dài hơn một chút nhé!"){
-          
-        // }
-        if(mess!==undefined){
-          console.log(mess)
-        }
         
       });
     }
     
     
     handleListen();
-  }, [messages, isOpen, socket, isListening, mess, dispatch, text, sound]);
+  }, [messages, isOpen, socket, isListening, mess, dispatch, text]);
 
   
 
@@ -138,10 +124,8 @@ export default function ChatBox(props) {
       });
     if (mess === "Tôi chưa hiểu, bạn hãy hỏi câu hỏi dài hơn một chút nhé!"){
           console.log(" messageBody"+messageBody);
-          dispatch(createNewQ(messageBody));
+          // dispatch(createNewQ(messageBody));
     }
-    // dispatch(textToSpeech(mess));
-    // console.log(text_URL_Sound);
 
     
     

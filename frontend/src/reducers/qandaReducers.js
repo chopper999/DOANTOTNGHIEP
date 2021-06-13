@@ -1,5 +1,5 @@
-import { CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, MESS_REPLY_QUESTION_FAIL, MESS_REPLY_QUESTION_SUCCESS, QANDA_CREATE_FAIL, QANDA_CREATE_REQUEST, QANDA_DELETE_FAIL, QANDA_DELETE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_SUCCESS, QANDA_UPDATE_FAIL, QANDA_UPDATE_REQUEST, TEXT_TO_SPEECH_FAIL } from "./../constants/qandaConstans";
-import { QANDA_DETAILS_FAIL, QANDA_DETAILS_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_CREATE_RESET, QANDA_DELETE_SUCCESS, QANDA_DELETE_RESET, QANDA_UPDATE_SUCCESS, QANDA_DETAILS_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, LIST_NEW_QUESTION_SUCCESS } from './../constants/qandaConstans';
+import { CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, MESS_REPLY_QUESTION_FAIL, MESS_REPLY_QUESTION_SUCCESS, QANDA_CREATE_FAIL, QANDA_CREATE_REQUEST, QANDA_DELETE_FAIL, QANDA_DELETE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_SUCCESS, QANDA_UPDATE_FAIL, QANDA_UPDATE_REQUEST, QUESTION_TRAIN_SUCCESS, TEXT_TO_SPEECH_FAIL } from "./../constants/qandaConstans";
+import { QANDA_DETAILS_FAIL, QANDA_DETAILS_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_CREATE_RESET, QANDA_DELETE_SUCCESS, QANDA_DELETE_RESET, QANDA_UPDATE_SUCCESS, QANDA_DETAILS_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL, QUESTION_TRAIN_RESET } from './../constants/qandaConstans';
 
 export const qandaListReducer = (state = {loading: true, qandas: []}, action) => {
     switch (action.type) {
@@ -111,6 +111,21 @@ export const listNewQuestionReducer = (state={}, action)=>{
         case LIST_NEW_QUESTION_FAIL:
             return {loading: false, error: action.payload};
     
+        default:
+            return state;
+    }
+}
+
+export const trainQuestionReducer = (state={}, action)=>{
+    switch (action.type) {
+        case QUESTION_TRAIN_REQUEST:
+            return {loading: true};
+        case QUESTION_TRAIN_SUCCESS:
+            return {loading: false, success: true, message: action.payload}            
+        case QUESTION_TRAIN_FAIL:
+            return {loading: false, error: action.payload};
+        case QUESTION_TRAIN_RESET:
+            return {};
         default:
             return state;
     }

@@ -120,11 +120,11 @@ const [flag, setFlag] = useState(true);
       .then( mes =>{
         // setMessageBody('');
 
-        // if(mes!==undefined){
-        //   dispatch(textToSpeech(mes)).then(speech=>{
-        //   soundPlay(speech);
-        //   });
-        // }
+        if(mes!==undefined){
+          dispatch(textToSpeech(mes)).then(speech=>{
+          soundPlay(speech);
+          });
+        }
         
       });
     

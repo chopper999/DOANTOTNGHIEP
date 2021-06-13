@@ -324,7 +324,7 @@ function App() {
             <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
             <AdminRoute path="/support" component={SupportMessScreen} />
             <AdminRoute path="/qanda" component={QandAScreen} exact/>
-            <AdminRoute path="/qanda/:id/edit" component={QandaEditScreen} exact />
+            <AdminRoute path="/qanda/:index/edit" component={QandaEditScreen} exact />
           </div>
         </main>
         <footer className="row center footer"> 

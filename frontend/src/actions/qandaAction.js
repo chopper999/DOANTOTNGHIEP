@@ -1,6 +1,9 @@
 import Axios from 'axios';
-import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_REQUEST, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_REQUEST, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL } from '../constants/qandaConstans';
+import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_REQUEST, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_REQUEST, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS } from '../constants/qandaConstans';
 import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS } from './../constants/qandaConstans';
+import { useSelector } from 'react-redux';
+
+
 
 export const listQandas = ({}) =>async (dispatch) =>{
     try {
@@ -40,8 +43,8 @@ export const createQanda = (qanda) => async (dispatch, getState) => {
 
 export const detailQanda = (qandaId) => async (dispatch) =>{
     try {
-        dispatch({type: QANDA_DETAILS_REQUEST, payload: qandaId});
-        const {data} = await Axios.get("/api/qanda/" + qandaId);
+        // dispatch({type: QANDA_DETAILS_REQUEST, payload: qandaId});
+        const {data} = await Axios.get("https://quocdatit.tk/update/chat-getlistquestions/" + qandaId);
         dispatch({type:QANDA_DETAILS_SUCCESS, payload: data});
     
     } catch (error) {
@@ -55,15 +58,18 @@ export const detailQanda = (qandaId) => async (dispatch) =>{
     }
 }
 
-export const updateQanda = (qanda) => async(dispatch, getState)=>{
-    dispatch({type: QANDA_UPDATE_REQUEST, payload: qanda});
-    const {userSignin: {userInfo}} = getState();
+export const updateQanda = (qandaId, tag, answer) => async(dispatch)=>{
+
+    console.log("sadsads "+qandaId);
+    console.log("tag "+tag);
+    console.log("answer "+ answer);
+    const dataAPI = {
+        tag: tag,
+        responses: answer
+    };
     try {
-        const {data} = await Axios.put(`/api/qanda/${qanda._id}`, qanda,{
-            headers: { Authorization: `Bearer ${userInfo.token}` },
-        });
+        const {data} = await Axios.post(`https://quocdatit.tk/update/chat-newquestions/${qandaId}`, dataAPI);
         dispatch({type: QANDA_UPDATE_SUCCESS, payload: data});
-    
     } catch (error) {
         const message =
       error.response && error.response.data.message
@@ -74,13 +80,14 @@ export const updateQanda = (qanda) => async(dispatch, getState)=>{
     }
 }
 
-export const deleteQanda = (qandaId) => async(dispatch, getState)=>{
-    dispatch({type: QANDA_DELETE_REQUEST, payload: qandaId});
-    const {userSignin: {userInfo}} = getState();
+export const deleteQanda = (index) => async(dispatch)=>{
+    dispatch({type: QANDA_DELETE_REQUEST, payload: index});
+    // const {userSignin: {userInfo}} = getState();
     try {
-        const {data} = Axios.delete(`/api/qanda/${qandaId}`,
-        {headers: {Authorization: `Bearer ${userInfo.token}`},
-    })
+        const {data} = Axios.get(`https://quocdatit.tk/update/chat-delete-newquestions/${index}`,
+    //     {headers: {Authorization: `Bearer ${userInfo.token}`},
+    // }
+    )
     dispatch({type: QANDA_DELETE_SUCCESS, payload:data});
     } catch (error) {
         const message = 
@@ -155,6 +162,26 @@ export const createNewQ = (question) => async(dispatch) => {
     } catch (error) {
         dispatch({
             type: CREATE_NEW_QUESTION_FAIL,
+            payload:
+              error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+          });
+    }
+}
+
+
+//List question
+export const listNewQuestions = () => async(dispatch) => {
+    try {
+        const {data} = await Axios.get(`https://quocdatit.tk/update/chat-getlistquestions`);
+        if (data){
+            dispatch({type: LIST_NEW_QUESTION_SUCCESS, payload: data});
+        }
+    
+    } catch (error) {
+        dispatch({
+            type: LIST_NEW_QUESTION_FAIL,
             payload:
               error.response && error.response.data.message
                 ? error.response.data.message

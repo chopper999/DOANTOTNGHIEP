@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import { Icon, Button, Input, Divider } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewQ, replyMess } from '../actions/qandaAction';
+import { replyMess } from '../actions/qandaAction';
 import { textToSpeech } from './../actions/qandaAction';
 
 const ENDPOINT =
@@ -48,25 +48,9 @@ export default function ChatBox(props) {
     a.play();
   }
 
-  // useEffect(() => {
-  //   if(mess === undefined){
-  //     dispatch(replyMess(userInfo.email, userInfo.name, messageBody));
-  //   }
-  //   console.log("me "+ mess)
-  // }, [mess])
-
 
   
   useEffect(() => {
-    // if(flag)
-    // {
-    //   dispatch(replyMess(userInfo.email, userInfo.name, undefined));
-    //   setFlag(false);
-    // }
-    // if(mess!==undefined){
-      
-    // }
-    // console.log("Mess "+ mess);
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
         top: uiMessagesRef.current.clientHeight,
@@ -132,16 +116,13 @@ export default function ChatBox(props) {
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
         // setMessageBody('');
-        // console.log("Response")
-        // console.log("mes "+mes);
-        
 
-        // console.log(messageBody);
-        if(mes!==undefined){
-          dispatch(textToSpeech(mes)).then(speech=>{
-          soundPlay(speech);
-          });
-        }
+        // if(mes!==undefined){
+        //   dispatch(textToSpeech(mes)).then(speech=>{
+        //   soundPlay(speech);
+        //   });
+        // }
+        
       });
 
     

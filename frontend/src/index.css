@@ -941,3 +941,7 @@ img.large {
   min-height: 348px !important;
   object-fit: cover;
 }
+
+.mb4{
+  margin-bottom: 40px !important;
+}

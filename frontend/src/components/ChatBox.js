@@ -29,8 +29,6 @@ export default function ChatBox(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [messageBody, setMessageBody] = useState("");
   
-const [flag, setFlag] = useState(true);
-  
   
 
   const dispatch = useDispatch();
@@ -73,7 +71,6 @@ const [flag, setFlag] = useState(true);
       uiMessagesRef.current.scrollBy({
         top: uiMessagesRef.current.clientHeight,
         left: 0,
-        // behavior: "smooth",
       });
     }
       if (socket) {
@@ -89,7 +86,7 @@ const [flag, setFlag] = useState(true);
     
     
     handleListen();
-  }, [isOpen, socket, isListening,flag, mess]); //mesages
+  }, [messages, isOpen, socket, isListening, mess]); //mesages
  
   
   // Mic
@@ -146,12 +143,6 @@ const [flag, setFlag] = useState(true);
           });
         }
       });
-    // if (mess === "Tôi chưa hiểu, bạn hãy hỏi câu hỏi dài hơn một chút nhé!"){
-    //       console.log(" messageBody"+messageBody);
-    //       dispatch(createNewQ(messageBody));
-    // }
-    // dispatch(textToSpeech(mess));
-    // console.log(text_URL_Sound);
 
     
     

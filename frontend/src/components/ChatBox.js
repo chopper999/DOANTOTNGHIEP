@@ -117,11 +117,11 @@ export default function ChatBox(props) {
       .then( mes =>{
         // setMessageBody('');
 
-        // if(mes!==undefined){
-        //   dispatch(textToSpeech(mes)).then(speech=>{
-        //   soundPlay(speech);
-        //   });
-        // }
+        if(mes!==undefined){
+          dispatch(textToSpeech(mes)).then(speech=>{
+          soundPlay(speech);
+          });
+        }
         
       });
 

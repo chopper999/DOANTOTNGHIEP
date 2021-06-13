@@ -93,34 +93,37 @@ export const deleteQanda = (qandaId) => async(dispatch, getState)=>{
 
 
 // Chat bot API reply message
-const api = `http://35.220.150.192:4200/chatbot/chat-run`;
+const api = `https://quocdatit.tk/chatbot/chat-run`;
 export const replyMess = (userMail, name, request_question) => async(dispatch) =>{
     const dataAPI = {
         user: userMail,
         name: name,
         request_question: request_question
     };
-    try {
-        const {data} = await Axios.post(api, dataAPI);
-        if (data){
-                dispatch({
-                    type: MESS_REPLY_QUESTION_SUCCESS,
-                    payload: data,
-                })
-            }
-        return data;
-    } catch (error) {
-        const message =
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message;
-        dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
-      }
+    if(request_question){
+        try {
+            const {data} = await Axios.post(api, dataAPI);
+            if (data){
+                    dispatch({
+                        type: MESS_REPLY_QUESTION_SUCCESS,
+                        payload: data,
+                    })
+                }
+            return data;
+        } catch (error) {
+            const message =
+              error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+            dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
+          }
+    }
+    
       
 }
 
 // Text to speech API
-const apiTextToSpeech = `http://35.220.150.192:4200/texttospeech/soundAPI`;
+const apiTextToSpeech = `https://quocdatit.tk/texttospeech/soundAPI`;
 export const textToSpeech = (text) => async(dispatch) => {
     const dataAPI = {text: text}
     try {

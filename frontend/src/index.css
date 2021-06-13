@@ -258,6 +258,7 @@ img.large {
   border-radius: 0.5rem;
   margin: 1rem;
   text-align: center;
+  width: 360px !important;
 }
 .card-body {
   padding: 1rem;
@@ -836,6 +837,7 @@ img.large {
   position: fixed;
   right: 1rem;
   bottom: 1rem;
+  resize: none !important;
 }
 .chatbox ul {
   overflow: scroll;

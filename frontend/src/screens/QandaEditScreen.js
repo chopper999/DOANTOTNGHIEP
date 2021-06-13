@@ -9,35 +9,35 @@ import { detailQanda } from './../actions/qandaAction';
 import { Button } from 'semantic-ui-react';
 
 export default function QandaEditScreen(props) {
-    const qandaId = props.match.params.id;
+    const qandaId = props.match.params.index;
     const [question, setQuestion] = useState('');
+    const [tag, setTag] = useState('');
     const [answer, setAnswer] = useState('');
-
     const qandaDetail = useSelector((state) => state.qandaDetail);
     const { loading, error, qanda } = qandaDetail;
-
     const qandaUpdate = useSelector((state) => state.qandaUpdate);
     const {loading: loadingUpdate, error: errorUpdate, success: successUpdate} = qandaUpdate;
+
+    const listQ = useSelector((state)=> state.listQuestion);
+    const {questions} = listQ;
 
     const dispatch = useDispatch();
 
     useEffect(() => {  
         if (successUpdate) {
           props.history.push('/qanda'); //redirect ve QandaScreen sau khi da update xong
-        }     
-        if (!qanda || qanda._id !== qandaId ||successUpdate ) { //Neu khong co Q and A thi load tu backend len, qanda._id !== qandaId để không show Q and A trc do 
-          //  kiem tra successUpdate de refresh lai trang khi update thanh cong, tranh show lai thong tin cu
-          //  successUpdate = true thi se dispatch toi detailQanda 1 lan nua
+        }    
+        if (!qanda || qanda!== questions[qandaId] ) { 
           dispatch({type: QANDA_UPDATE_RESET});
           dispatch(detailQanda(qandaId));
         } else {
-            setQuestion(qanda.question);
-            setAnswer(qanda.answer);
+            setQuestion(qanda);
         }
       }, [qanda, dispatch, qandaId, successUpdate, props.history]);
       const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(updateQanda({_id: qandaId, question, answer}))
+        console.log(qandaId + " "+ tag + " "+answer);
+        dispatch(updateQanda(qandaId, tag, answer));
       };
     return (
         <div>
@@ -71,6 +71,16 @@ export default function QandaEditScreen(props) {
                 placeholder="Enter answer"
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
+              ></input>
+            </div>
+            <div>
+              <label htmlFor="tag">Tag</label>
+              <input
+                id="tag"
+                type="text"
+                placeholder="Enter tag"
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
               ></input>
             </div>
               <label></label>

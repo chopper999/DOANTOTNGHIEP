@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import socketIOClient from 'socket.io-client';
 import { Icon, Button, Input, Divider } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createNewQ, replyMess } from '../actions/qandaAction';
+import { replyMess } from '../actions/qandaAction';
 import { textToSpeech } from './../actions/qandaAction';
 
 const ENDPOINT =
@@ -50,25 +50,9 @@ const [flag, setFlag] = useState(true);
     a.play();
   }
 
-  // useEffect(() => {
-  //   if(mess === undefined){
-  //     dispatch(replyMess(userInfo.email, userInfo.name, messageBody));
-  //   }
-  //   console.log("me "+ mess)
-  // }, [mess])
-
 
   
   useEffect(() => {
-    // if(flag)
-    // {
-    //   dispatch(replyMess(userInfo.email, userInfo.name, undefined));
-    //   setFlag(false);
-    // }
-    // if(mess!==undefined){
-      
-    // }
-    // console.log("Mess "+ mess);
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
         top: uiMessagesRef.current.clientHeight,
@@ -89,7 +73,7 @@ const [flag, setFlag] = useState(true);
     
     
     handleListen();
-  }, [isOpen, socket, isListening,flag, mess]); //mesages
+  }, [messages, isOpen, socket, isListening,flag, mess]); //mesages
  
   
   // Mic
@@ -135,24 +119,14 @@ const [flag, setFlag] = useState(true);
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
         // setMessageBody('');
-        // console.log("Response")
-        // console.log("mes "+mes);
+
+        // if(mes!==undefined){
+        //   dispatch(textToSpeech(mes)).then(speech=>{
+        //   soundPlay(speech);
+        //   });
+        // }
         
-
-        // console.log(messageBody);
-        if(mes!==undefined){
-          dispatch(textToSpeech(mes)).then(speech=>{
-          soundPlay(speech);
-          });
-        }
       });
-    // if (mess === "Tôi chưa hiểu, bạn hãy hỏi câu hỏi dài hơn một chút nhé!"){
-    //       console.log(" messageBody"+messageBody);
-    //       dispatch(createNewQ(messageBody));
-    // }
-    // dispatch(textToSpeech(mess));
-    // console.log(text_URL_Sound);
-
     
     
     

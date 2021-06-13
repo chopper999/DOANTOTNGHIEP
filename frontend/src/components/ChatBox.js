@@ -28,9 +28,8 @@ export default function ChatBox(props) {
   const uiMessagesRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [messageBody, setMessageBody] = useState("");
-  const [messages, setMessages] = useState([
-    { name: "Trợ lý", body: "Chào "+ userInfo.name},
-  ]);
+  
+const [flag, setFlag] = useState(true);
   
   
 
@@ -41,38 +40,58 @@ export default function ChatBox(props) {
   const textResult = useSelector((state)=> state.textToSpeechResult);
   const {text} = textResult;
 
+  const [messages, setMessages] = useState([
+    { name: "Trợ lý", body: "Chào "+ userInfo.name},
+  ]);
+
+
   const soundPlay = (src) => {
     let a = new Audio(src);
     a.play();
   }
 
+  // useEffect(() => {
+  //   if(mess === undefined){
+  //     dispatch(replyMess(userInfo.email, userInfo.name, messageBody));
+  //   }
+  //   console.log("me "+ mess)
+  // }, [mess])
 
+
+  
   useEffect(() => {
+    // if(flag)
+    // {
+    //   dispatch(replyMess(userInfo.email, userInfo.name, undefined));
+    //   setFlag(false);
+    // }
+    // if(mess!==undefined){
+      
+    // }
+    // console.log("Mess "+ mess);
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
         top: uiMessagesRef.current.clientHeight,
         left: 0,
-        behavior: "smooth",
+        // behavior: "smooth",
       });
     }
-    if (socket) {
-      socket.emit("onLogin", {
-        _id: userInfo._id,
-        name: userInfo.name,
-        isAdmin: userInfo.isAdmin,
-      });
-      socket.on("message", (data) => {
-        setMessages([...messages, { body: mess, name: data.name }]); //body:data.body
-        
-      });
-    }
+      if (socket) {
+        socket.emit("onLogin", {
+          _id: userInfo._id,
+          name: userInfo.name,
+          isAdmin: userInfo.isAdmin,
+        });
+          socket.on("message", (data) => {
+              setMessages([...messages, { body: mess, name: data.name }]); //body:data.body 
+          });
+      }
     
     
     handleListen();
-  }, [messages, isOpen, socket, isListening, mess, dispatch, text]);
-
+  }, [isOpen, socket, isListening,flag, mess]); //mesages
+ 
   
-
   // Mic
   const handleListen = () => {
     if (isListening) {
@@ -111,21 +130,28 @@ export default function ChatBox(props) {
     setSocket(sk);
   };
   const submitHandler = (e) => {
-    
-    e.preventDefault();
 
+    e.preventDefault();
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
+        // setMessageBody('');
+        // console.log("Response")
+        // console.log("mes "+mes);
+        
+
+        // console.log(messageBody);
         if(mes!==undefined){
           dispatch(textToSpeech(mes)).then(speech=>{
-            soundPlay(speech);
+          soundPlay(speech);
           });
         }
       });
-    if (mess === "Tôi chưa hiểu, bạn hãy hỏi câu hỏi dài hơn một chút nhé!"){
-          console.log(" messageBody"+messageBody);
-          // dispatch(createNewQ(messageBody));
-    }
+    // if (mess === "Tôi chưa hiểu, bạn hãy hỏi câu hỏi dài hơn một chút nhé!"){
+    //       console.log(" messageBody"+messageBody);
+    //       dispatch(createNewQ(messageBody));
+    // }
+    // dispatch(textToSpeech(mess));
+    // console.log(text_URL_Sound);
 
     
     
@@ -135,7 +161,7 @@ export default function ChatBox(props) {
       alert("Error. Please type message.");
     } else {
       setMessages([...messages, { body: messageBody, name: userInfo.name }]);
-      setMessageBody("");
+      setMessageBody('');
       setTimeout(() => {
         socket.emit("onMessage", {
           body: messageBody,
@@ -182,7 +208,7 @@ export default function ChatBox(props) {
               <Input
                 value={messageBody}
                 onChange={(e) => {
-                  setMessageBody(e.target.value);
+                  setMessageBody(e.target.value); //meeageBody = 'a'
                 }}
                 type="text"
                 placeholder="type message"

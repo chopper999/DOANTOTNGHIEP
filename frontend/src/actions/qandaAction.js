@@ -100,22 +100,25 @@ export const replyMess = (userMail, name, request_question) => async(dispatch) =
         name: name,
         request_question: request_question
     };
-    try {
-        const {data} = await Axios.post(api, dataAPI);
-        if (data){
-                dispatch({
-                    type: MESS_REPLY_QUESTION_SUCCESS,
-                    payload: data,
-                })
-            }
-        return data;
-    } catch (error) {
-        const message =
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message;
-        dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
-      }
+    if(request_question){
+        try {
+            const {data} = await Axios.post(api, dataAPI);
+            if (data){
+                    dispatch({
+                        type: MESS_REPLY_QUESTION_SUCCESS,
+                        payload: data,
+                    })
+                }
+            return data;
+        } catch (error) {
+            const message =
+              error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message;
+            dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
+          }
+    }
+    
       
 }
 

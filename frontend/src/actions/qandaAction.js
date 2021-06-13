@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_REQUEST, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_REQUEST, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS } from '../constants/qandaConstans';
-import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS } from './../constants/qandaConstans';
+import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_REQUEST, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_REQUEST, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_SUCCESS } from '../constants/qandaConstans';
+import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL } from './../constants/qandaConstans';
 import { useSelector } from 'react-redux';
 
 
@@ -182,6 +182,26 @@ export const listNewQuestions = () => async(dispatch) => {
     } catch (error) {
         dispatch({
             type: LIST_NEW_QUESTION_FAIL,
+            payload:
+              error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+          });
+    }
+}
+
+//TRAIN
+export const trainQuestion = () => async(dispatch) => {
+    dispatch({ type: QUESTION_TRAIN_REQUEST });
+    try {
+        const {data} = await Axios.get(`https://quocdatit.tk/chatbot/chat-training`);
+        if (data){
+            dispatch({type: QUESTION_TRAIN_SUCCESS, payload: data});
+        }
+    
+    } catch (error) {
+        dispatch({
+            type: QUESTION_TRAIN_FAIL,
             payload:
               error.response && error.response.data.message
                 ? error.response.data.message

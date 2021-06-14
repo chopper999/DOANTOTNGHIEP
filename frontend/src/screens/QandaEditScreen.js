@@ -5,7 +5,7 @@ import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 import { QANDA_UPDATE_RESET } from '../constants/qandaConstans';
 import { updateQanda } from '../actions/qandaAction';
-import { detailQanda } from './../actions/qandaAction';
+import { detailQanda, listNewQuestions } from './../actions/qandaAction';
 import { Button } from 'semantic-ui-react';
 
 export default function QandaEditScreen(props) {
@@ -36,7 +36,6 @@ export default function QandaEditScreen(props) {
       }, [qanda, dispatch, qandaId, successUpdate, props.history]);
       const submitHandler = (e) => {
         e.preventDefault();
-        console.log(qandaId + " "+ tag + " "+answer);
         dispatch(updateQanda(qandaId, tag, answer));
       };
     return (

@@ -33,6 +33,7 @@ import SupportMessScreen from './screens/SupportMessScreen';
 import ChatBox from './components/ChatBox';
 import QandAScreen from './screens/QandaScreen';
 import QandaEditScreen from './screens/QandaEditScreen';
+import DatasetScreen from './screens/DatasetScreen';
 
 
 
@@ -188,6 +189,13 @@ function App() {
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
+                          <Dropdown.Item>
+                            <Dropdown.Text>
+                              <Link className="dropdownItem" to="/dataset">
+                                Dataset Q&A
+                              </Link>
+                            </Dropdown.Text>
+                          </Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
                     )}
@@ -325,6 +333,9 @@ function App() {
             <AdminRoute path="/support" component={SupportMessScreen} />
             <AdminRoute path="/qanda" component={QandAScreen} exact/>
             <AdminRoute path="/qanda/:index/edit" component={QandaEditScreen} exact />
+            
+            <AdminRoute path="/dataset" component={DatasetScreen} exact/>
+
           </div>
         </main>
         <footer className="row center footer"> 

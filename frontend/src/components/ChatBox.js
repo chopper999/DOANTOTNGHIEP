@@ -65,6 +65,7 @@ export default function ChatBox(props) {
         });
           socket.on("message", (data) => {
               setMessages([...messages, { body: mess, name: data.name }]); //body:data.body 
+              
           });
       }
     

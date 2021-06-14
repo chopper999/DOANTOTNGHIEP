@@ -945,3 +945,7 @@ img.large {
 .mb4{
   margin-bottom: 40px !important;
 }
+
+.button_action{
+  width: 180px;
+}

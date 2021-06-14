@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_REQUEST, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_REQUEST, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_SUCCESS } from '../constants/qandaConstans';
-import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL } from './../constants/qandaConstans';
+import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_REQUEST, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_REQUEST, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_SUCCESS, DATASET_LIST_SUCCESS } from '../constants/qandaConstans';
+import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL, DATASET_LIST_REQUEST, DATASET_LIST_FAIL, DATASET_DELETE_REQUEST, DATASET_DELETE_FAIL, DATASET_DELETE_SUCCESS, LIST_NEW_QUESTION_REQUEST } from './../constants/qandaConstans';
 import { useSelector } from 'react-redux';
 
 
@@ -174,10 +174,9 @@ export const createNewQ = (question) => async(dispatch) => {
 //List question
 export const listNewQuestions = () => async(dispatch) => {
     try {
+        dispatch({type: LIST_NEW_QUESTION_REQUEST})
         const {data} = await Axios.get(`https://quocdatit.tk/update/chat-getlistquestions`);
-        if (data){
             dispatch({type: LIST_NEW_QUESTION_SUCCESS, payload: data});
-        }
     
     } catch (error) {
         dispatch({
@@ -209,3 +208,40 @@ export const trainQuestion = () => async(dispatch) => {
           });
     }
 }
+
+//dataset 
+export const listDatasets = () => async (dispatch) => {
+    try {
+        dispatch({type: DATASET_LIST_REQUEST});
+        const {data} = await Axios.get(`https://quocdatit.tk/dataset/get-all-dataset`);
+        if(data){
+            dispatch({type: DATASET_LIST_SUCCESS, payload: data.intents});
+        }
+    
+    } catch (error) {
+        const message =
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message;
+        dispatch({ type: DATASET_LIST_FAIL, payload: message });
+      }
+}
+
+//delete dataset by tag
+export const deleteDataset = (tag) => async (dispatch) => {
+  dispatch({ type: DATASET_DELETE_REQUEST, payload: tag });
+  const urlAPI = `https://quocdatit.tk/dataset/delete-dataset`;
+  const dataAPI = {
+    tag: tag,
+  };
+  try {
+    const { data } = Axios.post(urlAPI, dataAPI);
+    dispatch({ type: DATASET_DELETE_SUCCESS, payload: data });
+  } catch (error) {
+    const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
+  }
+};

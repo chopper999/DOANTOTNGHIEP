@@ -1,5 +1,5 @@
-import { CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, MESS_REPLY_QUESTION_FAIL, MESS_REPLY_QUESTION_SUCCESS, QANDA_CREATE_FAIL, QANDA_CREATE_REQUEST, QANDA_DELETE_FAIL, QANDA_DELETE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_SUCCESS, QANDA_UPDATE_FAIL, QANDA_UPDATE_REQUEST, QUESTION_TRAIN_SUCCESS, TEXT_TO_SPEECH_FAIL } from "./../constants/qandaConstans";
-import { QANDA_DETAILS_FAIL, QANDA_DETAILS_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_CREATE_RESET, QANDA_DELETE_SUCCESS, QANDA_DELETE_RESET, QANDA_UPDATE_SUCCESS, QANDA_DETAILS_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL, QUESTION_TRAIN_RESET } from './../constants/qandaConstans';
+import { CREATE_NEW_QUESTION_FAIL, DATASET_DELETE_FAIL, DATASET_DELETE_REQUEST, DATASET_DELETE_RESET, DATASET_LIST_RESET, DATASET_LIST_SUCCESS, LIST_NEW_QUESTION_FAIL, MESS_REPLY_QUESTION_FAIL, MESS_REPLY_QUESTION_SUCCESS, QANDA_CREATE_FAIL, QANDA_CREATE_REQUEST, QANDA_DELETE_FAIL, QANDA_DELETE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_SUCCESS, QANDA_UPDATE_FAIL, QANDA_UPDATE_REQUEST, QUESTION_TRAIN_SUCCESS, TEXT_TO_SPEECH_FAIL } from "./../constants/qandaConstans";
+import { QANDA_DETAILS_FAIL, QANDA_DETAILS_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_CREATE_RESET, QANDA_DELETE_SUCCESS, QANDA_DELETE_RESET, QANDA_UPDATE_SUCCESS, QANDA_DETAILS_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL, QUESTION_TRAIN_RESET, DATASET_LIST_REQUEST, DATASET_LIST_FAIL, DATASET_DELETE_SUCCESS, LIST_NEW_QUESTION_REQUEST } from './../constants/qandaConstans';
 
 export const qandaListReducer = (state = {loading: true, qandas: []}, action) => {
     switch (action.type) {
@@ -106,6 +106,8 @@ export const createNewQuestionReducer = (state={}, action) =>{
 
 export const listNewQuestionReducer = (state={}, action)=>{
     switch (action.type) {
+        case LIST_NEW_QUESTION_REQUEST:
+            return {loading: true};
         case LIST_NEW_QUESTION_SUCCESS:
             return {loading:false, success: true, questions: action.payload};
         case LIST_NEW_QUESTION_FAIL:
@@ -125,6 +127,35 @@ export const trainQuestionReducer = (state={}, action)=>{
         case QUESTION_TRAIN_FAIL:
             return {loading: false, error: action.payload};
         case QUESTION_TRAIN_RESET:
+            return {};
+        default:
+            return state;
+    }
+}
+
+export const listDatasetsReducer = (state = {}, action) =>{
+    switch (action.type) {
+        case DATASET_LIST_REQUEST:
+            return {loading: true};
+        case DATASET_LIST_SUCCESS:
+            return {loading: false, success: true, datasets: action.payload};
+        case DATASET_LIST_FAIL:
+            return {loading: false, error: action.payload};
+        case DATASET_LIST_RESET:
+            return {};
+        default:
+            return state;
+    }
+}
+export const deleteDatasetReducer = (state={}, action)=>{
+    switch (action.type) {
+        case DATASET_DELETE_REQUEST:
+            return {loading: true};
+        case DATASET_DELETE_SUCCESS:
+            return {loading: false, success: true, dataset: action.payload};
+        case DATASET_DELETE_FAIL:
+            return {loading: false, error: action.payload};
+        case DATASET_DELETE_RESET:
             return {};
         default:
             return state;

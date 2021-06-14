@@ -4,6 +4,7 @@ import { Icon, Button, Input, Divider } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { replyMess } from '../actions/qandaAction';
 import { textToSpeech } from './../actions/qandaAction';
+import processString from 'react-process-string';
 
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
@@ -29,7 +30,6 @@ export default function ChatBox(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [messageBody, setMessageBody] = useState("");
   
-const [flag, setFlag] = useState(true);
   
   
 
@@ -50,6 +50,19 @@ const [flag, setFlag] = useState(true);
     a.play();
   }
 
+  let config = [{
+    regex: /(http|https):\/\/(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
+    fn: (key, result) => <span key={key}>
+                             <a target="_blank" href={`${result[1]}://${result[2]}.${result[3]}${result[4]}`}>{result[2]}.{result[3]}{result[4]}</a>{result[5]}
+                         </span>
+}, {
+    regex: /(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
+    fn: (key, result) => <span key={key}>
+                             <a target="_blank" href={`http://${result[1]}.${result[2]}${result[3]}`}>{result[1]}.{result[2]}{result[3]}</a>{result[4]}
+                         </span>
+}];
+
+
 
   
   useEffect(() => {
@@ -67,14 +80,15 @@ const [flag, setFlag] = useState(true);
           isAdmin: userInfo.isAdmin,
         });
           socket.on("message", (data) => {
-              setMessages([...messages, { body: mess, name: data.name }]); //body:data.body 
+            let processed = processString(config)(mess);
+              setMessages([...messages, { body: processed, name: data.name }]); //body:data.body 
               
           });
       }
     
     
     handleListen();
-  }, [messages, isOpen, socket, isListening,flag, mess]); //mesages
+  }, [messages, isOpen, socket, isListening, mess]); //mesages
  
   
   // Mic
@@ -120,8 +134,7 @@ const [flag, setFlag] = useState(true);
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
         // setMessageBody('');
-
-        if(mes!==undefined){
+        if(mes!==undefined && !mes.includes("http")){
           dispatch(textToSpeech(mes)).then(speech=>{
           soundPlay(speech);
           });

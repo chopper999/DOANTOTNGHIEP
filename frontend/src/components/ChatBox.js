@@ -4,6 +4,7 @@ import { Icon, Button, Input, Divider } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { replyMess } from '../actions/qandaAction';
 import { textToSpeech } from './../actions/qandaAction';
+import processString from 'react-process-string';
 
 const ENDPOINT =
   window.location.host.indexOf('localhost') >= 0
@@ -48,6 +49,19 @@ export default function ChatBox(props) {
     a.play();
   }
 
+  let config = [{
+    regex: /(http|https):\/\/(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
+    fn: (key, result) => <span key={key}>
+                             <a target="_blank" href={`${result[1]}://${result[2]}.${result[3]}${result[4]}`}>{result[2]}.{result[3]}{result[4]}</a>{result[5]}
+                         </span>
+}, {
+    regex: /(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
+    fn: (key, result) => <span key={key}>
+                             <a target="_blank" href={`http://${result[1]}.${result[2]}${result[3]}`}>{result[1]}.{result[2]}{result[3]}</a>{result[4]}
+                         </span>
+}];
+
+
 
   
   useEffect(() => {
@@ -64,7 +78,8 @@ export default function ChatBox(props) {
           isAdmin: userInfo.isAdmin,
         });
           socket.on("message", (data) => {
-              setMessages([...messages, { body: mess, name: data.name }]); //body:data.body 
+            let processed = processString(config)(mess);
+              setMessages([...messages, { body: processed, name: data.name }]); //body:data.body 
               
           });
       }
@@ -117,8 +132,7 @@ export default function ChatBox(props) {
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
         // setMessageBody('');
-
-        if(mes!==undefined){
+        if(mes!==undefined && !mes.includes("http")){
           dispatch(textToSpeech(mes)).then(speech=>{
           soundPlay(speech);
           });

@@ -23,15 +23,16 @@ export default function QandAScreen(props) {
   const {loading: loadingDetele, error: errorDelete, success: successDelete} = qandaDelete;
 
   const listQ = useSelector((state)=> state.listQuestion);
-  const {loading: loadingListQuestions, error: errorListQuestion, success: successListQuestions, questions} = listQ;
+  const {success: successListQuestions, questions} = listQ;
 
   const questionTrain = useSelector(state => state.questionTrain);
-  const {loading: loadingTrain, error: errorTrain, success: successTrain, message: messageTrain} = questionTrain;
+  const {loading: loadingTrain, error: errorTrain, success: successTrain} = questionTrain;
+
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listNewQuestions({}));
+    
 
     if (successTrain){
       alert("Train thành công!");
@@ -41,6 +42,7 @@ export default function QandAScreen(props) {
     if (successDelete) {
       dispatch({type: QANDA_DELETE_RESET});
     }
+    dispatch(listNewQuestions({}));
 
     
   }, [dispatch, props.history, successDelete, userInfo._id, successTrain]); //sau khi tao hoac xoa thanh cong, dispatch toi listProduct de reload lai 
@@ -56,58 +58,68 @@ export default function QandAScreen(props) {
     return (
       <div className="containerNavbar">
         <h1 className="centerText mt-20 mb4">Question and Answer</h1>
-        <div className="btnCreateProduct">
-          <Button
-            color="green"
-            type="button"
-            onClick={trainHandler}
-          >
-            Train
-          </Button>
-      </div>
-        {loadingDetele && <LoadingBox></LoadingBox>}
-        {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
-        
-        {loadingTrain && <LoadingBox></LoadingBox>}
-        {errorTrain && <MessageBox variant="danger">{errorTrain}</MessageBox>}
 
-        {successListQuestions && <>
-            <table className="table mb4">
-              <thead>
-                <tr>
-                  <th>Index</th>
-                  <th>Question</th>
-                  <th>ACTIONS</th>
-                </tr>
-              </thead>
-              <tbody>
-                {questions.map((question, index) => (
-                  <tr key={index}>
-                    <td>{index}</td>
-                    <td>{question}</td>
-                    <td>
-                      <Button
-                        primary
-                        type="button"
-                        onClick={() =>
-                          props.history.push(`/qanda/${index}/edit`)
-                        }
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        color="red"
-                        type="button"
-                        onClick={() => deleteHandler(index)}
-                      >
-                        Delete
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </>}
+        {errorTrain && <MessageBox variant="danger">{errorTrain}</MessageBox>}
+        {loadingTrain ? (
+          <LoadingBox></LoadingBox>
+        ) : (
+          <>
+            <div className="btnCreateProduct">
+              <Button
+                size="huge"
+                color="green"
+                type="button"
+                onClick={trainHandler}
+              >
+                Train
+              </Button>
+            </div>
+            {loadingDetele && <LoadingBox></LoadingBox>}
+            {errorDelete && (
+              <MessageBox variant="danger">{errorDelete}</MessageBox>
+            )}
+
+            {successListQuestions && (
+              <>
+                <table className="table mb4">
+                  <thead>
+                    <tr>
+                      <th>Index</th>
+                      <th>Question</th>
+                      <th>ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {questions.map((question, index) => (
+                      <tr key={index}>
+                        <td>{index}</td>
+                        <td>{question}</td>
+                        <td>
+                          <Button
+                            primary
+                            type="button"
+                            onClick={() =>
+                              props.history.push(`/qanda/${index}/edit`)
+                            }
+                          >
+                            Edit
+                          </Button>
+                          <Button
+                            color="red"
+                            type="button"
+                            onClick={() => deleteHandler(index)}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            )}
+          </>
+        )}
       </div>
     );
 }

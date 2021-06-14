@@ -68,6 +68,7 @@ const [flag, setFlag] = useState(true);
         });
           socket.on("message", (data) => {
               setMessages([...messages, { body: mess, name: data.name }]); //body:data.body 
+              
           });
       }
     

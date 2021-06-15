@@ -126,14 +126,25 @@ export default function ChatBox(props) {
     const sk = socketIOClient(ENDPOINT);
     setSocket(sk);
   };
+  function detectURLs(message) {
+    var urlRegex = /(((https?:\/\/)|(www\.))[^\s]+)/g;
+    return message.match(urlRegex)
+  }
+
   const submitHandler = (e) => {
 
     e.preventDefault();
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
         // setMessageBody('');
-        if(mes!==undefined && !mes.includes("http")){
-          dispatch(textToSpeech(mes)).then(speech=>{
+        if(mes!==undefined ){
+          let messs = detectURLs(mes);
+          let messStr = String(messs);
+
+
+          const messRemoveLink = mes.replace(messStr, '');
+
+          dispatch(textToSpeech(messRemoveLink)).then(speech=>{
           soundPlay(speech);
           });
         }

@@ -544,7 +544,8 @@ img.large {
 }
 
 .product{
- margin: 2rem !important;
+ margin: 0.5rem !important;
+ width: 335px !important;
 }
 .contain-product{
   margin-left: 60px !important;
@@ -973,7 +974,7 @@ img.large {
   padding: 2rem;
 }
 .columnFooter :hover{
-    color: red;
+    color: #f02020;
 }
 
 .row:after {
@@ -994,5 +995,5 @@ img.large {
   color: white !important;
 }
 .linkWhite:hover{
-  color: red !important;
+  color: #f02020 !important;
 }

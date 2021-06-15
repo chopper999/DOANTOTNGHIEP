@@ -371,7 +371,7 @@ function App() {
               <div className="columnFooter">
                 <i className="fa fa-3x fa-map-marker"></i>
                 <h4>Vị trí</h4>
-                <p>29/2/19 Lê Đức Thọ</p>
+                <p>29/2/19 Lê Đức Thọ, Gò Vấp, Tp Hồ Chí Minh</p>
               </div>
               <div className="columnFooter">
                 <i className="fa fa-3x fa-envelope"></i>

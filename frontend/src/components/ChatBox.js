@@ -22,6 +22,7 @@ mic.lang = 'vi';
 export default function ChatBox(props) {
   //Mic
   const [isListening, setIsListening] = useState(false);
+  const [isTalking, setIsTalking] = useState(true);
   //
 
   const { userInfo } = props;
@@ -137,7 +138,7 @@ export default function ChatBox(props) {
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
         // setMessageBody('');
-        if(mes!==undefined ){
+        if(mes!==undefined && isTalking){
           let messs = detectURLs(mes);
           let messStr = String(messs);
 
@@ -178,7 +179,7 @@ export default function ChatBox(props) {
       {!isOpen ? (
         <Icon
           className="iconMess"
-          name="facebook messenger"
+          name="comment alternate"
           size="huge"
           onClick={supportHandler}
         ></Icon>
@@ -211,19 +212,25 @@ export default function ChatBox(props) {
                 type="text"
                 placeholder="type message"
               />
-              <Button
-                color="green"
-                onClick={() => setIsListening((prevState) => !prevState)}
-                type="button"
-              >
                 <Icon
                   name={
                     isListening === false ? "microphone slash" : "microphone"
                   }
+                  color="red"
+                  link
+                  size = "large"
+                onClick={() => setIsListening((prevState) => !prevState)}
                 ></Icon>
-              </Button>
-              <Button color="red" type="summit" onClick={()=>setIsListening(false)}>
-                Send
+                <Icon
+                  name={
+                    isTalking === false ? "volume off" : "volume up"
+                  }
+                  color="red"
+                  link
+                  size = "large"
+                onClick={() => setIsTalking((prevState) => !prevState)}
+                ></Icon>
+              <Button color="google plus" circular icon="paper plane" type="summit" onClick={()=>setIsListening(false)}>
               </Button>
             </form>
           </div>

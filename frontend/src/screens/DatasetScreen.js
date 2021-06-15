@@ -72,8 +72,9 @@ export default function DatasetScreen(props) {
                   <Button
                     primary
                     type="button"
+                    onClick = {()=> props.history.push(`/dataset/${index}/edit`)}
                   >
-                    Edit
+                    Add
                   </Button>
                   <Button
                     color="red"

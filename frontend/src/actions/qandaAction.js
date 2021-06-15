@@ -1,6 +1,6 @@
 import Axios from 'axios';
-import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_SUCCESS, DATASET_LIST_SUCCESS } from '../constants/qandaConstans';
-import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL, DATASET_LIST_REQUEST, DATASET_LIST_FAIL, DATASET_DELETE_REQUEST, DATASET_DELETE_SUCCESS, LIST_NEW_QUESTION_REQUEST } from './../constants/qandaConstans';
+import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_SUCCESS, DATASET_LIST_SUCCESS, DATASET_DETAIL_FAIL, DATASET_UPDATE_SUCCESS, QANDA_DETAILS_REQUEST } from '../constants/qandaConstans';
+import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL, DATASET_LIST_REQUEST, DATASET_LIST_FAIL, DATASET_DELETE_REQUEST, DATASET_DELETE_SUCCESS, LIST_NEW_QUESTION_REQUEST, DATASET_DETAIL_REQUEST, DATASET_DETAIL_SUCCESS, DATASET_UPDATE_FAIL } from './../constants/qandaConstans';
 
 
 
@@ -42,7 +42,7 @@ export const createQanda = (qanda) => async (dispatch, getState) => {
 
 export const detailQanda = (qandaId) => async (dispatch) =>{
     try {
-        // dispatch({type: QANDA_DETAILS_REQUEST, payload: qandaId});
+        dispatch({type: QANDA_DETAILS_REQUEST, payload: qandaId});
         const {data} = await Axios.get("https://quocdatit.tk/update/chat-getlistquestions/" + qandaId);
         dispatch({type:QANDA_DETAILS_SUCCESS, payload: data});
     
@@ -58,10 +58,6 @@ export const detailQanda = (qandaId) => async (dispatch) =>{
 }
 
 export const updateQanda = (qandaId, tag, answer) => async(dispatch)=>{
-
-    console.log("sadsads "+qandaId);
-    console.log("tag "+tag);
-    console.log("answer "+ answer);
     const dataAPI = {
         tag: tag,
         responses: answer
@@ -210,6 +206,7 @@ export const trainQuestion = () => async(dispatch) => {
 
 //dataset 
 export const listDatasets = () => async (dispatch) => {
+    
     try {
         dispatch({type: DATASET_LIST_REQUEST});
         const {data} = await Axios.get(`https://quocdatit.tk/dataset/get-all-dataset`);
@@ -244,3 +241,41 @@ export const deleteDataset = (tag) => async (dispatch) => {
     dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
   }
 };
+
+// Dataset detail 
+
+export const detailDatasetTag = (index) => async (dispatch) =>{
+    try {
+        dispatch({type: DATASET_DETAIL_REQUEST, payload: index});
+        const {data} = await Axios.get(`https://quocdatit.tk/dataset/get-tag-dataset/`+index);
+        dispatch({type: DATASET_DETAIL_SUCCESS, payload: data});
+    
+    } catch (error) {
+        dispatch({
+            type: DATASET_DETAIL_FAIL,
+            payload:
+              error.response && error.response.data.message
+                ? error.response.data.message
+                : error.message
+          });
+    }
+}
+
+export const updateDataset = (tag, patterns, responses) => async(dispatch) =>{
+    const dataAPI = {
+        tag: tag,
+        patterns: patterns,
+        responses: responses
+    };
+    try {
+        const {data} = await Axios.post(`https://quocdatit.tk/dataset/edit-dataset/`, dataAPI);
+        dispatch({type: DATASET_UPDATE_SUCCESS, payload:data});
+    
+    } catch (error) {
+        const message =
+      error.response && error.response.data.message
+        ? error.response.data.message
+        : error.message;
+    dispatch({ type: DATASET_UPDATE_FAIL, payload: message });
+    }
+} 

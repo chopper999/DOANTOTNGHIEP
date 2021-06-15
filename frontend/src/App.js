@@ -34,6 +34,7 @@ import ChatBox from './components/ChatBox';
 import QandAScreen from './screens/QandaScreen';
 import QandaEditScreen from './screens/QandaEditScreen';
 import DatasetScreen from './screens/DatasetScreen';
+import DatasetEditScreen from './screens/DatasetEditScreen';
 
 
 
@@ -335,6 +336,8 @@ function App() {
             <AdminRoute path="/qanda/:index/edit" component={QandaEditScreen} exact />
             
             <AdminRoute path="/dataset" component={DatasetScreen} exact/>
+            <AdminRoute path="/dataset/:index/edit" component={DatasetEditScreen} exact />
+
 
           </div>
         </main>

@@ -25,6 +25,7 @@ export default function QandaEditScreen(props) {
 
     useEffect(() => {  
         if (successUpdate) {
+          dispatch({type: QANDA_UPDATE_RESET});
           props.history.push('/qanda'); //redirect ve QandaScreen sau khi da update xong
         }    
         if (!qanda || qanda!== questions[qandaId] ) { 

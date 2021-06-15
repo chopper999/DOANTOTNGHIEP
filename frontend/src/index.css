@@ -976,12 +976,12 @@ img.large {
 .columnFooter :hover{
     color: #f02020;
 }
-
+/* 
 .row:after {
   content: "";
   display: table;
   clear: both;
-}
+} */
 
 .columnFooter fa {
   padding: 20px;

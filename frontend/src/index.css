@@ -27,7 +27,7 @@ body {
     'main'
     'footer';
   grid-template-columns: 1fr;
-  grid-template-rows: 8em 4rem 1fr 5rem;
+  grid-template-rows: 8em 4rem 1fr 200px;
   height: 100%;
   
 }
@@ -75,7 +75,7 @@ footer {
   grid-area: footer;
   text-align: center;
   
-  background-color: black;
+  background-color: #2B2E34;
   color: #ffffff;
 }
 /* Common */
@@ -948,4 +948,51 @@ img.large {
 
 .button_action{
   width: 180px;
+}
+
+ /* footer */
+ .footerContainer{
+  position: relative;
+  left: 0;
+  bottom: 0;
+  /* background-color: #2B2E34; */
+  width: 100%;
+  /* height: 250px; */
+}
+.footerLienhe{
+    position: fixed !important;
+}
+
+.columnFooter {
+  box-sizing: border-box;
+  float: left;
+  width: 25%;
+  padding: 10px;
+  text-align: center;
+  color: white;
+  padding: 2rem;
+}
+.columnFooter :hover{
+    color: red;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.columnFooter fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+}
+.linkWhite{
+  color: white !important;
+}
+.linkWhite:hover{
+  color: red !important;
 }

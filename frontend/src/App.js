@@ -72,11 +72,15 @@ function App() {
         <div className="menuTop">
           <Segment inverted className="segmentHeader">
             <Menu pointing inverted secondary className="menuHeader">
-            <Menu.Item>
-              <Image className="imgLogo" src='/logoChopper.jpg' size='tiny' circular />
+              <Menu.Item>
+                <Image
+                  className="imgLogo"
+                  src="/logoChopper.jpg"
+                  size="tiny"
+                  circular
+                />
               </Menu.Item>
               <Link to="/">
-              
                 <Menu.Item
                   className="brandName"
                   name="CHOPPER SHOP"
@@ -95,7 +99,13 @@ function App() {
 
               <Menu.Item className="iconCart">
                 <Link to="/cart">
-                  <Icon className = "iconCart1" name="cart" link size="huge" color='red'></Icon>
+                  <Icon
+                    className="iconCart1"
+                    name="cart"
+                    link
+                    size="huge"
+                    color="red"
+                  ></Icon>
                   {cartItems.length > 0 && (
                     <span className="badge">{cartItems.length}</span>
                   )}
@@ -136,14 +146,14 @@ function App() {
                       </Dropdown>
                     ) : (
                       <Link to="/signin" className="btnSignin1">
-                        <Button  color = {"red"}>
+                        <Button color={"red"}>
                           <Icon name="sign-in"></Icon>
                           Sign In
                         </Button>
                       </Link>
                     )}
                   </Menu.Item>
-                  
+
                   <Menu.Item>
                     {userInfo && userInfo.isAdmin && (
                       <Dropdown className="txtDropdown" text="Admin">
@@ -207,12 +217,17 @@ function App() {
             </Menu>
           </Segment>
         </div>
-        
+
         <div className="navbar">
-        <Divider fitted className='dividerLine'/>
-        <Segment className="colorNavbar" inverted>
-          <Menu className='containerNavbar' inverted secondary pointing size="huge">
-            
+          <Divider fitted className="dividerLine" />
+          <Segment className="colorNavbar" inverted>
+            <Menu
+              className="containerNavbar"
+              inverted
+              secondary
+              pointing
+              size="huge"
+            >
               <Dropdown item text="Category">
                 <Dropdown.Menu>
                   {loadingCategory ? (
@@ -234,28 +249,28 @@ function App() {
                   )}
                 </Dropdown.Menu>
               </Dropdown>
-            <Link to="/">
-              <Menu.Item
-                name="HOME"
-                active={activeItem === "HOME"}
-                onClick={handleItemClick}
-              />
-            </Link>
-            <Link to="/search/name/">
-              <Menu.Item
-                name="SHOP"
-                active={activeItem === "SHOP"}
-                onClick={handleItemClick}
-              />
-            </Link>
-            <Link to="/">
-              <Menu.Item
-                name="CONTACT"
-                active={activeItem === "CONTACT"}
-                onClick={handleItemClick}
-              />
-            </Link>
-          </Menu>
+              <Link to="/">
+                <Menu.Item
+                  name="HOME"
+                  active={activeItem === "HOME"}
+                  onClick={handleItemClick}
+                />
+              </Link>
+              <Link to="/search/name/">
+                <Menu.Item
+                  name="SHOP"
+                  active={activeItem === "SHOP"}
+                  onClick={handleItemClick}
+                />
+              </Link>
+              <Link to="/">
+                <Menu.Item
+                  name="CONTACT"
+                  active={activeItem === "CONTACT"}
+                  onClick={handleItemClick}
+                />
+              </Link>
+            </Menu>
           </Segment>
         </div>
 
@@ -332,21 +347,50 @@ function App() {
             />
             <AdminRoute path="/user/:id/edit" component={UserEditScreen} />
             <AdminRoute path="/support" component={SupportMessScreen} />
-            <AdminRoute path="/qanda" component={QandAScreen} exact/>
-            <AdminRoute path="/qanda/:index/edit" component={QandaEditScreen} exact />
-            
-            <AdminRoute path="/dataset" component={DatasetScreen} exact/>
-            <AdminRoute path="/dataset/:index/edit" component={DatasetEditScreen} exact />
+            <AdminRoute path="/qanda" component={QandAScreen} exact />
+            <AdminRoute
+              path="/qanda/:index/edit"
+              component={QandaEditScreen}
+              exact
+            />
 
-
+            <AdminRoute path="/dataset" component={DatasetScreen} exact />
+            <AdminRoute
+              path="/dataset/:index/edit"
+              component={DatasetEditScreen}
+              exact
+            />
           </div>
         </main>
-        <footer className="row center footer"> 
-        {userInfo && !userInfo.isAdmin && <ChatBox userInfo={userInfo}></ChatBox>}
-        <div>Footer</div>{' '}
+        <footer className="row center footer">
+          {userInfo && !userInfo.isAdmin && (
+            <ChatBox userInfo={userInfo}></ChatBox>
+          )}
+          <div className="footerContainer">
+            <div className="row">
+              <div className="columnFooter">
+                <i className="fa fa-3x fa-map-marker"></i>
+                <h4>Vị trí</h4>
+                <p>29/2/19 Lê Đức Thọ</p>
+              </div>
+              <div className="columnFooter">
+                <i className="fa fa-3x fa-envelope"></i>
+                <h4>Email</h4>
+                <p>vanspykid85@gmail.com</p>
+              </div>
+              <div className="columnFooter">
+                <i className="fa fa-3x fa-facebook-f"></i>
+                <h4>Facebook</h4>
+                <p><a href="https://www.facebook.com/tibbers.annie.75" target="_blank" className="linkWhite">https://www.facebook.com/tibbers.annie.75</a></p>
+              </div>
+              <div className="columnFooter">
+                <i className="fa fa-3x fa-phone"></i>
+                <h4>Điện thoại</h4>
+                <p>0378938915</p>
+              </div>
+            </div>
+          </div>
         </footer>
-        
-
       </div>
     </BrowserRouter>
   );

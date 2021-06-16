@@ -55,6 +55,7 @@ export default function ProductListScreen(props) {
             color="green"
             type="button"
             onClick={createHandler}
+            size= "huge"
           >
             Create Product
           </Button>

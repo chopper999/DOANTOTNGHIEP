@@ -527,7 +527,7 @@ img.large {
 .inputSearchContainer{
   position: absolute;
   width: 500px;
-  top: -30px;
+  top: -25px;
 }
 .dropdownItem{
   color: black !important;

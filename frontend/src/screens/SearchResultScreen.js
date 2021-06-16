@@ -95,7 +95,7 @@ export default function SearchResultScreen(props) {
             )}
           </div>
           <div className="mt-20">
-            <h1>Price</h1>
+            <h1 className="textCategory">Price</h1>
             {prices.map((p) => (
               <List animated verticalAlign="middle" size="big">
                 <List.Item>
@@ -115,7 +115,7 @@ export default function SearchResultScreen(props) {
           </div>
 
           <div className="mt-20">
-            <h1>Customer Review</h1>
+            <h1 className="textCategory">Customer Review</h1>
             {ratings.map((r) => (
               <List animated verticalAlign="middle" size="big">
                 <List.Item>

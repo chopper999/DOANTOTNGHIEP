@@ -228,7 +228,7 @@ function App() {
               pointing
               size="huge"
             >
-              <Dropdown item text="Category">
+              <Dropdown item text="CATEGORY">
                 <Dropdown.Menu>
                   {loadingCategory ? (
                     <LoadingBox></LoadingBox>

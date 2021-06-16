@@ -37,7 +37,7 @@ menuTop {
 }
 .navbar{
   grid-area: navbar;
-  height: 4rem;
+  /* height: 4rem; */
   background-color: white;
   margin-bottom: 0px !important;
 }
@@ -146,8 +146,10 @@ a.brand {
   font-weight: bold;
 }
 .badge {
-  background-color: red;
-  color: #ffffff;
+  position: absolute;
+  left: 60px;
+  background-color: #ffffff;
+  color: red;
   border-radius: 50%;
   padding: 0.2rem 0.7rem;
   font-size: 1.4rem;
@@ -380,7 +382,8 @@ img.large {
   flex: 1;
   padding: 1rem;
   font-weight: bold;
-  margin-left: 90px;
+  margin-left: 30px;
+  margin-right: 30px;
 }
 .checkout-steps > div.activeCK {
   border-top-color: #F43818;
@@ -474,9 +477,10 @@ img.large {
 }
 .menuHeader{
   max-width: 1520px;
+
   padding-left: 60px;
   padding-right: 60px;
-  height: inherit;
+  height: 114px;
 
 }
 
@@ -502,7 +506,7 @@ img.large {
   left: 150px;
   right: 60px;
   width: 150px;
-  top: -15px;
+  top: -5px;
 }
 .iconCart{
   position: absolute;
@@ -597,6 +601,7 @@ img.large {
 .textCategory{
   color: #2B2E34;
   font-weight: bolder;
+  font-size: 3rem;
 
 }
 .mt-20{
@@ -953,7 +958,7 @@ img.large {
 
  /* footer */
  .footerContainer{
-  position: relative;
+  position: static;
   left: 0;
   bottom: 0;
   /* background-color: #2B2E34; */
@@ -996,4 +1001,8 @@ img.large {
 }
 .linkWhite:hover{
   color: #f02020 !important;
+}
+
+.containerCart{
+  min-height: 1000px !important;
 }

@@ -130,7 +130,7 @@ export default function ProductScreen(props) {
                   {product.countInStock > 0 && (
                     <div>
                       <div className="row price p-1">
-                        <div>Qty</div>
+                        <div>Quantity</div>
                         <div>
                           <select
                             value={qty}
@@ -168,7 +168,7 @@ export default function ProductScreen(props) {
             </h2>
             {product.reviews.length === 0 && (
               <MessageBox>
-                <Message compact warning size="huge" color="red">
+                <Message compact warning size="medium" color="red">
                   <Message.Header>There is no review. </Message.Header>
                 </Message>
               </MessageBox>

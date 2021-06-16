@@ -465,7 +465,7 @@ img.large {
 
 .brandName{
   margin-left: 0.5em;
-  top: 35px;
+  top: 20px;
   color:white !important;
   font-family: fantasy;
   font-size: 3rem;
@@ -489,7 +489,7 @@ img.large {
 .btnSignin{
   position: absolute;
   left: 70px;
-  top: -23px;
+  top: -30px;
 }
 .btnSignin :hover{
   color: wheat;
@@ -513,7 +513,7 @@ img.large {
 .iconCart{
   position: absolute;
   left: 90px;
-  top: -20px;
+  top: -25px;
 }
 .iconCart1{
   color: white !important;

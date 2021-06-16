@@ -146,7 +146,7 @@ function App() {
                       </Dropdown>
                     ) : (
                       <Link to="/signin" className="btnSignin1">
-                        <Button size="medium" color={"red"}>
+                        <Button size="huge" color={"red"}>
                           <Icon name="sign-in"></Icon>
                           Sign In
                         </Button>

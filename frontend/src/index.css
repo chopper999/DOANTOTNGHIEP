@@ -476,7 +476,7 @@ img.large {
   max-width: 1520px;
   padding-left: 60px;
   padding-right: 60px;
-  height: inherit;
+  height: 128px !important;
 
 }
 

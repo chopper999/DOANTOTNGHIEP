@@ -465,7 +465,7 @@ img.large {
 
 .brandName{
   margin-left: 0.5em;
-  top: 20px;
+  top: 30px;
   color:white !important;
   font-family: fantasy;
   font-size: 3rem;
@@ -527,7 +527,7 @@ img.large {
 .inputSearchContainer{
   position: absolute;
   width: 500px;
-  top: -20px;
+  top: -30px;
 }
 .dropdownItem{
   color: black !important;

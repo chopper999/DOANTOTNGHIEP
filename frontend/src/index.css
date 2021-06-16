@@ -149,7 +149,7 @@ a.brand {
 }
 .badge {
   position: absolute;
-  left: 55px;
+  left: 35px;
   background-color: #ffffff;
   color: red;
   border-radius: 50%;
@@ -465,7 +465,7 @@ img.large {
 
 .brandName{
   margin-left: 0.5em;
-  top: 20px;
+  top: 40px;
   color:white !important;
   font-family: fantasy;
   font-size: 3rem;

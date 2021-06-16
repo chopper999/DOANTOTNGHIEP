@@ -103,7 +103,7 @@ function App() {
                     className="iconCart1"
                     name="cart"
                     link
-                    size="massive"
+                    size="huge"
                     color="red"
                   ></Icon>
                   {cartItems.length > 0 && (

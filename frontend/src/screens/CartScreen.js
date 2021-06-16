@@ -31,7 +31,7 @@ function CartScreen(props) {
 
   
   return (
-    <Container>
+    <Container className="containerCart">
       <Header className="cart-Label" as="h1">
         SHOPPING CART
       </Header>

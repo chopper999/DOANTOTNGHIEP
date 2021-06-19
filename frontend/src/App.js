@@ -35,6 +35,7 @@ import QandAScreen from './screens/QandaScreen';
 import QandaEditScreen from './screens/QandaEditScreen';
 import DatasetScreen from './screens/DatasetScreen';
 import DatasetEditScreen from './screens/DatasetEditScreen';
+import { trainQuestion } from './actions/qandaAction';
 
 
 
@@ -64,7 +65,14 @@ function App() {
   const [activeItem, setActiveItem] = useState('');
   const handleItemClick = ({name} ) => setActiveItem({ activeItem: name});
 
-  
+  window.setInterval(function(){ 
+    var date = new Date();
+    if(date.getHours() === 12 && date.getMinutes() === 52 && date.getSeconds()===1 && (date.getMilliseconds() > 1 && date.getMilliseconds() < 100)){ // Check the time
+        console.log("Timeeeeeeeeeeeeeeeeeeee " + date.getMinutes() +" "+date.getSeconds() +" "+date.getMilliseconds());
+        dispatch(trainQuestion());
+    }
+  }, 100); // 60000 milliseconds (1 minute)
+
   return (
     <BrowserRouter>
       {/* UI */}

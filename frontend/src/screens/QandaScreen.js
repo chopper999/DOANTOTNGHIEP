@@ -6,7 +6,7 @@ import { deleteQanda, listNewQuestions, trainQuestion } from './../actions/qanda
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 import { QUESTION_TRAIN_RESET } from './../constants/qandaConstans';
-
+import schedule from 'node-schedule';
 
 
 
@@ -23,7 +23,7 @@ export default function QandAScreen(props) {
   const {loading: loadingDetele, error: errorDelete, success: successDelete} = qandaDelete;
 
   const listQ = useSelector((state)=> state.listQuestion);
-  const {success: successListQuestions, questions} = listQ;
+  const {loading:loadingList, success: successListQuestions, questions} = listQ;
 
   const questionTrain = useSelector(state => state.questionTrain);
   const {loading: loadingTrain, error: errorTrain, success: successTrain} = questionTrain;
@@ -55,6 +55,22 @@ export default function QandAScreen(props) {
   const trainHandler = () => {
     dispatch(trainQuestion());
 };
+
+const rule = new schedule.RecurrenceRule();
+// rule.hour = 11;
+// rule.minute = 18;
+rule.second = 1;
+
+
+// const job = schedule.scheduleJob('/1 * * * * *', function(){
+//   var day = new Date();
+//   console.log("demm:              " + day.getHours() + " " + day.getMinutes() +" " + day.getSeconds());
+//   // job.cancel();
+// // dispatch(trainQuestion());
+// });
+
+
+
     return (
       <div className="containerNavbar">
         <h1 className="centerText mt-20 mb4">Question and Answer</h1>
@@ -78,7 +94,7 @@ export default function QandAScreen(props) {
             {errorDelete && (
               <MessageBox variant="danger">{errorDelete}</MessageBox>
             )}
-
+            {loadingList && <LoadingBox></LoadingBox>}
             {successListQuestions && (
               <>
                 <table className="table mb4">

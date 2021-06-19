@@ -1,15 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
-import socketIOClient from 'socket.io-client';
+// import socketIOClient from 'socket.io-client';
 import { Icon, Button, Input, Divider } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { replyMess } from '../actions/qandaAction';
 import { textToSpeech } from './../actions/qandaAction';
 import processString from 'react-process-string';
+import { sk } from './soket';
+// import _ from 'lodash';
 
-const ENDPOINT =
-  window.location.host.indexOf('localhost') >= 0
-    ? 'http://127.0.0.1:5000'
-    : window.location.host;
+// const ENDPOINT =
+//   window.location.host.indexOf('localhost') >= 0
+//     ? 'http://127.0.0.1:5000'
+//     : window.location.host;
 
 // Mic
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -32,6 +34,8 @@ export default function ChatBox(props) {
   const [messageBody, setMessageBody] = useState("");
   
   
+  const [isAdminOnline, setIsAdminOnline] = useState(false);
+
 
   const dispatch = useDispatch();
 
@@ -78,18 +82,30 @@ export default function ChatBox(props) {
           name: userInfo.name,
           isAdmin: userInfo.isAdmin,
         });
+        
           socket.on("message", (data) => {
-            let processed = processString(config)(mess);
-              setMessages([...messages, { body: processed, name: data.name }]); //body:data.body 
-              
-          });
+            if(data.isAdmin){
+              console.log("admin Online");
+              setIsAdminOnline(true);
+              setMessages([...messages, { body: data.body, name: data.name }]); //body:data.body   
+            }
+            else{
+              console.log("admin Offline");
+              setIsAdminOnline(false);
+              let processed = processString(config)(mess);  // Hiển thị link trong chuỗi
+              setMessages([...messages, { body: processed, name: data.name }]); //body:data.body    
+            }
+            
+        });
       }
     
     
     handleListen();
-  }, [messages, isOpen, socket, isListening, mess]); //mesages
+  }, [messages, isOpen, socket, isListening, mess, isAdminOnline]); //mesages
  
-  
+
+
+
   // Mic
   const handleListen = () => {
     if (isListening) {
@@ -123,8 +139,8 @@ export default function ChatBox(props) {
 
   const supportHandler = () => {
     setIsOpen(true);
-    console.log(ENDPOINT);
-    const sk = socketIOClient(ENDPOINT);
+    // console.log(ENDPOINT);
+    // const sk = socketIOClient(ENDPOINT);
     setSocket(sk);
   };
   function detectURLs(message) {
@@ -133,21 +149,25 @@ export default function ChatBox(props) {
   }
 
   const submitHandler = (e) => {
-
-    e.preventDefault();
+      e.preventDefault();
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
         // setMessageBody('');
-        if(mes!==undefined && isTalking){
+        if(mes!==undefined && isTalking && !isAdminOnline){     //!isAdminOnline
+          
           let messs = detectURLs(mes);
           let messStr = String(messs);
 
 
           const messRemoveLink = mes.replace(messStr, '');
-
-          dispatch(textToSpeech(messRemoveLink)).then(speech=>{
-          soundPlay(speech);
-          });
+          try {
+            dispatch(textToSpeech(messRemoveLink)).then(speech=>{
+              soundPlay(speech);
+              });
+          } catch (e) {
+            console.log("error from text to speech API: " + e);
+          }
+          
         }
         
       });
@@ -174,6 +194,11 @@ export default function ChatBox(props) {
   const closeHandler = () => {
     setIsOpen(false);
   };
+
+  // const debouncedSubmit = useRef(_.debounce(submitHandler,3000)).current
+  // useEffect(() => {
+  //   _.debounce(() => submitHandler,3000);
+  // }, [messageBody]);
   return (
     <div className="chatbox">
       {!isOpen ? (

@@ -65,9 +65,9 @@ app.use((err, req, res, next) => {
 });
 
 const httpServer = http.Server(app);
-const io = new Server(httpServer, {cors: {origin:'*'}});
+const io = new Server(httpServer, {cors: {origin:'*'}});      //Tránh bị Exception, *: cho phép tất cả các trang đều cors được
 const users = [];
-io.on('connection', (socket) => {
+io.on('connection', (socket) => {          //Xử lý khi có connect từ client tới  
     console.log('connection', socket.id);
     socket.on('disconnect', () => {
       const user = users.find((x) => x.socketId === socket.id);
@@ -92,9 +92,9 @@ io.on('connection', (socket) => {
         existUser.socketId = socket.id;
         existUser.online = true;
       } else {
-        users.push(updatedUser);
+        users.push(updatedUser);      //Nếu có người dùng mới thì thêm vào mảng users
       }
-      // console.log('Online', user.name);
+      console.log('Online', user.name);
       const admin = users.find((x) => x.isAdmin && x.online);
       if (admin) {
         io.to(admin.socketId).emit('updateUser', updatedUser);
@@ -113,19 +113,20 @@ io.on('connection', (socket) => {
     });
   
     socket.on('onMessage', (message) => {
-      if (message.isAdmin) {
-        const user = users.find((x) => x._id === message._id && x.online);
+      if (message.isAdmin) {        //Nếu mess là của admin gửi đi
+        const user = users.find((x) => x._id === message._id && x.online);  //tìm đến user đc nhận và truyển mess đó cho user
         if (user) {
           io.to(user.socketId).emit('message', message);
           user.messages.push(message);
         }
-      } else {
+      } else {    //nếu là mess của user gửi cho admin
         const admin = users.find((x) => x.isAdmin && x.online);
         if (admin) {
           io.to(admin.socketId).emit('message', message);
           const user = users.find((x) => x._id === message._id && x.online);
           user.messages.push(message);
-        } else {
+        } 
+        else {            //trường hợp admin chưa online
           io.to(socket.id).emit('message', {
             name: 'Trợ lý',
             body: 'Sorry. I am not online right now',

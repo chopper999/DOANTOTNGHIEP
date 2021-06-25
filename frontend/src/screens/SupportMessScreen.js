@@ -193,7 +193,7 @@ export default function SupportMessScreen() {
                       type="text"
                       placeholder="type message"
                     />
-                    <Button color='red' type="submit">Send</Button>
+                    <Button color='red' size = 'huge' type="submit">Send</Button>
                   </form>
                 </div>
               </div>

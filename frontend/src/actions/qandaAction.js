@@ -1,5 +1,5 @@
 import Axios from 'axios';
-import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_SUCCESS, DATASET_LIST_SUCCESS, DATASET_DETAIL_FAIL, DATASET_UPDATE_SUCCESS, QANDA_DETAILS_REQUEST } from '../constants/qandaConstans';
+import { QANDA_CREATE_FAIL, QANDA_LIST_SUCCESS, QANDA_CREATE_REQUEST, QANDA_LIST_REQUEST, QANDA_LIST_FAIL, QANDA_CREATE_SUCCESS, QANDA_DELETE_REQUEST, QANDA_DELETE_SUCCESS, QANDA_DELETE_FAIL, QANDA_UPDATE_SUCCESS, QANDA_UPDATE_FAIL, QANDA_DETAILS_SUCCESS, QANDA_DETAILS_FAIL, MESS_REPLY_QUESTION_FAIL, CREATE_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_FAIL, LIST_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_SUCCESS, DATASET_LIST_SUCCESS, DATASET_DETAIL_FAIL, DATASET_UPDATE_SUCCESS, QANDA_DETAILS_REQUEST, MESS_REPLY_QUESTION_REQUEST } from '../constants/qandaConstans';
 import { TEXT_TO_SPEECH_FAIL, MESS_REPLY_QUESTION_SUCCESS, TEXT_TO_SPEECH_SUCCESS, CREATE_NEW_QUESTION_SUCCESS, QUESTION_TRAIN_REQUEST, QUESTION_TRAIN_FAIL, DATASET_LIST_REQUEST, DATASET_LIST_FAIL, DATASET_DELETE_REQUEST, DATASET_DELETE_SUCCESS, LIST_NEW_QUESTION_REQUEST, DATASET_DETAIL_REQUEST, DATASET_DETAIL_SUCCESS, DATASET_UPDATE_FAIL } from './../constants/qandaConstans';
 
 
@@ -97,12 +97,13 @@ export const deleteQanda = (index) => async(dispatch)=>{
 // Chat bot API reply message
 const api = `https://quocdatit.tk/chatbot/chat-run`;
 export const replyMess = (userMail, name, request_question) => async(dispatch) =>{
+    dispatch({type: MESS_REPLY_QUESTION_REQUEST});
     const dataAPI = {
         user: userMail,
         name: name,
         request_question: request_question
     };
-    if(request_question){
+    // if(request_question){
         try {
             const {data} = await Axios.post(api, dataAPI);
             if (data){
@@ -119,7 +120,7 @@ export const replyMess = (userMail, name, request_question) => async(dispatch) =
                 : error.message;
             dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
           }
-    }
+    // }
     
       
 }

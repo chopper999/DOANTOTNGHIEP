@@ -103,7 +103,6 @@ export const replyMess = (userMail, name, request_question) => async(dispatch) =
         name: name,
         request_question: request_question
     };
-    // if(request_question){
         try {
             const {data} = await Axios.post(api, dataAPI);
             if (data){
@@ -120,7 +119,6 @@ export const replyMess = (userMail, name, request_question) => async(dispatch) =
                 : error.message;
             dispatch({ type: MESS_REPLY_QUESTION_FAIL, payload: message });
           }
-    // }
     
       
 }

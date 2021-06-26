@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import socketIOClient from 'socket.io-client';
-import { Icon, Button, Input, Divider, Loader } from 'semantic-ui-react';
+import { Icon, Button, Input, Divider } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { replyMess } from '../actions/qandaAction';
 import { textToSpeech } from './../actions/qandaAction';
@@ -82,28 +82,22 @@ export default function ChatBox(props) {
           name: userInfo.name,
           isAdmin: userInfo.isAdmin,
         });
-        
-          socket.on("message", (data) => {
-            if (data.isAdmin) {
-              console.log("admin Online");
-              setIsAdminOnline(true);
-              setMessages([...messages, { body: data.body, name: data.name }]); //body:data.body
 
-            } else {
-                console.log("admin Offline");
-                setIsAdminOnline(false);
-                let processed = processString(config)(mess); // Hiển thị link trong chuỗi
-                setMessages([
-                  ...messages,
-                  { body: processed, name: data.name },
-                ]); //body:data.body
-            }
-              
-              
-            })
+        socket.on("message", (data) => {
+          if (data.isAdmin) {
+            console.log("admin Online");
+            setIsAdminOnline(true);
+            setMessages([...messages, { body: data.body, name: data.name }]); //body:data.body
+          } else {
+            console.log("admin Offline");
+            setIsAdminOnline(false);
+            let processed = processString(config)(mess); // Hiển thị link trong chuỗi
+            setMessages([...messages, { body: processed, name: data.name }]); //body:data.body
+          }
+        });
       }
     handleListen();
-  }, [messages, isOpen, socket, isListening, mess, isAdminOnline]); //mesages
+  }, [messages, isOpen, socket, isListening, mess]); //mesages
 
 // useEffect(() => {
 //     if (uiMessagesRef.current) {
@@ -202,7 +196,7 @@ export default function ChatBox(props) {
       console.log(messageBody);
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
-        console.log(mes);
+        console.log("mes "+mes);
         // setMessageBody('');
         
         if(mes!==undefined && isTalking && !isAdminOnline){     //!isAdminOnline
@@ -226,23 +220,21 @@ export default function ChatBox(props) {
       });
 
     
-    
-    
-
+  
     if (!messageBody.trim()) {
       alert("Error. Please type message.");
     } else {
         setMessages([...messages, { body: messageBody, name: userInfo.name }]);
         setMessageBody("");
-
-      setTimeout(() => {
-        socket.emit("onMessage", {
-          body: messageBody,
-          name: userInfo.name,
-          isAdmin: userInfo.isAdmin,
-          _id: userInfo._id,
-        });
-      }, 8000);
+      
+          setTimeout(() => {
+            socket.emit("onMessage", {
+              body: messageBody,
+              name: userInfo.name,
+              isAdmin: userInfo.isAdmin,
+              _id: userInfo._id,
+            });
+          }, 2000);
     }
   };
   const closeHandler = () => {

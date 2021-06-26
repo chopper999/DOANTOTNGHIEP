@@ -90,14 +90,6 @@ export default function SupportMessScreen() {
         }
         return () => {
           dispatch({type: ADMIN_ONLINE_FAIL});
-          sk.on('disconnect', {
-            _id: userInfo._id,
-            name: userInfo.name,
-            isAdmin: userInfo.isAdmin
-          });
-          // if(sk.disconnect()){
-          console.log("sk: "+sk.disconnected)
-          // }
           
         }
       }, [messages, socket, users, dispatch]);

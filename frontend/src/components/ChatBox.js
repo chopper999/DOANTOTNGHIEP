@@ -93,7 +93,7 @@ useEffect(() => {
       uiMessagesRef.current.scrollBy({
         top: uiMessagesRef.current.clientHeight,
         left: 0,
-        // behavior: "smooth",
+        behavior: "smooth",
       });
     }
       if (socket) {
@@ -124,7 +124,7 @@ useEffect(() => {
         });
       }
     handleListen();
-  }, [messages, isOpen, socket, isListening, mess]); //mesages
+  }, [isOpen, socket, isListening, mess]); //mesages
 
  
  

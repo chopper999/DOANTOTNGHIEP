@@ -252,13 +252,13 @@ useEffect(() => {
           open = {openPopup ? true : false}
           position="top left"
         >
-          <Header className='headerChatPopup' as='h4'>Xin chào
+          <Header className='headerChatPopup' as='h1'>Xin chào
           <Icon name='times circle outline' color='red' onClick={()=>setopenPopup(false)}></Icon></Header>
           <Image src='/image_virtual_staff.jpg'/>
         <p>
           <strong><i>{hello}</i></strong>
         </p>
-        <Button positive fluid onClick={supportHandler}>Trò chuyện ngay</Button>
+        <Button size="huge" positive fluid onClick={supportHandler}>Trò chuyện ngay</Button>
         
         
         </Popup>
@@ -275,7 +275,6 @@ useEffect(() => {
               size="big"
               onClick={closeHandler}
             ></Icon>
-            <Image src='./../image/image_virtual_staff.png'/>
           </div>
           <Divider></Divider>
           <ul ref={uiMessagesRef}>

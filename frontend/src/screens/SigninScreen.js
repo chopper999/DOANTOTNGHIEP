@@ -5,6 +5,7 @@ import { signin } from '../actions/userActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { Button} from 'semantic-ui-react';
+import { sk } from '../components/soket';
 
 
 export default function SigninScreen(props) {
@@ -31,7 +32,9 @@ export default function SigninScreen(props) {
   
   useEffect(() => {
     if (userInfo) {
+
       props.history.push(redirect);
+      sk.connect();
     }
   }, [props.history, redirect, userInfo]);
 

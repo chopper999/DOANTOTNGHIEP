@@ -74,6 +74,11 @@ io.on('connection', (socket) => {          //Xử lý khi có connect từ clien
       if (user) {
         user.online = false;
         console.log('Offline', user.name);
+        if (user.isAdmin){    //Xu ly khi admin offline thi bat flag de chay textToSpeech
+          const existUserOnl = users.find((x) => !x.isAdmin && x.online);
+          io.to(existUserOnl.socketId).emit('adminOff');
+        }
+        
         const admin = users.find((x) => x.isAdmin && x.online);
         if (admin) {
           io.to(admin.socketId).emit('updateUser', user);
@@ -111,7 +116,16 @@ io.on('connection', (socket) => {          //Xử lý khi có connect từ clien
         io.to(admin.socketId).emit('selectUser', existUser);
       }
     });
-  
+    
+    socket.on('checkAdminOnline', (data) => {
+      console.log(data);
+      const user = users.find((x) => !x.isAdmin && x.online);
+      if(user)
+      {
+        io.to(user.socketId).emit('adminOnl', data);
+      }
+    })
+
     socket.on('onMessage', (message) => {
       if (message.isAdmin) {        //Nếu mess là của admin gửi đi
         const user = users.find((x) => x._id === message._id && x.online);  //tìm đến user đc nhận và truyển mess đó cho user

@@ -3,7 +3,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import MessageBox from '../components/MessageBox';
 import { Input, Button } from 'semantic-ui-react';
-import { ADMIN_ONLINE_FAIL, ADMIN_ONLINE_SUCCESS } from './../constants/qandaConstans';
 import { sk } from '../components/soket';
 
 
@@ -35,7 +34,6 @@ export default function SupportMessScreen() {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch({type:ADMIN_ONLINE_SUCCESS});
 
         if (uiMessagesRef.current) {
           uiMessagesRef.current.scrollBy({
@@ -53,6 +51,9 @@ export default function SupportMessScreen() {
             name: userInfo.name,
             isAdmin: userInfo.isAdmin,
           });
+
+          sk.emit('checkAdminOnline', {adOnline: true});
+
           sk.on('message', (data) => {
             if (allSelectedUser._id === data._id) {       // Nếu data dành cho user hiện tại thì cập nhật lại messages
               allMessages = [...allMessages, data];
@@ -87,10 +88,6 @@ export default function SupportMessScreen() {
             allMessages = user.messages;
             setMessages(allMessages);
           });
-        }
-        return () => {
-          dispatch({type: ADMIN_ONLINE_FAIL});
-          
         }
       }, [messages, socket, users, dispatch]);
     

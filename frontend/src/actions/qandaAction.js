@@ -278,3 +278,15 @@ export const updateDataset = (tag, patterns, responses) => async(dispatch) =>{
     dispatch({ type: DATASET_UPDATE_FAIL, payload: message });
     }
 } 
+
+export const sayHello = (name) => async(dispatch) =>{
+    const dataAPI = {text: name};
+    try {
+        const {data} = await Axios.post(`https://quocdatit.tk/chatbot/chat-hello/`, dataAPI);
+        if(data){
+            return data;
+        }
+    } catch (e) {
+    
+    }
+}

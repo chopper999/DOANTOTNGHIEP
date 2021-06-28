@@ -1003,3 +1003,10 @@ img.large {
 .linkWhite:hover{
   color: #f02020 !important;
 }
+.headerChatPopup .icon{
+  margin-left: 110px !important;
+  padding-left: 20px !important;
+}
+.headerChatPopup .icon:hover{
+  cursor: pointer;
+}

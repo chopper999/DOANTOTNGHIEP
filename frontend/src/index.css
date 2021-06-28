@@ -1010,3 +1010,9 @@ img.large {
 .headerChatPopup .icon:hover{
   cursor: pointer;
 }
+.helloText{
+  font-size: 1.5rem !important;
+}
+.headerChatPopup{
+  font-size: 1.5rem !important;
+}

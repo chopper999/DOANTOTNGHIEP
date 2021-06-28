@@ -165,6 +165,7 @@ useEffect(() => {
   const supportHandler = () => {
     soundPlay(helloSound);
     setIsOpen(true);
+    setopenPopup(false);
     // console.log(ENDPOINT);
     // const sk = socketIOClient(ENDPOINT);
     setSocket(sk);
@@ -253,7 +254,7 @@ useEffect(() => {
           <Header className='headerChatPopup' as='h1'>Xin chào
           <Icon name='times circle outline' color='red' onClick={()=>setopenPopup(false)}></Icon></Header>
           <Image src='/image_virtual_staff.jpg'/>
-        <p>
+        <p className="helloText">
           <strong><i>{hello}</i></strong>
         </p>
         <Button size="huge" positive fluid onClick={supportHandler}>Trò chuyện ngay</Button>

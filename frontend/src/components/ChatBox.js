@@ -1,12 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import socketIOClient from 'socket.io-client';
-import { Icon, Button, Input, Divider } from 'semantic-ui-react';
+import { Icon, Button, Input, Divider, Popup, Header, Image } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { replyMess } from '../actions/qandaAction';
-import { textToSpeech } from './../actions/qandaAction';
+import { textToSpeech, sayHello } from './../actions/qandaAction';
 import processString from 'react-process-string';
 import { sk } from './soket';
-// import _ from 'lodash';
 
 // const ENDPOINT =
 //   window.location.host.indexOf('localhost') >= 0
@@ -32,8 +31,10 @@ export default function ChatBox(props) {
   const uiMessagesRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [messageBody, setMessageBody] = useState("");
+
   const [isAdminOnline, setIsAdminOnline] = useState(false);
 
+  const [openPopup, setopenPopup] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -41,6 +42,10 @@ export default function ChatBox(props) {
   const {mess} = repMess;
   const textResult = useSelector((state)=> state.textToSpeechResult);
   const {text} = textResult;
+
+  const [checkOnl, setCheckOnl] = useState(false);
+
+  const [speechInitial, setSpeechInitial] = useState(true);
 
   const [messages, setMessages] = useState([
     { name: "Trợ lý", body: "Chào "+ userInfo.name},
@@ -51,6 +56,10 @@ export default function ChatBox(props) {
     let a = new Audio(src);
     a.play();
   }
+
+  
+  
+
 
   let config = [{
     regex: /(http|https):\/\/(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
@@ -65,9 +74,21 @@ export default function ChatBox(props) {
 }];
 
 
+const [hello, setHello] = useState("");
+const [helloSound, setHelloSound] = useState("");
 
+useEffect(() => {
+  dispatch(sayHello(userInfo.name)).then((dataHello) =>{
+    if (dataHello) {
+      setHello(dataHello[0]);
+      setHelloSound(dataHello[1]);
+    }
+    
+  })
+}, [])
   
   useEffect(() => {
+    
     if (uiMessagesRef.current) {
       uiMessagesRef.current.scrollBy({
         top: uiMessagesRef.current.clientHeight,
@@ -81,6 +102,13 @@ export default function ChatBox(props) {
           name: userInfo.name,
           isAdmin: userInfo.isAdmin,
         });
+
+        socket.on('adminOnl', (data) => {
+            setCheckOnl(true);
+        })
+        socket.on('adminOff', () =>{
+          setCheckOnl(false);
+        })
 
         socket.on("message", (data) => {
           if (data.isAdmin) {
@@ -98,51 +126,6 @@ export default function ChatBox(props) {
     handleListen();
   }, [messages, isOpen, socket, isListening, mess]); //mesages
 
-// useEffect(() => {
-//     if (uiMessagesRef.current) {
-//       uiMessagesRef.current.scrollBy({
-//         top: uiMessagesRef.current.clientHeight,
-//         left: 0,
-//         behavior: "smooth",
-//       });
-//     }
-//       if (socket) {
-//         socket.emit("onLogin", {
-//           _id: userInfo._id,
-//           name: userInfo.name,
-//           isAdmin: userInfo.isAdmin,
-//         });
-        
-//           socket.on("message", (data) => {
-//             if(data.isAdmin){
-//               console.log("admin Online");
-//               setIsAdminOnline(true);
-//               setMessages([...messages, { body: data.body, name: data.name }]);
-//             }
-//             else{
-//               console.log("admin Offline");
-//               setIsAdminOnline(false);
-//               if(!mess){
-//                 dispatch(replyMess(userInfo.email, userInfo.name, messageBody)).then((result) => {
-//                   let peoceed = processString(config)(result);
-//                   setMessages([...messages, { body: peoceed, name: data.name }]);
-//                 })
-//               }
-//               else{
-//                 let peoceed = processString(config)(mess);
-//                   setMessages([...messages, { body: peoceed, name: data.name }]);
-//               }
-
-
-
-//             }
-            
-//         });
-//       }
-    
-    
-//     handleListen();
-//   }, [isOpen, isListening, messages]); //mesages, mess, socket
  
  
 
@@ -180,6 +163,7 @@ export default function ChatBox(props) {
   //Mic
 
   const supportHandler = () => {
+    soundPlay(helloSound);
     setIsOpen(true);
     // console.log(ENDPOINT);
     // const sk = socketIOClient(ENDPOINT);
@@ -197,27 +181,35 @@ export default function ChatBox(props) {
       .then( mes =>{
         console.log("mes "+mes);
         // setMessageBody('');
+        console.log(checkOnl);
         
-        if(mes!==undefined && isTalking && !isAdminOnline){     //!isAdminOnline
+        if(mes!==undefined && isTalking && !isAdminOnline && !checkOnl){     //!isAdminOnline
+          //Check if admin online
+            socket.on("onLogin",(user) =>{
+              console.log(user);
+            });
           
           let messs = detectURLs(mes);
           let messStr = String(messs);
-
+          
+          
 
           const messRemoveLink = mes.replace(messStr, '');
           try {
             dispatch(textToSpeech(messRemoveLink)).then(speech=>{
-              //2s
-              soundPlay(speech);
+              setTimeout(()=>{
+                soundPlay(speech);
+              },2000);
               });
           } catch (e) {
-            console.log("error from text to speech API: " + e);
+            console.log(e);
           }
           
         }
         
       });
     
+      
   
     if (!messageBody.trim()) {
       alert("Error. Please type message.");
@@ -226,13 +218,13 @@ export default function ChatBox(props) {
         setMessageBody("");
       
           setTimeout(() => {
-            socket.emit("onMessage", {
+            socket.emit("onMessage", {  
               body: messageBody,
               name: userInfo.name,
               isAdmin: userInfo.isAdmin,
               _id: userInfo._id,
             });
-          }, 2000);
+          }, 3000);
     }
   };
   const closeHandler = () => {
@@ -246,22 +238,42 @@ export default function ChatBox(props) {
   return (
     <div className="chatbox">
       {!isOpen ? (
-        <Icon
-          className="iconMess"
-          name="comments"
-          size="huge"
-          onClick={supportHandler}
-        ></Icon>
+        <Popup
+          trigger={
+            <Icon
+              className="iconMess"
+              name="comments"
+              size="huge"
+              onClick={supportHandler}
+            ></Icon>
+          }
+          open = {openPopup ? true : false}
+          position="top left"
+        >
+          <Header className='headerChatPopup' as='h4'>Xin chào
+          <Icon name='times circle outline' color='red' onClick={()=>setopenPopup(false)}></Icon></Header>
+          <Image src='/image_virtual_staff.jpg'/>
+        <p>
+          <strong><i>{hello}</i></strong>
+        </p>
+        <Button positive fluid onClick={supportHandler}>Trò chuyện ngay</Button>
+        
+        
+        </Popup>
+        
+        
       ) : (
         <div className="card card-body">
           <div className="row">
-            <strong className="supportLabel">Support </strong>
+          
+            <strong className="supportLabel"> </strong>
             <Icon
               className="iconClose"
               name="close"
               size="big"
               onClick={closeHandler}
             ></Icon>
+            <Image src='./../image/image_virtual_staff.png'/>
           </div>
           <Divider></Divider>
           <ul ref={uiMessagesRef}>
@@ -281,26 +293,27 @@ export default function ChatBox(props) {
                 type="text"
                 placeholder="type message"
               />
-                <Icon
-                  name={
-                    isListening === false ? "microphone slash" : "microphone"
-                  }
-                  color="red"
-                  link
-                  size = "large"
+              <Icon
+                name={isListening === false ? "microphone slash" : "microphone"}
+                color="red"
+                link
+                size="large"
                 onClick={() => setIsListening((prevState) => !prevState)}
-                ></Icon>
-                <Icon
-                  name={
-                    isTalking === false ? "volume off" : "volume up"
-                  }
-                  color="red"
-                  link
-                  size = "large"
+              ></Icon>
+              <Icon
+                name={isTalking === false ? "volume off" : "volume up"}
+                color="red"
+                link
+                size="large"
                 onClick={() => setIsTalking((prevState) => !prevState)}
-                ></Icon>
-              <Button color="google plus" circular icon="paper plane" type="summit" onClick={()=>setIsListening(false)}>
-              </Button>
+              ></Icon>
+              <Button
+                color="google plus"
+                circular
+                icon="paper plane"
+                type="summit"
+                onClick={() => setIsListening(false)}
+              ></Button>
             </form>
           </div>
         </div>

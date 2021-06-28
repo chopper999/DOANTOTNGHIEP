@@ -36,6 +36,7 @@ import QandaEditScreen from './screens/QandaEditScreen';
 import DatasetScreen from './screens/DatasetScreen';
 import DatasetEditScreen from './screens/DatasetEditScreen';
 import { trainQuestion } from './actions/qandaAction';
+import { sk } from './components/soket';
 
 
 
@@ -51,6 +52,7 @@ function App() {
   const dispatch = useDispatch();
   const signoutHandler = () => {  
     dispatch(signout()); 
+    sk.disconnect();
   };
 
   const productCategoryList = useSelector(state => state.productCategoryList);

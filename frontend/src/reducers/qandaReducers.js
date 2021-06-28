@@ -192,7 +192,7 @@ export const updateDatasetReducer = (state={}, action) => {
     }
 }
 
-export const checkIsAdminReducer = (state = {adminOnline: false}, action) =>{
+export const checkIsAdminReducer = (state = {}, action) =>{
     switch (action.type) {
         case ADMIN_ONLINE_SUCCESS:
             return {adminOnline: true};

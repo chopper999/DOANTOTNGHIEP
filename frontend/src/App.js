@@ -66,14 +66,18 @@ function App() {
   //UI
   const [activeItem, setActiveItem] = useState('');
   const handleItemClick = ({name} ) => setActiveItem({ activeItem: name});
-
-  window.setInterval(function(){ 
-    var date = new Date();
-    if(date.getHours() === 12 && date.getMinutes() === 52 && date.getSeconds()===1 && (date.getMilliseconds() > 1 && date.getMilliseconds() < 100)){ // Check the time
-        console.log("Timeeeeeeeeeeeeeeeeeeee " + date.getMinutes() +" "+date.getSeconds() +" "+date.getMilliseconds());
-        dispatch(trainQuestion());
-    }
-  }, 100); // 60000 milliseconds (1 minute)
+  const [train, setTrain] = useState(true)
+  // window.setInterval(function(){ 
+  //   var date = new Date();
+  //   if(train && date.getHours() === 12 && date.getMinutes() === 52 && date.getSeconds()===1 && (date.getMilliseconds() > 1 && date.getMilliseconds() < 100)){ // Check the time
+  //       console.log("Timeeeeeeeeeeeeeeeeeeee " + date.getMinutes() +" "+date.getSeconds() +" "+date.getMilliseconds());
+  //       dispatch(trainQuestion());
+  //       setTrain(false);
+  //   }
+  //   if(date.getHours() === 13 && date.getMinutes() === 1 && date.getSeconds()===1){
+  //     setTrain(true);
+  //   }
+  // }, 100); // 60000 milliseconds (1 minute)
 
   return (
     <BrowserRouter>

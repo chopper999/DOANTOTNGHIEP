@@ -847,13 +847,21 @@ img.large {
   resize: none !important;
 }
 .chatbox ul {
-  overflow: scroll;
+  /* overflow: none; */
   max-height: 20rem;
+  min-height: 20rem;
+  /* max-width: 24rem; */
+  white-space: pre-wrap !important;
+
+  
 }
 .chatbox li {
   margin-bottom: 1rem;
   text-align: left;
+  word-break: break-word !important;
+  
 }
+
 .chatbox input {
   width: calc(100% - 9rem);
 }

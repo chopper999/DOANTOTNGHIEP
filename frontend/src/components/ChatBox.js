@@ -6,6 +6,7 @@ import { replyMess } from '../actions/qandaAction';
 import { textToSpeech, sayHello } from './../actions/qandaAction';
 import processString from 'react-process-string';
 import { sk } from './soket';
+import ReactScrollableFeed from 'react-scrollable-feed';
 
 // const ENDPOINT =
 //   window.location.host.indexOf('localhost') >= 0
@@ -47,7 +48,6 @@ export default function ChatBox(props) {
 
   const [checkOnl, setCheckOnl] = useState(false);
 
-  const [speechInitial, setSpeechInitial] = useState(true);
 
   const [messages, setMessages] = useState([
     { name: "Trợ lý", body: "Chào "+ userInfo.name},
@@ -91,13 +91,13 @@ useEffect(() => {
   
   useEffect(() => {
     
-    if (uiMessagesRef.current) {
-      uiMessagesRef.current.scrollBy({
-        top: uiMessagesRef.current.clientHeight,
-        left: 0,
-        behavior: "smooth",
-      });
-    }
+    // if (uiMessagesRef.current) {
+    //   uiMessagesRef.current.scrollBy({
+    //     top: uiMessagesRef.current.clientHeight,
+    //     left: 0,
+    //     behavior: "smooth",
+    //   });
+    // }
       if (socket) {
         socket.emit("onLogin", {
           _id: userInfo._id,
@@ -228,17 +228,14 @@ useEffect(() => {
               isAdmin: userInfo.isAdmin,
               _id: userInfo._id,
             });
-          }, 3000);
+          }, 4000);
     }
   };
   const closeHandler = () => {
     setIsOpen(false);
   };
 
-  // const debouncedSubmit = useRef(_.debounce(submitHandler,3000)).current
-  // useEffect(() => {
-  //   _.debounce(() => submitHandler,3000);
-  // }, [messageBody]);
+  
   return (
     <div className="chatbox">
       {!isOpen ? (
@@ -251,26 +248,31 @@ useEffect(() => {
               onClick={supportHandler}
             ></Icon>
           }
-          open = {openPopup ? true : false}
+          open={openPopup ? true : false}
           position="top left"
         >
-          <Header className='headerChatPopup' as='h1'>Xin chào
-          <Icon name='times circle outline' color='red' onClick={()=>setopenPopup(false)}></Icon></Header>
-          <Image src='/image_virtual_staff.jpg'/>
-        <p className="helloText">
-          <strong><i>{hello}</i></strong>
-        </p>
-        <Button size="huge" positive fluid onClick={supportHandler}>Trò chuyện ngay</Button>
-        
-        
+          <Header className="headerChatPopup" as="h1">
+            Xin chào
+            <Icon
+              name="times circle outline"
+              color="red"
+              onClick={() => setopenPopup(false)}
+            ></Icon>
+          </Header>
+          <Image src="/image_virtual_staff.jpg" />
+          <p className="helloText">
+            <strong>
+              <i>{hello}</i>
+            </strong>
+          </p>
+          <Button size="huge" positive fluid onClick={supportHandler}>
+            Trò chuyện ngay
+          </Button>
         </Popup>
-        
-        
       ) : (
         <div className="card card-body">
           <div className="row">
-          
-            <strong className="supportLabel"> </strong>
+            <strong className="supportLabel"> Trò chuyện với tôi </strong>
             <Icon
               className="iconClose"
               name="close"
@@ -280,11 +282,13 @@ useEffect(() => {
           </div>
           <Divider></Divider>
           <ul ref={uiMessagesRef}>
-            {messages.map((msg, index) => (
-              <li key={index}>
-                <strong>{`${msg.name}: `}</strong> {msg.body}
-              </li>
-            ))}
+            <ReactScrollableFeed>
+              {messages.map((msg, index) => (
+                <li key={index}>
+                  <strong>{`${msg.name}: `}</strong> {msg.body}
+                </li>
+              ))}
+            </ReactScrollableFeed>
           </ul>
           <div>
             <form className="row" onSubmit={submitHandler}>

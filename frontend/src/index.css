@@ -845,6 +845,7 @@ img.large {
   right: 1rem;
   bottom: 1rem;
   resize: none !important;
+  z-index: 100;
 }
 .chatbox ul {
   /* overflow: none; */
@@ -970,8 +971,8 @@ img.large {
   position: relative;
   left: 0;
   bottom: 0;
-  /* background-color: #2B2E34; */
   width: 100%;
+  z-index: 1;
   /* height: 250px; */
 }
 .footerLienhe{

@@ -7,7 +7,7 @@ import { textToSpeech, sayHello } from './../actions/qandaAction';
 import processString from 'react-process-string';
 import { sk } from './soket';
 import ReactScrollableFeed from 'react-scrollable-feed';
-
+import debounce from 'lodash.debounce';
 // const ENDPOINT =
 //   window.location.host.indexOf('localhost') >= 0
 //     ? 'http://127.0.0.1:5000'
@@ -41,8 +41,8 @@ export default function ChatBox(props) {
 
   const repMess = useSelector((state) => state.messReply);
   const {mess} = repMess;
-  const textResult = useSelector((state)=> state.textToSpeechResult);
-  const {text} = textResult;
+
+
 
   const [checkOnl, setCheckOnl] = useState(false);
 
@@ -76,6 +76,7 @@ export default function ChatBox(props) {
 
 const [hello, setHello] = useState("");
 const [helloSound, setHelloSound] = useState("");
+const [helloSoundCheck, setHelloSoundCheck] = useState(true);
 
 useEffect(() => {
   dispatch(sayHello(userInfo.name)).then((dataHello) =>{
@@ -124,6 +125,11 @@ useEffect(() => {
         });
       }
     handleListen();
+    return () => {
+      if(isListening){
+        setIsListening(false);
+      }
+    };
   }, [isOpen, socket, isListening, mess]); //mesages
 
  
@@ -150,12 +156,16 @@ useEffect(() => {
     };
 
     mic.onresult = (event) => {
+      // debounce(()=>{
+
+      // }, 3000);
+      
       const transcript = Array.from(event.results)
         .map((result) => result[0])
         .map((result) => result.transcript)
         .join("");
-      //for mic
       setMessageBody(transcript);
+      
 
       console.log(transcript);
     };
@@ -163,11 +173,14 @@ useEffect(() => {
   //Mic
 
   const supportHandler = () => {
-    soundPlay(helloSound);
+    if(helloSoundCheck){
+      soundPlay(helloSound);
+      setHelloSoundCheck(false);
+
+    }
+    
     setIsOpen(true);
     setopenPopup(false);
-    // console.log(ENDPOINT);
-    // const sk = socketIOClient(ENDPOINT);
     setSocket(sk);
   };
   function detectURLs(message) {
@@ -225,11 +238,14 @@ useEffect(() => {
               isAdmin: userInfo.isAdmin,
               _id: userInfo._id,
             });
-          }, 4000);
+          }, 2000);
     }
   };
   const closeHandler = () => {
     setIsOpen(false);
+    if(isListening){
+      setIsListening(false);
+    }
   };
 
   
@@ -256,10 +272,12 @@ useEffect(() => {
               onClick={() => setopenPopup(false)}
             ></Icon>
           </Header>
+          <Divider></Divider>
           <Image src="/image_virtual_staff.jpg" />
+          <Divider></Divider>
           <p className="helloText">
             <strong>
-              <i>{hello}</i>
+              {hello}
             </strong>
           </p>
           <Button size="huge" positive fluid onClick={supportHandler}>
@@ -287,6 +305,7 @@ useEffect(() => {
               ))}
             </ReactScrollableFeed>
           </ul>
+          <Divider></Divider>
           <div>
             <form className="row" onSubmit={submitHandler}>
               <Input

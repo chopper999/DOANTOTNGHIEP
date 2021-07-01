@@ -118,19 +118,16 @@ useEffect(() => {
 
         socket.on("message", (data) => {
           if (data.isAdmin) {
-            console.log("admin Online");
             setIsAdminOnline(true);
             setMessages([...messages, { body: data.body, name: data.name , isAd: true }]);//body:data.body
             
           } else {
-            console.log("admin Offline");
             setIsAdminOnline(false);
             let processed = processString(config)(mess); // Hiển thị link trong chuỗi
             setMessages([...messages, { body: processed, name: data.name, isAd: false }]); //body:data.body
           }
           
         });
-        console.log(messages);
         
       }
     handleListen();
@@ -139,7 +136,7 @@ useEffect(() => {
         setIsListening(false);
       }
     };
-  }, [isOpen, socket, isListening, mess, checkOnl]); //messages
+  }, [isOpen, socket, isListening, mess, checkOnl, isAdminOnline]); //messages
 
  
  
@@ -204,9 +201,8 @@ useEffect(() => {
       .then( mes =>{
         console.log("mes "+mes);
         setMessageBody("");
-        console.log(checkOnl);
         
-        if(mes!==undefined && isTalking && !isAdminOnline && !checkOnl){     //!isAdminOnline
+        if(mes!==undefined && isTalking && !checkOnl){     //!isAdminOnline
           //Check if admin online
             socket.on("onLogin",(user) =>{
               console.log(user);

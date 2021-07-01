@@ -37,6 +37,7 @@ import DatasetScreen from './screens/DatasetScreen';
 import DatasetEditScreen from './screens/DatasetEditScreen';
 import { trainQuestion } from './actions/qandaAction';
 import { sk } from './components/soket';
+import DatasetCreateScreen from './screens/DatasetCreateScreen';
 
 
 
@@ -382,6 +383,11 @@ function App() {
             <AdminRoute
               path="/dataset/:index/edit"
               component={DatasetEditScreen}
+              exact
+            />
+             <AdminRoute
+              path="/dataset/createEdit"
+              component={DatasetCreateScreen}
               exact
             />
           </div>

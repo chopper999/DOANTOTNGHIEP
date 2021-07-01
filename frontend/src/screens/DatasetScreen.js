@@ -5,6 +5,7 @@ import { deleteDataset, listDatasets } from '../actions/qandaAction';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
 import { DATASET_DELETE_RESET } from '../constants/qandaConstans';
+import { DATASET_CREATE_RESET } from './../constants/qandaConstans';
 
 
 
@@ -19,13 +20,19 @@ export default function DatasetScreen(props) {
   const datasetDelete = useSelector(state => state.datasetDelete);
   const {loading: loadingDelete, error: errorDelete, success: successDelete} = datasetDelete;
 
+  const datasetCreate = useSelector(state => state.datasetCreate);
+  const {loading: loadingCreate, error: errorCreate, success: successCreate, dataset} = datasetCreate;
+    
   const dispatch = useDispatch();
   useEffect(() => {
     if(successDelete){
       dispatch({type: DATASET_DELETE_RESET});
     }
+    if(successCreate){
+      dispatch({type: DATASET_CREATE_RESET});
+    }
     dispatch(listDatasets({}));
-  }, [dispatch, props.history, userInfo._id, successDelete]); //sau khi tao hoac xoa thanh cong, dispatch toi listProduct de reload lai
+  }, [dispatch, props.history, userInfo._id, successDelete, successCreate]); //sau khi tao hoac xoa thanh cong, dispatch toi listProduct de reload lai
 
   const deleteHandler = (tag) => {
     if (window.confirm("Are you sure to delete this product?")) {
@@ -33,11 +40,23 @@ export default function DatasetScreen(props) {
     }
     
   };
+  const createHandler = ()=>{
+    props.history.push(`/dataset/createEdit`)
+  }
 
   return (
     <div className="containerNavbar">
       <h1 className="centerText mt-20 mb4">Dataset for question and answer</h1>
-
+      <div className="btnCreateProduct">
+              <Button
+                size="huge"
+                color="green"
+                type="button"
+                onClick={createHandler}
+              >
+                Create
+              </Button>
+            </div>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
 

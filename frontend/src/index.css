@@ -1112,6 +1112,8 @@ img.large {
 
 .mess-mutichat{
   padding-top: 60px !important;
+  /*  margin-top: 60px !important; */
+  margin-bottom: 60px !important;
 }
 .not-me{
   color: #D8DADF;

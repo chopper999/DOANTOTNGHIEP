@@ -10,27 +10,25 @@ import { qandaCreateReducer, qandaListReducer, qandaDeleterReducer, qandaUpdateR
 
 
 const initialState = {
-    userSignin: {
-        userInfo: localStorage.getItem('userInfo')
-        ? JSON.parse(localStorage.getItem('userInfo'))
-        : null,
-    },
-    cart: {
-        cartItems: localStorage.getItem('cartItems')
-        ? JSON.parse(localStorage.getItem('cartItems'))
-        : [], 
-        shippingAddress: localStorage.getItem('shippingAddress') 
-        ? JSON.parse(localStorage.getItem('shippingAddress') )
-        : {},
-        paymentMethod: 'PayPal',
-    },
-    soundHelloField:{
-        checkHelloSuccess: localStorage.getItem('checkHelloSuccess')
-        ? JSON.parse(localStorage.getItem('checkHelloSuccess'))
-        : false,
-
-    }
-    
+  userSignin: {
+    userInfo: localStorage.getItem("userInfo")
+      ? JSON.parse(localStorage.getItem("userInfo"))
+      : null,
+  },
+  cart: {
+    cartItems: localStorage.getItem("cartItems")
+      ? JSON.parse(localStorage.getItem("cartItems"))
+      : [],
+    shippingAddress: localStorage.getItem("shippingAddress")
+      ? JSON.parse(localStorage.getItem("shippingAddress"))
+      : {},
+    paymentMethod: "PayPal",
+  },
+  soundHelloField: {
+    checkHelloSuccess: localStorage.getItem("checkHelloSuccess")
+      ? JSON.parse(localStorage.getItem("checkHelloSuccess"))
+      : false,
+  }
 };
 const reducer = combineReducers({
     productList: productListReducer,

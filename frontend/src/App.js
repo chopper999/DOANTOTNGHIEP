@@ -49,6 +49,16 @@ function App() {
   
   const userSignin = useSelector((state)=>state.userSignin);
   const {userInfo} = userSignin;
+  
+
+
+  const unauthenticatedUser = {
+    _id: "123",
+    name: "Bạn",
+    email: "ban@gmail.com",
+    isAdmin: false,
+  };
+
   const dispatch = useDispatch();
   const signoutHandler = () => {  
     dispatch(signout()); 
@@ -380,6 +390,11 @@ function App() {
           {userInfo && !userInfo.isAdmin && (
             <ChatBox userInfo={userInfo}></ChatBox>
           )}
+          {
+            !userInfo && (
+              <ChatBox userInfo={unauthenticatedUser}></ChatBox>
+            )
+          }
           <div className="footerContainer">
             <div className="row">
               <div className="columnFooter">

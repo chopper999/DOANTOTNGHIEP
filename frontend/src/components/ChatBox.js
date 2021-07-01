@@ -79,13 +79,23 @@ const [helloSound, setHelloSound] = useState("");
 const [helloSoundCheck, setHelloSoundCheck] = useState(true);
 
 useEffect(() => {
-  dispatch(sayHello(userInfo.name)).then((dataHello) =>{
-    if (dataHello) {
-      setHello(dataHello[0]);
-      setHelloSound(dataHello[1]);
-    }
-    
-  })
+  if(userInfo.name ==="Bạn"){
+    dispatch(sayHello("")).then((dataHello) =>{
+      if (dataHello) {
+        setHello(dataHello[0]);
+        setHelloSound(dataHello[1]);
+      }
+    })
+  }
+  else{
+    dispatch(sayHello(userInfo.name)).then((dataHello) =>{
+      if (dataHello) {
+        setHello(dataHello[0]);
+        setHelloSound(dataHello[1]);
+      }
+    })
+  }
+  
 }, [])
   
   useEffect(() => {
@@ -276,9 +286,7 @@ useEffect(() => {
           <Image src="/image_virtual_staff.jpg" />
           <Divider></Divider>
           <p className="helloText">
-            <strong>
-              {hello}
-            </strong>
+            <strong>{hello}</strong>
           </p>
           <Button size="huge" positive fluid onClick={supportHandler}>
             Trò chuyện ngay
@@ -296,11 +304,21 @@ useEffect(() => {
             ></Icon>
           </div>
           <Divider></Divider>
-          <ul ref={uiMessagesRef}>
+          <ul ref={uiMessagesRef} className="ul-message">
             <ReactScrollableFeed>
               {messages.map((msg, index) => (
-                <li key={index}>
-                  <strong>{`${msg.name}: `}</strong> {msg.body}
+                <li key={index} className="li-message">
+                  {userInfo.isAdmin || msg.name === "Trợ lý" ? (
+                    <div  className={index===0 ? "":"mess-div"}>
+                      <div className="align-left message-data"><i className="fa fa-circle not-me"></i>{`${msg.name} `}</div>
+                      <div className="message other-message  ">{msg.body}</div>
+                    </div>
+                  ) : (
+                    <div className={messages[index].name===messages[index-1].name ? "mess-mutichat" : ""}>
+                      <div className="align-right message-data">{`${msg.name} `}<i className="fa fa-circle me"></i></div>
+                      <div className="message my-message float-right">{msg.body}</div>
+                    </div>
+                  )}
                 </li>
               ))}
             </ReactScrollableFeed>

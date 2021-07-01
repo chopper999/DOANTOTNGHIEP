@@ -849,8 +849,8 @@ img.large {
 }
 .chatbox ul {
   /* overflow: none; */
-  max-height: 20rem;
-  min-height: 20rem;
+  max-height: 25rem;
+  min-height: 25rem;
   /* max-width: 24rem; */
   white-space: pre-wrap !important;
 

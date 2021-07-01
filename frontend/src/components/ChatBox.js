@@ -203,7 +203,7 @@ useEffect(() => {
       dispatch(replyMess(userInfo.email, userInfo.name, messageBody))
       .then( mes =>{
         console.log("mes "+mes);
-        // setMessageBody('');
+        setMessageBody("");
         console.log(checkOnl);
         
         if(mes!==undefined && isTalking && !isAdminOnline && !checkOnl){     //!isAdminOnline

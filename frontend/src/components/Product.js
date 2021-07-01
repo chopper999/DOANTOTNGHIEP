@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Rating from './Rating';
-import { Card, Icon, Image, Transition } from 'semantic-ui-react';
+import { Card, Image, Transition } from 'semantic-ui-react';
 import { useState } from 'react';
 
 
@@ -22,8 +22,8 @@ export default function Product(props) {
           <Card.Header className="productNameCard">{product.name}</Card.Header>
         </Link>
         <Card.Meta className="priceCard">
-          <Icon name="dollar" />
-          {product.price}
+          
+          {product.price} VND
         </Card.Meta>
         <Rating 
           rating={product.rating}

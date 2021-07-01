@@ -7,11 +7,7 @@ import { textToSpeech, sayHello } from './../actions/qandaAction';
 import processString from 'react-process-string';
 import { sk } from './soket';
 import ReactScrollableFeed from 'react-scrollable-feed';
-import debounce from 'lodash.debounce';
-// const ENDPOINT =
-//   window.location.host.indexOf('localhost') >= 0
-//     ? 'http://127.0.0.1:5000'
-//     : window.location.host;
+
 
 // Mic
 const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -48,7 +44,7 @@ export default function ChatBox(props) {
 
 
   const [messages, setMessages] = useState([
-    { name: "Trợ lý", body: "Chào "+ userInfo.name},
+    { name: "Trợ lý", body: "Chào "+ userInfo.name, isAd: false},
   ]);
 
 
@@ -99,7 +95,6 @@ useEffect(() => {
 }, [])
   
   useEffect(() => {
-    
     // if (uiMessagesRef.current) {
     //   uiMessagesRef.current.scrollBy({
     //     top: uiMessagesRef.current.clientHeight,
@@ -125,14 +120,18 @@ useEffect(() => {
           if (data.isAdmin) {
             console.log("admin Online");
             setIsAdminOnline(true);
-            setMessages([...messages, { body: data.body, name: data.name }]); //body:data.body
+            setMessages([...messages, { body: data.body, name: data.name , isAd: true }]);//body:data.body
+            
           } else {
             console.log("admin Offline");
             setIsAdminOnline(false);
             let processed = processString(config)(mess); // Hiển thị link trong chuỗi
-            setMessages([...messages, { body: processed, name: data.name }]); //body:data.body
+            setMessages([...messages, { body: processed, name: data.name, isAd: false }]); //body:data.body
           }
+          
         });
+        console.log(messages);
+        
       }
     handleListen();
     return () => {
@@ -140,7 +139,7 @@ useEffect(() => {
         setIsListening(false);
       }
     };
-  }, [isOpen, socket, isListening, mess]); //mesages
+  }, [isOpen, socket, isListening, mess, checkOnl]); //messages
 
  
  
@@ -238,9 +237,8 @@ useEffect(() => {
     if (!messageBody.trim()) {
       alert("Error. Please type message.");
     } else {
-        setMessages([...messages, { body: messageBody, name: userInfo.name }]);
+        setMessages([...messages, { body: messageBody, name: userInfo.name, isAd: false }]);
         setMessageBody("");
-      
           setTimeout(() => {
             socket.emit("onMessage", {  
               body: messageBody,
@@ -308,10 +306,11 @@ useEffect(() => {
             <ReactScrollableFeed>
               {messages.map((msg, index) => (
                 <li key={index} className="li-message">
-                  {userInfo.isAdmin || msg.name === "Trợ lý" ? (
-                    <div  className={index===0 ? "":"mess-div"}>
+                  {msg.isAd || msg.name === "Trợ lý" ? (
+                    /* <div className={index===0 ? "":"mess-div"}> */
+                    <div className= {messages[index].name===messages[index-1]?.name || (msg.isAd && messages[index-1]?.name === "Trợ lý" ) || index===0 ? "" : "mess-div"}>
                       <div className="align-left message-data"><i className="fa fa-circle not-me"></i>{`${msg.name} `}</div>
-                      <div className="message other-message  ">{msg.body}</div>
+                      <div className="message other-message">{msg.body}</div>
                     </div>
                   ) : (
                     <div className={messages[index].name===messages[index-1].name ? "mess-mutichat" : ""}>

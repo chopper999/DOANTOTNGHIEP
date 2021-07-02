@@ -103,6 +103,7 @@ useEffect(() => {
     //   });
     // }
       if (socket) {
+        console.log(userInfo)
         socket.emit("onLogin", {
           _id: userInfo._id,
           name: userInfo.name,
@@ -115,13 +116,14 @@ useEffect(() => {
         socket.on('adminOff', () =>{
           setCheckOnl(false);
         })
-
         socket.on("message", (data) => {
+          console.log(data)
           if (data.isAdmin) {
             setIsAdminOnline(true);
             setMessages([...messages, { body: data.body, name: data.name , isAd: true }]);//body:data.body
             
           } else {
+            console.log("aaaaaa")
             setIsAdminOnline(false);
             let processed = processString(config)(mess); // Hiển thị link trong chuỗi
             setMessages([...messages, { body: processed, name: data.name, isAd: false }]); //body:data.body

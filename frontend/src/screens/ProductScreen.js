@@ -112,7 +112,7 @@ export default function ProductScreen(props) {
                   <Card.Meta>
                     <div className="row price p-1">
                       <div> Price</div>
-                      <div>${product.price}</div>
+                      <div><strong>{product.price} VNĐ</strong></div>
                     </div>
                   </Card.Meta>
                   <div className="row price p-1">

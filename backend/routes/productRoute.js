@@ -51,7 +51,7 @@ productRouter.get(
 
 //api for top product has best Rating
 productRouter.get("/top", expressAsyncHandler(async (req, res) => {
-  const topProducts = await Product.find().sort({'product.rating':-1}).limit(3);
+  const topProducts = await Product.find().sort({'rating':-1}).limit(3);
   res.send(topProducts);
 }));
 

@@ -64,6 +64,7 @@ function App() {
   const signoutHandler = () => {  
     dispatch(signout()); 
     sk.disconnect();
+    sk.connect();
   };
 
   const productCategoryList = useSelector(state => state.productCategoryList);

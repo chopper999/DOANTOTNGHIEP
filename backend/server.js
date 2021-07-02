@@ -93,7 +93,9 @@ io.on('connection', (socket) => {          //Xử lý khi có connect từ clien
         messages: [],
       };
       const existUser = users.find((x) => x._id === updatedUser._id);
+      
       if (existUser) {
+        
         existUser.socketId = socket.id;
         existUser.online = true;
       } else {

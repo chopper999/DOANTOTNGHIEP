@@ -140,10 +140,10 @@ export default function SearchResultScreen(props) {
             <div className="ml-60">
               <Statistic inverted>
                 <Statistic.Value className="numProduct">
-                  {products.length}
+                  {/* {products.length} */}
                 </Statistic.Value>
                 <Statistic.Label className="labelResult">
-                  Results
+                  {/* Results */}
                 </Statistic.Label>
               </Statistic>
             </div>

@@ -739,6 +739,9 @@ img.large {
 .textSort{
   font-size: 1.5rem;
 }
+.textWhite{
+  color: white;
+}
 
 .box select {
   background-color: #777785;

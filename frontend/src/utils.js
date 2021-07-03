@@ -5,19 +5,19 @@ export const prices = [
         max: 0,
     },
     {
-        name: '$1 to $10',
-        min: 1,
-        max: 10,
+        name: '10.000 VNĐ to 100.000 VNĐ',
+        min: 10000,
+        max: 100000,
     },
     {
-        name: '$10 to $100',
-        min: 10,
-        max: 100,
+        name: '100.000 VNĐ to 300.000 VNĐ',
+        min: 100000,
+        max: 300000,
     },
     {
-        name: '$100 to $1000',
-        min: 100,
-        max: 1000,
+        name: '300.000VNĐ to 1.000.000VNĐ',
+        min: 300000,
+        max: 1000000,
     },
 ];
 export const ratings = [

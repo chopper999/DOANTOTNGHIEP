@@ -105,7 +105,7 @@ useEffect(() => {
     //   });
     // }
       if (socket) {
-        console.log(userInfo)
+        
         socket.emit("onLogin", {
           _id: userInfo._id,
           name: userInfo.name,
@@ -154,6 +154,7 @@ useEffect(() => {
       mic.onend = () => {
         console.log("continue...");
         mic.start();
+        
       };
     } else {
       mic.stop();
@@ -167,17 +168,22 @@ useEffect(() => {
 
     mic.onresult = (event) => {
       // debounce(()=>{
-
-      // }, 3000);
-      
-      const transcript = Array.from(event.results)
+        const transcript = Array.from(event.results)
         .map((result) => result[0])
         .map((result) => result.transcript)
         .join("");
       setMessageBody(transcript);
       
-
-      console.log(transcript);
+      if (event.results[0].isFinal){
+        // clearTimeout(setT);
+        var setT = setTimeout(() => {
+          setIsListening(false);
+          // dispatch(submitHandler);
+          
+          
+        }, 3000);
+      }
+      
     };
   };
   //Mic

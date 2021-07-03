@@ -305,15 +305,15 @@ useEffect(() => {
               {messages.map((msg, index) => (
                 <li key={index} className="li-message">
                   {msg.isAd || msg.name === "Trợ lý" ? (
-                    /* <div className={index===0 ? "":"mess-div"}> */
                     <div className= {messages[index].name===messages[index-1]?.name || (msg.isAd && messages[index-1]?.name === "Trợ lý" ) || index===0 ? "" : "mess-div"}>
                       <div className="align-left message-data"><i className="fa fa-circle not-me"></i>{`${msg.name} `}</div>
                       <div className="message other-message">{msg.body}</div>
                     </div>
                   ) : (
                     <div className={messages[index].name===messages[index-1].name ? "mess-mutichat" : ""}>
-                      <div className="align-right message-data">{`${msg.name} `}<i className="fa fa-circle me"></i></div>
-                      <div className="message my-message float-right">{msg.body}</div>
+                      <div className="align-right message-data">
+                            {`${msg.name} `}<i className="fa fa-circle me"></i></div>
+                       <div className="message my-message float-right">{msg.body}</div>
                     </div>
                   )}
                 </li>

@@ -101,7 +101,7 @@ function App() {
               <Menu.Item>
                 <Image
                   className="imgLogo"
-                  src="/logoChopper.jpg"
+                  src="/logoChopperShop3.jpg"
                   size="tiny"
                   circular
                 />

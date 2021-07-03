@@ -262,7 +262,7 @@ img.large {
   border-radius: 0.5rem;
   margin: 1rem;
   text-align: center;
-  width: 360px !important;
+  width: 380px !important;
 }
 .card-body {
   padding: 1rem;
@@ -573,7 +573,7 @@ img.large {
 }
 .selectItem{
   position: absolute;
-  right: 200px;
+  right: 220px;
   cursor: pointer;
 }
 
@@ -713,9 +713,10 @@ img.large {
 /* Pagination */
 .pagination a {
   padding: 1rem;
+  color: #000000 !important;
   margin: 0.5rem;
   border-radius: 0.5rem;
-  border: 0.1rem #a4a4a4 solid;
+  /* border: 0.1rem #a4a4a4 solid; */
   font-size: 1.6rem;
   font-family: karla,sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -1063,9 +1064,10 @@ img.large {
     padding: 10px 15px;
     font-size: 16px;
     border-radius: 7px;
-    /* margin-bottom: 5px; */
     width: 80%;
     position: relative;
+    margin-bottom: 10px;
+    height: auto;
   }
 
   .message::after {
@@ -1076,7 +1078,7 @@ img.large {
     height: 0;
     width: 0;
     position: absolute;
-    pointer-events: none;
+    /* pointer-events: none; */
     border-bottom-color: #D8DADF;
     border-width: 10px;
     margin-left: -10px;
@@ -1105,22 +1107,31 @@ img.large {
 	height: 0;
 }
 .message-data {
-  margin-bottom: 8px;
-
+  margin-bottom: 15px;
 }
 
-.mess-div{
+/* .mess-div{
   margin-top: 60px;
-}
+} */
 
 .mess-mutichat{
-  padding-top: 60px !important;
+  /* padding-top: 60px !important; */
   /*  margin-top: 60px !important; */
-  margin-bottom: 60px !important;
+  /* margin-bottom: 60px !important; */
 }
 .not-me{
   color: #D8DADF;
 }
 .me{
  color: #e25e3d;
+ margin-right: 10px;
+}
+
+.ul-message{
+  padding: 20px;
+  
+}
+
+.li-message{
+ overflow-y: hidden;
 }

@@ -81,8 +81,8 @@ function CartScreen(props) {
 
                       <div className="itemPrice">
                         {" "}
-                        <Icon name="dollar" />
-                        {item.price}
+                        {/* <Icon name="dollar" /> */}
+                        {item.price} VNĐ
                       </div>
                       <div>
                         <Button
@@ -104,9 +104,9 @@ function CartScreen(props) {
             <ul>
               <li>
                 <h2>
-                  Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) :
-                  <Icon name="dollar"></Icon>
-                  {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                  Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : {" "}
+                  {/* <Icon name="dollar"></Icon> */}
+                  {cartItems.reduce((a, c) => a + c.price * c.qty, 0)} VNĐ
                 </h2>
               </li>
               <li>

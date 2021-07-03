@@ -6,7 +6,7 @@ import { useParams, Link } from 'react-router-dom';
 import LoadingBox from './../components/LoadingBox';
 import MessageBox from './../components/MessageBox';
 import Product from './../components/Product';
-import { List, Statistic, Icon, Divider } from 'semantic-ui-react';
+import { List, Statistic, Icon } from 'semantic-ui-react';
 import { prices, ratings } from './../utils';
 import Rating from './../components/Rating';
 
@@ -98,7 +98,7 @@ export default function SearchResultScreen(props) {
             <h1 className="textCategory">Price</h1>
             {prices.map((p) => (
               <List animated verticalAlign="middle" size="big">
-                <List.Item>
+                <List.Item key={p}>
                   <Link
                     to={getFilterUrl({ min: p.min, max: p.max })}
                     className={
@@ -118,7 +118,7 @@ export default function SearchResultScreen(props) {
             <h1 className="textCategory">Customer Review</h1>
             {ratings.map((r) => (
               <List animated verticalAlign="middle" size="big">
-                <List.Item>
+                <List.Item key={r}>
                   <Link
                     to={getFilterUrl({ rating: r.rating })}
                     className={`${r.rating}` === `${rating}` ? "active" : ""}

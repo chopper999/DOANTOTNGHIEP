@@ -24,11 +24,7 @@ const initialState = {
       : {},
     paymentMethod: "PayPal",
   },
-  soundHelloField: {
-    checkHelloSuccess: localStorage.getItem("checkHelloSuccess")
-      ? JSON.parse(localStorage.getItem("checkHelloSuccess"))
-      : false,
-  }
+  
 };
 const reducer = combineReducers({
     productList: productListReducer,

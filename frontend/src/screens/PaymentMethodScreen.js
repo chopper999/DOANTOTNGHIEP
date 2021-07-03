@@ -45,6 +45,7 @@ export default function PaymentMethodScreen(props) {
               value="Stripe"
               name="paymentMethod"
               required
+              disabled
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></input>
             <label className="namePayMethod" htmlFor="stripe">Stripe</label>

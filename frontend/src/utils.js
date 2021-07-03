@@ -5,17 +5,17 @@ export const prices = [
         max: 0,
     },
     {
-        name: '10.000 VNĐ to 100.000 VNĐ',
+        name: '10.000 VNĐ - 100.000 VNĐ',
         min: 10000,
         max: 100000,
     },
     {
-        name: '100.000 VNĐ to 300.000 VNĐ',
+        name: '100.000 VNĐ - 300.000 VNĐ',
         min: 100000,
         max: 300000,
     },
     {
-        name: '300.000VNĐ to 1.000.000VNĐ',
+        name: '300.000VNĐ - 1.000.000VNĐ',
         min: 300000,
         max: 1000000,
     },

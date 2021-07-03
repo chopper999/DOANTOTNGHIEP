@@ -20,8 +20,8 @@ export default function PlaceOrderScreen(props) {
   cart.itemsPrice = toPrice(
     cart.cartItems.reduce((a, c) => a + c.qty * c.price, 0)
   );
-  cart.shippingPrice = cart.itemsPrice > 100 ? toPrice(0) : toPrice(10); //free ship khi tong tien lon hon 100
-  cart.taxPrice = toPrice(0.15 * cart.itemsPrice);
+  cart.shippingPrice = cart.itemsPrice > 500000 ? toPrice(0) : toPrice(30000); //free ship khi tong tien lon hon 100
+  cart.taxPrice = toPrice(0 * cart.itemsPrice);
   cart.totalPrice = cart.itemsPrice + cart.shippingPrice + cart.taxPrice;
   const dispatch = useDispatch();
   const placeOrderHandler = () => {
@@ -82,7 +82,7 @@ export default function PlaceOrderScreen(props) {
                         </div>
 
                         <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x {item.price} VNĐ= {item.qty * item.price} VNĐ
                         </div>
                       </div>
                     </li>
@@ -101,19 +101,19 @@ export default function PlaceOrderScreen(props) {
               <li>
                 <div className="row">
                   <div>Items</div>
-                  <div>${cart.itemsPrice.toFixed(2)}</div>
+                  <div>{cart.itemsPrice.toFixed(0)} VNĐ</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Shipping</div>
-                  <div>${cart.shippingPrice.toFixed(2)}</div>
+                  <div>{cart.shippingPrice.toFixed(0)} VNĐ</div>
                 </div>
               </li>
               <li>
                 <div className="row">
                   <div>Tax</div>
-                  <div>${cart.taxPrice.toFixed(2)}</div>
+                  <div>{cart.taxPrice.toFixed(0)} VNĐ</div>
                 </div>
               </li>
               <li>
@@ -122,7 +122,7 @@ export default function PlaceOrderScreen(props) {
                     <strong> Order Total</strong>
                   </div>
                   <div>
-                    <strong>${cart.totalPrice.toFixed(2)}</strong>
+                    <strong>{cart.totalPrice.toFixed(0)} VNĐ</strong>
                   </div>
                 </div>
               </li>

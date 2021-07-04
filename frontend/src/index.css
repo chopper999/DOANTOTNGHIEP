@@ -612,6 +612,9 @@ img.large {
 .mt-20{
   margin-top: 20px !important;
 }
+.allProductLable{
+  margin-top: 40px !important;
+}
 .noProduct{
   color: #a02020 !important;
   font-size: 3rem !important;
@@ -1164,7 +1167,7 @@ img.large {
   display: inline-block;
   border-radius: 10px;
   height: 300px !important;
-  width: 45rem;
+  width: 60rem;
   /* padding-bottom: 30px; */
 }
 .rowLogin:after {

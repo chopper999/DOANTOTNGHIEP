@@ -90,7 +90,7 @@ function ShippingAddressScreen(props) {
           <input
             type="text"
             id="country"
-            placeholder="Enter your country"
+            placeholder="Nhập quốc gia"
             value={country}
             onChange={e => setCountry(e.target.value)}
             required

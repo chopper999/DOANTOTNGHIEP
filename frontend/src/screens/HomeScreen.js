@@ -79,7 +79,7 @@ export default function HomeScreen() {
          
           <Divider className="dividerAllProduct"></Divider>
           
-          <h2 className="topProduct">Tất cả sản phẩm</h2>
+          <h2 className="topProduct allProductLable">Tất cả sản phẩm</h2>
           
           <Grid className="contain-product" columns={2} divided>
             <Grid.Row>

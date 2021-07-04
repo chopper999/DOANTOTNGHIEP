@@ -33,7 +33,7 @@ function CartScreen(props) {
   return (
     <Container className="containerCart">
       <Header className="cart-Label" as="h1">
-        SHOPPING CART
+        GIỎ HÀNG
       </Header>
       <Grid>
         <Grid.Column width={10}>
@@ -41,9 +41,9 @@ function CartScreen(props) {
             <MessageBox>
               <Message warning size="huge">
                 <Message.Header>
-                  Cart is empty.{" "}
+                  Giỏ hàng trống.{" "}
                   <Link className="goShopping" to="/">
-                    Go Shopping <Icon name="angle double right"></Icon>
+                    Shopping nào <Icon name="angle double right"></Icon>
                   </Link>
                 </Message.Header>
               </Message>
@@ -104,8 +104,7 @@ function CartScreen(props) {
             <ul>
               <li>
                 <h2>
-                  Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : {" "}
-                  {/* <Icon name="dollar"></Icon> */}
+                  Tổng tiền ({cartItems.reduce((a, c) => a + c.qty, 0)} sp) : {" "}
                   {cartItems.reduce((a, c) => a + c.price * c.qty, 0)} VNĐ
                 </h2>
               </li>
@@ -116,7 +115,7 @@ function CartScreen(props) {
                   className="block"
                   disabled={cartItems.length === 0}
                 >
-                  Proceed to Checkout
+                  Tiến hành thanh toán
                 </Button>
               </li>
             </ul>

@@ -46,7 +46,7 @@ export default function DatasetScreen(props) {
 
   return (
     <div className="containerNavbar">
-      <h1 className="centerText mt-20 mb4">Dataset for question and answer</h1>
+      <h1 className="centerText mt-20 mb4">Dữ liệu câu hỏi và trả lời</h1>
       <div className="btnCreateProduct">
               <Button
                 size="huge"
@@ -54,7 +54,7 @@ export default function DatasetScreen(props) {
                 type="button"
                 onClick={createHandler}
               >
-                Create
+                Tạo mới
               </Button>
             </div>
       {loadingDelete && <LoadingBox></LoadingBox>}
@@ -68,10 +68,10 @@ export default function DatasetScreen(props) {
           <thead>
             <tr>
               <th>Index</th>
-              <th>Tag</th>
-              <th>Patterns</th>
-              <th>Responses</th>
-              <th>Actions</th>
+              <th>Loại</th>
+              <th>Câu hỏi</th>
+              <th>Câu trả lời</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -93,14 +93,14 @@ export default function DatasetScreen(props) {
                     type="button"
                     onClick = {()=> props.history.push(`/dataset/${index}/edit`)}
                   >
-                    Add
+                    Thêm
                   </Button>
                   <Button
                     color="red"
                     type="button"
                     onClick = {() => deleteHandler(dataset.tag)}
                   >
-                    Delete
+                    Xóa
                   </Button>
                 </td>
               </tr>

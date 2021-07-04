@@ -30,13 +30,13 @@ export default function OrderListScreen(props) {
     
   }, [dispatch, successDelete, userInfo._id,pageNumber]);    //khi xoa thanh cong, refresh lai listOrder
   const deleteHandler = (order) => {
-    if (window.confirm('Are you sure to delete this order')) {
+    if (window.confirm('Bạn có muốn xóa đơn hàng này')) {
         dispatch(deleteOrder(order._id));
     }
   };
   return (
     <div className="containerNavbar mt-20">
-      <h1 className="centerText">Orders</h1>
+      <h1 className="centerText">Đơn hàng</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {loading ? (
@@ -49,12 +49,12 @@ export default function OrderListScreen(props) {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>USER</th>
-                <th>DATE</th>
-                <th>TOTAL</th>
-                <th>PAID</th>
-                <th>DELIVERED</th>
-                <th>ACTIONS</th>
+                <th>Tên người dùng</th>
+                <th>Ngày</th>
+                <th>Tổng tiền</th>
+                <th>Tình trạng thanh toán</th>
+                <th>Tình trạng chuyển phát</th>
+                <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -63,12 +63,12 @@ export default function OrderListScreen(props) {
                   <td>{order._id}</td>
                   <td>{order.user.name}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.totalPrice.toFixed(2)}</td>
-                  <td>{order.isPaid ? order.paidAt.substring(0, 10) : "No"}</td>
+                  <td>{order.totalPrice.toFixed(0)}</td>
+                  <td>{order.isPaid ? order.paidAt.substring(0, 10) : "Chưa thanh toán"}</td>
                   <td>
                     {order.isDelivered
                       ? order.deliveredAt.substring(0, 10)
-                      : "No"}
+                      : "Chưa chuyển phát "}
                   </td>
                   <td>
                     <Button
@@ -76,11 +76,11 @@ export default function OrderListScreen(props) {
                     type="button"
                     onClick={() => {
                         props.history.push(`/order/${order._id}`); // redirect toi trang detail order
-                      }}>Details</Button>
+                      }}>Chi tiết</Button>
                       <Button
                     color = 'red'
                     type="button"
-                    onClick={() => deleteHandler(order)}>Delete</Button>
+                    onClick={() => deleteHandler(order)}>Xóa</Button>
                   </td>
                 </tr>
               ))}

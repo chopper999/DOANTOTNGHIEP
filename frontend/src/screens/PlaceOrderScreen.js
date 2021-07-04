@@ -46,8 +46,8 @@ export default function PlaceOrderScreen(props) {
               <div className=" card-placeorder card-body-placeorder">
                 <h2>Shipping</h2>
                 <p>
-                  <strong>Name:</strong> {cart.shippingAddress.fullName} <br />
-                  <strong>Address: </strong> {cart.shippingAddress.address},
+                  <strong>Tên khách hàng:</strong> {cart.shippingAddress.fullName} <br />
+                  <strong>Địa chỉ: </strong> {cart.shippingAddress.address},
                   {cart.shippingAddress.city}, {cart.shippingAddress.postalCode}
                   ,{cart.shippingAddress.country}
                 </p>
@@ -55,15 +55,15 @@ export default function PlaceOrderScreen(props) {
             </li>
             <li>
               <div className="card-placeorder card-body-placeorder">
-                <h2>Payment</h2>
+                <h2>Thanh toán</h2>
                 <p>
-                  <strong>Method:</strong> {cart.paymentMethod}
+                  <strong>Phương thức:</strong> {cart.paymentMethod}
                 </p>
               </div>
             </li>
             <li>
               <div className="card-placeorder card-body-placeorder">
-                <h2>Order Items</h2>
+                <h2>Sản phẩm</h2>
                 <ul>
                   {cart.cartItems.map((item) => (
                     <li key={item.product}>
@@ -96,30 +96,30 @@ export default function PlaceOrderScreen(props) {
           <div className="card card-body">
             <ul>
               <li>
-                <h2 className="textLb">Order Summary</h2>
+                <h2 className="textLb">Chi phí đơn hàng</h2>
               </li>
               <li>
                 <div className="row">
-                  <div>Items</div>
+                  <div>Sản phẩm</div>
                   <div>{cart.itemsPrice.toFixed(0)} VNĐ</div>
                 </div>
               </li>
               <li>
                 <div className="row">
-                  <div>Shipping</div>
+                  <div>Phí vận chuyển</div>
                   <div>{cart.shippingPrice.toFixed(0)} VNĐ</div>
                 </div>
               </li>
-              <li>
+              {/* <li>
                 <div className="row">
                   <div>Tax</div>
                   <div>{cart.taxPrice.toFixed(0)} VNĐ</div>
                 </div>
-              </li>
+              </li> */}
               <li>
                 <div className="row">
                   <div>
-                    <strong> Order Total</strong>
+                    <strong>Tổng tiền</strong>
                   </div>
                   <div>
                     <strong>{cart.totalPrice.toFixed(0)} VNĐ</strong>
@@ -134,7 +134,7 @@ export default function PlaceOrderScreen(props) {
                   className="block"
                   disabled={cart.cartItems.length === 0}
                 >
-                  Place Order
+                  Đặt hàng
                 </Button>
               </li>
               {

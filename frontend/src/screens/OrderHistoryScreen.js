@@ -20,8 +20,8 @@ export default function OrderHistoryScreen(props) {
 
 
   return (
-    <div className="containerNavbar">
-      <h1 className="centerText ">Order History</h1>
+    <div className="containerNavbar mt-20">
+      <h1 className="centerText ">Lịch sử đơn hàng</h1>
       {loading ? (
         <LoadingBox></LoadingBox>
       ) : error ? (
@@ -32,11 +32,11 @@ export default function OrderHistoryScreen(props) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>DATE</th>
-              <th>TOTAL</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
-              <th>ACTIONS</th>
+              <th>Ngày</th>
+              <th>Tổng tiền</th>
+              <th>Tình trạng thanh toán</th>
+              <th>Tình trạng chuyển phát</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -45,11 +45,11 @@ export default function OrderHistoryScreen(props) {
                 <td>{order._id}</td>
                 <td>{order.createdAt.substring(0, 10)}</td>
                 <td>{order.totalPrice.toFixed(2)}</td>
-                <td>{order.isPaid ? order.paidAt.substring(0, 10) : "No"}</td>
+                <td>{order.isPaid ? order.paidAt.substring(0, 10) : "Chưa thanh toán"}</td>
                 <td>
                   {order.isDelivered
                     ? order.deliveredAt.substring(0, 10)
-                    : "No"}
+                    : "Chưa chuyển phát"}
                 </td>
                 <td>
                 <Button
@@ -57,7 +57,7 @@ export default function OrderHistoryScreen(props) {
                     type="button"
                     onClick={() => {
                       props.history.push(`/order/${order._id}`);
-                    }}>Details</Button>
+                    }}>Chi tiết</Button>
                 </td>
               </tr>
             ))}

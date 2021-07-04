@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 // import socketIOClient from 'socket.io-client';
-import { Icon, Button, Input, Divider, Popup, Header, Image } from 'semantic-ui-react';
+import { Icon, Button, Input, Divider, Popup, Header, Image, Transition } from 'semantic-ui-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { replyMess } from '../actions/qandaAction';
 import { textToSpeech, sayHello } from './../actions/qandaAction';
@@ -28,8 +28,6 @@ export default function ChatBox(props) {
   const uiMessagesRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const [messageBody, setMessageBody] = useState("");
-  
-  
 
   const [isAdminOnline, setIsAdminOnline] = useState(false);
 
@@ -237,7 +235,6 @@ useEffect(() => {
         }
         
       });
-
     
       
   
@@ -263,18 +260,27 @@ useEffect(() => {
     }
   };
 
-  
+  const [visible, setvisible] = useState(true);
+  setTimeout(() => {
+    setvisible((prevState)=> !prevState);
+  }, 1000);
   return (
     <div className="chatbox">
       {!isOpen ? (
         <Popup
           trigger={
+            <Transition
+            animation={'tada'}
+            duration={1000}
+            visible={visible}
+          >
             <Icon
               className="iconMess"
               name="comments"
               size="huge"
               onClick={supportHandler}
             ></Icon>
+            </Transition>
           }
           open={openPopup ? true : false}
           position="top left"
@@ -338,7 +344,7 @@ useEffect(() => {
                   setMessageBody(e.target.value); //meeageBody = 'a'
                 }}
                 type="text"
-                placeholder="type message"
+                placeholder="nhập tin nhắn"
               />
               <Icon
                 name={isListening === false ? "microphone slash" : "microphone"}

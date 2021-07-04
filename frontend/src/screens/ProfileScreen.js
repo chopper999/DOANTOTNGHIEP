@@ -48,7 +48,7 @@ export default function ProfileScreen() {
       <div>
         <form className="form containerForm " onSubmit={submitHandler}>
           <div>
-            <h1 className="centerText">User Profile</h1>
+            <h1 className="centerText">Thông tin cá nhân</h1>
           </div>
           {loading ? (
             <LoadingBox></LoadingBox>
@@ -62,11 +62,11 @@ export default function ProfileScreen() {
                 <MessageBox variant="success">Updated Success</MessageBox>
               )}
               <div>
-                <label htmlFor="name">Name</label>
+                <label htmlFor="name">Tên</label>
                 <input
                   id="name"
                   type="text"
-                  placeholder="Enter name"
+                  placeholder="Nhập tên"
                   value={name}
                   onChange={e => setName(e.target.value)}
                 ></input>
@@ -82,20 +82,20 @@ export default function ProfileScreen() {
                 ></input>
               </div>
               <div>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Mật khẩu</label>
                 <input
                   id="password"
                   type="password"
-                  placeholder="Enter password"
+                  placeholder="Nhập mật khẩu"
                   onChange={e => setPassword(e.target.value)}
                 ></input>
               </div>
               <div>
-                <label htmlFor="confirmPassword">Confirm Password</label>
+                <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
                 <input
                   id="confirmPassword"
                   type="password"
-                  placeholder="Enter confirm password"
+                  placeholder="Nhập lại mật khẩu"
                   onChange={e => setConfirmPassword(e.target.value)}
                 ></input>
               </div>
@@ -107,7 +107,7 @@ export default function ProfileScreen() {
                   type="submit"
                   className="block"
                 >
-                  Update
+                  Cập nhật
                 </Button>
               </div>
             </>

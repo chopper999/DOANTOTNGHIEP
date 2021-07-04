@@ -39,38 +39,38 @@ export default function DatasetCreateScreen(props) {
         <div>
             <form className="form containerForm" onSubmit={submitHandler}>
         <div>
-          <h1 className="centerText">Create Question and Answer</h1>
+          <h1 className="centerText">Tạo câu hỏi và trả lời</h1>
         </div>
         {loadingCreate ? <LoadingBox></LoadingBox>:
         errorCreate ? <MessageBox variant="danger">{errorCreate}</MessageBox>
         :(
           <>
             <div>
-              <label htmlFor="tag">Tag</label>
+              <label htmlFor="tag">Loại</label>
               <input
                 id="tag"
                 type="text"
-                placeholder="Enter tag"
+                placeholder="Nhập loại"
                 value={tag}
                 onChange={(e) => setTag(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="pattern">Pattern</label>
+              <label htmlFor="pattern">Câu hỏi</label>
               <input
                 id="pattern"
                 type="text"
-                placeholder="Enter pattern"
+                placeholder="Nhập câu hỏi"
                 value={pattern}
                 onChange={(e) => setPattern(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="response">Response</label>
+              <label htmlFor="response">Trả lời</label>
               <input
                 id="response"
                 type="text"
-                placeholder="Enter response"
+                placeholder="Nhập câu trả lời"
                 value={response}
                 onChange={(e) => setResponse(e.target.value)}
               ></input>
@@ -78,7 +78,7 @@ export default function DatasetCreateScreen(props) {
             <div>
               <label></label>
               <Button color="red" type="submit" className="block">
-                Create
+                Tạo
               </Button>
             </div>
           </>

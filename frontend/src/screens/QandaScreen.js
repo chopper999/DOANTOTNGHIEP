@@ -73,7 +73,7 @@ rule.second = 1;
 
     return (
       <div className="containerNavbar">
-        <h1 className="centerText mt-20 mb4">Question and Answer</h1>
+        <h1 className="centerText mt-20 mb4">Câu hỏi và trả lời</h1>
 
         {errorTrain && <MessageBox variant="danger">{errorTrain}</MessageBox>}
         {loadingTrain ? (
@@ -101,8 +101,8 @@ rule.second = 1;
                   <thead>
                     <tr>
                       <th>Index</th>
-                      <th>Question</th>
-                      <th>ACTIONS</th>
+                      <th>Câu hỏi</th>
+                      <th>Hành động</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -118,14 +118,14 @@ rule.second = 1;
                               props.history.push(`/qanda/${index}/edit`)
                             }
                           >
-                            Edit
+                            Chỉnh sửa
                           </Button>
                           <Button
                             color="red"
                             type="button"
                             onClick={() => deleteHandler(index)}
                           >
-                            Delete
+                            Xóa
                           </Button>
                         </td>
                       </tr>

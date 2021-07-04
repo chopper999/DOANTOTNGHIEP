@@ -62,7 +62,7 @@ export default function SearchResultScreen(props) {
         <div className="col-1">
           <div>
             {" "}
-            <h1 className="textCategory">Categories</h1>
+            <h1 className="textCategory">Danh mục</h1>
             {loadingCategory ? (
               <LoadingBox></LoadingBox>
             ) : errorCategory ? (
@@ -77,7 +77,7 @@ export default function SearchResultScreen(props) {
                     to={getFilterUrl({ category: "all" })}
                   >
                     <Icon name="arrow alternate circle right"></Icon>
-                    Any
+                    Tất cả
                   </Link>
                 </List.Item>
                 {categories.map((c) => (
@@ -95,7 +95,7 @@ export default function SearchResultScreen(props) {
             )}
           </div>
           <div className="mt-20">
-            <h1 className="textCategory">Price</h1>
+            <h1 className="textCategory">Khoảng giá</h1>
             {prices.map((p) => (
               <List animated verticalAlign="middle" size="big">
                 <List.Item key={p}>
@@ -115,7 +115,7 @@ export default function SearchResultScreen(props) {
           </div>
 
           <div className="mt-20">
-            <h1 className="textCategory">Customer Review</h1>
+            <h1 className="textCategory">Đánh giá khách hàng</h1>
             {ratings.map((r) => (
               <List animated verticalAlign="middle" size="big">
                 <List.Item key={r}>
@@ -123,7 +123,7 @@ export default function SearchResultScreen(props) {
                     to={getFilterUrl({ rating: r.rating })}
                     className={`${r.rating}` === `${rating}` ? "active" : ""}
                   >
-                    <Rating caption={"& up"} rating={r.rating}></Rating>
+                    <Rating caption={"trở lên"} rating={r.rating}></Rating>
                   </Link>
                 </List.Item>
               </List>
@@ -150,17 +150,17 @@ export default function SearchResultScreen(props) {
           )}
           <div className="mr-60 numProduct textSort">
             <div className="box">
-              Sort by {""}
+              Sắp xếp theo {""}
               <select
                 value={order}
                 onChange={(e) => {
                   props.history.push(getFilterUrl({ order: e.target.value }));
                 }}
               >
-                <option value="newest">Newest Arrivals</option>
-                <option value="lowest">Price: Low to High</option>
-                <option value="highest">Price: High to Low</option>
-                <option value="toprated">Avg. Customer Reviews</option>
+                <option value="newest">Mới nhất</option>
+                <option value="lowest">Giá thấp đến cao</option>
+                <option value="highest">Giá cao xuống thấp</option>
+                <option value="toprated">Đánh giá của khách hàng</option>
               </select>
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function SearchResultScreen(props) {
             <>
               {products.length === 0 && (
                 <MessageBox>
-                  <h1 className="noProduct">No Product Found</h1>
+                  <h1 className="noProduct">Không có sản phẩm</h1>
                 </MessageBox>
               )}
               <div className="row center">

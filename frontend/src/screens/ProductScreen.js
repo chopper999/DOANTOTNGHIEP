@@ -102,26 +102,26 @@ export default function ProductScreen(props) {
                   ></Rating>
                 </li>
                 <li className="description">
-                  Description: {product.description}
+                  Mô tả: {product.description}
                 </li>
                 <li></li>
               </ul>
-
+              <br/>
               <Card>
                 <Card.Content>
                   <Card.Meta>
                     <div className="row price p-1">
-                      <div> Price</div>
+                      <div> Giá</div>
                       <div><strong>{product.price} VNĐ</strong></div>
                     </div>
                   </Card.Meta>
                   <div className="row price p-1">
-                    <div>Status</div>
+                    <div>Trạng thái</div>
                     <div>
                       {product.countInStock > 0 ? (
-                        <span className="success">In Stock</span>
+                        <span className="success">Còn hàng</span>
                       ) : (
-                        <span className="danger">Unavailable</span>
+                        <span className="danger">Hết hàng</span>
                       )}
                     </div>
                   </div>
@@ -130,7 +130,7 @@ export default function ProductScreen(props) {
                   {product.countInStock > 0 && (
                     <div>
                       <div className="row price p-1">
-                        <div>Quantity</div>
+                        <div>Số lượng</div>
                         <div>
                           <select
                             value={qty}
@@ -155,7 +155,7 @@ export default function ProductScreen(props) {
                     onClick={addToCartHandler}
                     className="btnAddtoCart"
                     color="red"
-                  >Add to Cart
+                  >Thêm vào giỏ hàng
                   </Button>
                 )}
                 </Card.Content>
@@ -164,7 +164,7 @@ export default function ProductScreen(props) {
           </div>
           <div className="reviewArea">
             <h2 id="reviews">
-                Reviews
+                Đánh giá
             </h2>
             {product.reviews.length === 0 && (
               <MessageBox>
@@ -180,7 +180,7 @@ export default function ProductScreen(props) {
                   <Rating rating={review.rating} caption=" "></Rating>
                   <p className="lighterText">
                     {" "}
-                    <i> at &nbsp;{review.createdAt.substring(0, 10)}</i>
+                    <i>  &nbsp;{review.createdAt.substring(0, 10)}</i>
                   </p>
                   <p className="reviewContent">{review.comment}</p>
                 </li>
@@ -189,9 +189,9 @@ export default function ProductScreen(props) {
                 {userInfo ? (
                   <Segment color='grey' secondary padded piled tertiary className="reviewForm">
                     <Form inverted onSubmit={submitHandler}>
-                      <h2 className="textCenter">Write your review</h2>
+                      <h2 className="textCenter">Thêm đánh giá của bạn</h2>
                       <Form.Field>
-                        <label className="textRating" htmlFor="rating">Rating</label>
+                        <label className="textRating" htmlFor="rating">Đánh giá</label>
                         <Dropdown
                           fluid
                           selection
@@ -199,16 +199,16 @@ export default function ProductScreen(props) {
                           value={rating}
                           onChange={(e, data) => setRating(data.value)}
                           options={ratingOptions}
-                          placeholder="Select..."
+                          placeholder="Chọn mức độ..."
                         ></Dropdown>
                       </Form.Field>
                       <Form.Field>
-                        <label className="textRating">Comment</label>
+                        <label className="textRating">Nhận xét</label>
                         <TextArea
                           id="comment"
                           value={comment}
                           rows={3}
-                          placeholder="Enter your comment..."
+                          placeholder="Nhận xét..."
                           onChange={(e, data) => setComment(data.value)}
                         ></TextArea>
                       </Form.Field>
@@ -219,7 +219,7 @@ export default function ProductScreen(props) {
                           type="submit"
                           className="hoverBtn"
                         >
-                          Submit
+                          Đánh giá
                         </Button>
                       </div>
 
@@ -235,7 +235,7 @@ export default function ProductScreen(props) {
                   </Segment>
                 ) : (
                   <MessageBox>
-                    Please <Link to="/signin">Sign In</Link> to write a review
+                    Please <Link to="/signin">Đăng nhập</Link> để nhận xét và đánh giá
                   </MessageBox>
                 )}
               </li>

@@ -48,7 +48,7 @@ export default function HomeScreen() {
       ) : (
         <div className = "carousel">
           {productsTopList.length === 0 && (
-            <MessageBox className="topProduct">No Product Found</MessageBox>
+            <MessageBox className="topProduct">Không có sản phẩm</MessageBox>
           )}
           {
             <Slider {...settings}>
@@ -74,12 +74,12 @@ export default function HomeScreen() {
       ) : (
         <>
           {products.length === 0 && (
-            <MessageBox className="topProduct">No Product Found</MessageBox>
+            <MessageBox className="topProduct">Không có sản phẩm</MessageBox>
           )}
          
           <Divider className="dividerAllProduct"></Divider>
           
-          <h2 className="topProduct">All Products</h2>
+          <h2 className="topProduct">Tất cả sản phẩm</h2>
           
           <Grid className="contain-product" columns={2} divided>
             <Grid.Row>

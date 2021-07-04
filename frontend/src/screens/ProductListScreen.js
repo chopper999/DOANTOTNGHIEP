@@ -49,7 +49,7 @@ export default function ProductListScreen(props) {
   };
   return (
     <div className="containerNavbar">
-      <h1 className="centerText mt-20 mb4">Products</h1>
+      <h1 className="centerText mt-20 mb4">Danh sách sản phẩm</h1>
       <div className="btnCreateProduct">
           <Button
             color="green"
@@ -57,7 +57,7 @@ export default function ProductListScreen(props) {
             onClick={createHandler}
             size= "huge"
           >
-            Create Product
+            Thêm sản phẩm
           </Button>
       </div>
       {loadingDetele && <LoadingBox></LoadingBox>}
@@ -76,11 +76,11 @@ export default function ProductListScreen(props) {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
-                <th>ACTIONS</th>
+                <th>Tên</th>
+                <th>Giá</th>
+                <th>Danh mục</th>
+                <th>Thương hiệu</th>
+                <th>Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -97,12 +97,12 @@ export default function ProductListScreen(props) {
                     type="button"
                     onClick={() =>
                         props.history.push(`/product/${product._id}/edit`)}
-                    >Edit</Button>
+                    >Chỉnh sửa</Button>
                     <Button 
                     color="red"
                     type="button"
                     onClick={() => deleteHandler(product)}
-                    >Delete</Button>
+                    >Xóa</Button>
                   </td>
                 </tr>
               ))}

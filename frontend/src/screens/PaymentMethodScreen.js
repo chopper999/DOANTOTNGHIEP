@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { savePaymentMethod } from '../actions/cartActions';
 import CheckoutSteps from '../components/CheckoutSteps';
-import { Button, Label } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
 export default function PaymentMethodScreen(props) {
   const cart = useSelector((state) => state.cart);
@@ -22,7 +22,7 @@ export default function PaymentMethodScreen(props) {
       <CheckoutSteps step1 step2 step3></CheckoutSteps>
       <form className="form" onSubmit={submitHandler}>
         <div>
-          <h1 className="centerText">Payment Method</h1>
+          <h1 className="centerText">Chọn phương thức thanh toán</h1>
         </div>
         <div>
           <div className="centerItem">
@@ -58,7 +58,7 @@ export default function PaymentMethodScreen(props) {
                   type="submit"
                   className="block"
                 >
-                  Continue
+                  Tiếp tục
                 </Button>
         </div>
       </form>

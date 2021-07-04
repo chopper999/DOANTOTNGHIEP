@@ -77,7 +77,7 @@ export default function OrderScreen(props) {
     <MessageBox variant="danger">{error}</MessageBox>
   ) : (
     <div>
-      <h1 className="nameOrder">Order {order._id}</h1>
+      <h1 className="nameOrder">Đơn hàng {order._id}</h1>
       <div className="row top">
         <div className="col-2">
           <ul>
@@ -85,39 +85,39 @@ export default function OrderScreen(props) {
               <div className="card-placeorder card-body-placeorder">
                 <h2>Shipping</h2>
                 <p>
-                  <strong>Name:</strong> {order.shippingAddress.fullName} <br />
-                  <strong>Address: </strong> {order.shippingAddress.address},
+                  <strong>Tên:</strong> {order.shippingAddress.fullName} <br />
+                  <strong>Địa chỉ: </strong> {order.shippingAddress.address},
                   {order.shippingAddress.city},{" "}
                   {order.shippingAddress.postalCode},
                   {order.shippingAddress.country}
                 </p>
                 {order.isDelivered ? (
                   <MessageBox variant="success">
-                    Delivered at {order.deliveredAt}
+                    Chuyển phát vào ngày {order.deliveredAt}
                   </MessageBox>
                 ) : (
-                  <MessageBox variant="danger">Not Delivered</MessageBox>
+                  <MessageBox variant="danger">Chưa chuyển phát</MessageBox>
                 )}
               </div>
             </li>
             <li>
               <div className="card-placeorder card-body-placeorder">
-                <h2>Payment</h2>
+                <h2>Thanh toán</h2>
                 <p>
-                  <strong>Method:</strong> {order.paymentMethod}
+                  <strong>Phương thức:</strong> {order.paymentMethod}
                 </p>
                 {order.isPaid ? (
                   <MessageBox variant="success">
-                    Paid at {order.paidAt}
+                    Thanh toán vào ngày {order.paidAt}
                   </MessageBox>
                 ) : (
-                  <MessageBox variant="danger">Not Paid</MessageBox>
+                  <MessageBox variant="danger">Chưa thanh toán</MessageBox>
                 )}
               </div>
             </li>
             <li>
               <div className="card-placeorder card-body-placeorder">
-                <h2>Order Items</h2>
+                <h2>Sản phẩm</h2>
                 <ul>
                   {order.orderItems.map(item => (
                     <li key={item.product}>
@@ -136,7 +136,7 @@ export default function OrderScreen(props) {
                         </div>
 
                         <div>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
+                          {item.qty} x {item.price} VNĐ = {item.qty * item.price} VNĐ
                         </div>
                       </div>
                     </li>
@@ -150,33 +150,33 @@ export default function OrderScreen(props) {
           <div className="card card-body">
             <ul>
               <li>
-                <h2 className="textLb">Order Summary</h2>
+                <h2 className="textLb">Chi phí đơn hàng</h2>
               </li>
               <li>
                 <div className="row">
-                  <div>Items</div>
-                  <div>${order.itemsPrice.toFixed(2)}</div>
+                  <div>Tiền sản phẩm</div>
+                  <div>{order.itemsPrice.toFixed(0)} VNĐ</div>
                 </div>
               </li>
               <li>
                 <div className="row">
-                  <div>Shipping</div>
-                  <div>${order.shippingPrice.toFixed(2)}</div>
+                  <div>Tiền Ship</div>
+                  <div>{order.shippingPrice.toFixed(0)} VNĐ</div>
                 </div>
               </li>
-              <li>
+              {/* <li>
                 <div className="row">
                   <div>Tax</div>
                   <div>${order.taxPrice.toFixed(2)}</div>
                 </div>
-              </li>
+              </li> */}
               <li>
                 <div className="row">
                   <div>
-                    <strong> Order Total</strong>
+                    <strong> Tổng thanh toán</strong>
                   </div>
                   <div>
-                    <strong>${order.totalPrice.toFixed(2)}</strong>
+                    <strong>{order.totalPrice.toFixed(0)} VNĐ</strong>
                   </div>
                 </div>
               </li>

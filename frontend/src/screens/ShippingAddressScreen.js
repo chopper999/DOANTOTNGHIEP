@@ -36,25 +36,25 @@ function ShippingAddressScreen(props) {
       <CheckoutSteps step1 step2></CheckoutSteps>
       <form className="form containerForm" onSubmit={submitHandler}>
         <div>
-          <h1 className="centerText">Shipping Address</h1>
+          <h1 className="centerText">Nhập địa chỉ giao hàng</h1>
         </div>  
         <div>
-          <label htmlFor="fullName">Full Name</label>
+          <label htmlFor="fullName">Họ và tên</label>
           <input
             type="text"
             id="fullName"
-            placeholder="Enter your full name"
+            placeholder="Nhập họ và tên"
             value={fullName}
             onChange={e => setFullName(e.target.value)}
             required
           ></input>
         </div>
         <div>
-          <label htmlFor="address">Address</label>
+          <label htmlFor="address">Địa chỉ</label>
           <input
             type="text"
             id="address"
-            placeholder="Enter your address"
+            placeholder="Nhập địa chỉ"
             value={address}
             onChange={e => setAddress(e.target.value)}
             required
@@ -62,11 +62,11 @@ function ShippingAddressScreen(props) {
         </div>
 
         <div>
-          <label htmlFor="city">City</label>
+          <label htmlFor="city">Thành phố</label>
           <input
             type="text"
             id="city"
-            placeholder="Enter your city"
+            placeholder="Nhập thành phố"
             value={city}
             onChange={e => setCity(e.target.value)}
             required
@@ -78,7 +78,7 @@ function ShippingAddressScreen(props) {
           <input
             type="text"
             id="postalCode"
-            placeholder="Enter your Postal Code"
+            placeholder="Nhập Postal Code"
             value={postalCode}
             onChange={e => setPostalCode(e.target.value)}
             required
@@ -86,7 +86,7 @@ function ShippingAddressScreen(props) {
         </div>
 
         <div>
-          <label htmlFor="country">Country</label>
+          <label htmlFor="country">Quốc gia</label>
           <input
             type="text"
             id="country"
@@ -103,7 +103,7 @@ function ShippingAddressScreen(props) {
                   type="submit"
                   className="block"
                 >
-                  Continue
+                  Tiếp tục
                 </Button>
         </div>
       </form>

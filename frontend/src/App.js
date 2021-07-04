@@ -78,7 +78,9 @@ function App() {
   //UI
   const [activeItem, setActiveItem] = useState('');
   const handleItemClick = ({name} ) => setActiveItem({ activeItem: name});
-  const [train, setTrain] = useState(true)
+  const [train, setTrain] = useState(true);
+
+
   // window.setInterval(function(){ 
   //   var date = new Date();
   //   if(train && date.getHours() === 12 && date.getMinutes() === 52 && date.getSeconds()===1 && (date.getMilliseconds() > 1 && date.getMilliseconds() < 100)){ // Check the time
@@ -146,14 +148,14 @@ function App() {
                           <Dropdown.Item>
                             <Dropdown.Text>
                               <Link className="dropdownItem" to="/profile">
-                                User Profile
+                                Thông tin cá nhân
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
                           <Dropdown.Item>
                             <Dropdown.Text>
                               <Link className="dropdownItem" to="/orderhistory">
-                                Order History
+                                Lịch sử đơn hàng
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
@@ -164,7 +166,7 @@ function App() {
                                 to="#signout"
                                 onClick={signoutHandler}
                               >
-                                Sign Out
+                                Đăng xuất
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
@@ -174,7 +176,7 @@ function App() {
                       <Link to="/signin" className="btnSignin1">
                         <Button size="huge" color={"red"}>
                           <Icon name="sign-in"></Icon>
-                          Sign In
+                          Đăng nhập
                         </Button>
                       </Link>
                     )}
@@ -194,28 +196,28 @@ function App() {
                           <Dropdown.Item>
                             <Dropdown.Text>
                               <Link className="dropdownItem" to="/productlist">
-                                Products
+                                Sản phẩm
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
                           <Dropdown.Item>
                             <Dropdown.Text>
                               <Link className="dropdownItem" to="/orderlist">
-                                Orders
+                                Đơn hàng
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
                           <Dropdown.Item>
                             <Dropdown.Text>
                               <Link className="dropdownItem" to="/userlist">
-                                Users
+                                Người dùng
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
                           <Dropdown.Item>
                             <Dropdown.Text>
                               <Link className="dropdownItem" to="/support">
-                                Support
+                                Hỗ trợ
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
@@ -229,7 +231,7 @@ function App() {
                           <Dropdown.Item>
                             <Dropdown.Text>
                               <Link className="dropdownItem" to="/dataset">
-                                Dataset Q&A
+                                Dữ liệu Q&A
                               </Link>
                             </Dropdown.Text>
                           </Dropdown.Item>
@@ -254,7 +256,7 @@ function App() {
               pointing
               size="huge"
             >
-              <Dropdown item text="CATEGORY">
+              <Dropdown item text="Danh mục">
                 <Dropdown.Menu>
                   {loadingCategory ? (
                     <LoadingBox></LoadingBox>
@@ -277,25 +279,26 @@ function App() {
               </Dropdown>
               <Link to="/">
                 <Menu.Item
-                  name="HOME"
-                  active={activeItem === "HOME"}
+                  name="Trang chủ"
+                  active={activeItem === "Trang chủ"}
                   onClick={handleItemClick}
                 />
               </Link>
               <Link to="/search/name/">
                 <Menu.Item
-                  name="SHOP"
-                  active={activeItem === "SHOP"}
+                  name="Shop"
+                  active={activeItem === "Shop"}
                   onClick={handleItemClick}
                 />
               </Link>
-              <Link to="/">
+              {/* <Link to="/">
                 <Menu.Item
-                  name="CONTACT"
-                  active={activeItem === "CONTACT"}
+                className="lienHeText"
+                  name="Liên hệ"
+                  active={activeItem === "Liên hệ"}
                   onClick={handleItemClick}
                 />
-              </Link>
+              </Link> */}
             </Menu>
           </Segment>
         </div>

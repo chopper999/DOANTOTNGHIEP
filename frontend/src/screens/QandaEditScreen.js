@@ -41,9 +41,9 @@ export default function QandaEditScreen(props) {
       };
     return (
         <div>
-            <form className="form containerForm" onSubmit={submitHandler}>
+            <form className="form containerForm mt-20" onSubmit={submitHandler}>
         <div>
-          <h1 className="centerText">Create Question and Answer</h1>
+          <h1 className="centerText">Tạo câu hỏi và trả lời</h1>
         </div>
         {loadingUpdate && <LoadingBox></LoadingBox>}
         {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
@@ -54,31 +54,31 @@ export default function QandaEditScreen(props) {
         ) : (
           <>
             <div>
-              <label htmlFor="question">Question</label>
+              <label htmlFor="question">Câu hỏi</label>
               <input
                 id="question"
                 type="text"
-                placeholder="Enter question"
+                placeholder="Nhập câu hỏi"
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="answer">Answer</label>
+              <label htmlFor="answer">Trả lời</label>
               <input
                 id="answer"
                 type="text"
-                placeholder="Enter answer"
+                placeholder="Nhập câu trả lời"
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="tag">Tag</label>
+              <label htmlFor="tag">Loại</label>
               <input
                 id="tag"
                 type="text"
-                placeholder="Enter tag"
+                placeholder="Nhập loại câu hỏi"
                 value={tag}
                 onChange={(e) => setTag(e.target.value)}
               ></input>
@@ -89,7 +89,7 @@ export default function QandaEditScreen(props) {
                   type="submit"
                   className="block"
                 >
-                  Update
+                  Cập nhật
                 </Button>
           </>
         )}

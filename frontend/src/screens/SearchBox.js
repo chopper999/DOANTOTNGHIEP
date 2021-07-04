@@ -13,7 +13,7 @@ export default function SearchBox(props) {
             <Input inverted className='inputSearch' 
             action={{ icon: 'search', color:'red' }} 
             size='big' 
-            placeholder='Search...'
+            placeholder='Tìm kiếm...'
             onChange={(e)=>setName(e.target.value)} />
         </form> 
     )

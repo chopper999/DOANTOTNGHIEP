@@ -46,7 +46,7 @@ export default function DatasetEditScreen(props) {
     <div>
       <form className="form containerForm" onSubmit={submitHandler}>
         <div>
-          <h1 className="centerText">Add Question and Answer</h1>
+          <h1 className="centerText">Thêm câu hỏi và trả lời</h1>
         </div>
         {loadingUpdate && <LoadingBox></LoadingBox>}
         {errorUpdate && <MessageBox variant="danger">{errorUpdate}</MessageBox>}
@@ -57,7 +57,7 @@ export default function DatasetEditScreen(props) {
         ) : (
           <>
             <div>
-              <label htmlFor="tag">Tag</label>
+              <label htmlFor="tag">Loại</label>
               <input
                 id="tag"
                 type="text"
@@ -67,21 +67,21 @@ export default function DatasetEditScreen(props) {
               ></input>
             </div>
             <div>
-              <label htmlFor="pattern">Pattern</label>
+              <label htmlFor="pattern">Câu hỏi</label>
               <input
                 id="pattern"
                 type="text"
-                placeholder="Enter pattern"
+                placeholder="Nhập câu hỏi"
                 value={pattern}
                 onChange={(e) => setPattern(e.target.value)}
               ></input>
             </div>
             <div>
-              <label htmlFor="response">Response</label>
+              <label htmlFor="response">Trả lời</label>
               <input
                 id="response"
                 type="text"
-                placeholder="Enter response"
+                placeholder="Nhập câu trả lời"
                 value={response}
                 onChange={(e) => setResponse(e.target.value)}
               ></input>
@@ -89,7 +89,7 @@ export default function DatasetEditScreen(props) {
             <div>
               <label></label>
               <Button color="red" type="submit" className="block">
-                Update
+                Cập nhật
               </Button>
             </div>
           </>

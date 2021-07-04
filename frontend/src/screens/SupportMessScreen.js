@@ -130,7 +130,7 @@ export default function SupportMessScreen() {
         <div className="row top full-container">
           <div className="col-1 support-users">
             {users.filter((x) => x._id !== userInfo._id).length === 0 && (
-              <MessageBox>No Online User Found</MessageBox>
+              <MessageBox>Không có người dùng online</MessageBox>
             )}
             <ul>
               {users
@@ -160,14 +160,14 @@ export default function SupportMessScreen() {
           
           <div className="col-3 support-messages">
             {!selectedUser._id ? (
-              <MessageBox>Select a user to start chat</MessageBox>
+              <MessageBox>Chọn khách hàng để trò chuyện</MessageBox>
             ) : (
               <div>
                 <div className="row">
-                  <strong>Chat with {selectedUser.name} </strong>
+                  <strong>Trò chuyện với {selectedUser.name} </strong>
                 </div>
                 <ul ref={uiMessagesRef}>
-                  {messages.length === 0 && <li>No message.</li>}
+                  {messages.length === 0 && <li>Không có tin nhắn.</li>}
                   {messages.map((msg, index) => (
                     <li key={index}>
                       <strong>{`${msg.name}: `}</strong> {msg.body}
@@ -180,9 +180,9 @@ export default function SupportMessScreen() {
                       value={messageBody}
                       onChange={(e) => setMessageBody(e.target.value)}
                       type="text"
-                      placeholder="type message"
+                      placeholder="Nhập tin nhắn"
                     />
-                    <Button color='red' size = 'huge' type="submit">Send</Button>
+                    <Button color='red' size = 'huge' type="submit">Gửi</Button>
                   </form>
                 </div>
               </div>

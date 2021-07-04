@@ -230,7 +230,7 @@ img.large {
   max-width: 30rem;
 }
 .carousel{
-  width: auto;
+  width: 1530px;
   height: 300px;
   text-align: center;
   margin: 0px !important;
@@ -1138,4 +1138,106 @@ img.large {
 
 .li-message{
  overflow-y: hidden;
+}
+
+.loginContainer{
+  background: rgb(143,10,10);
+  background: radial-gradient(circle, rgba(143,10,10,1) 0%, rgba(191,166,166,1) 100%);
+  height:430px !important ;
+  padding-top: 70px;
+  text-align:center;
+  
+}
+
+.formLogin {
+  width: 300px; 
+  height: 300px;
+}
+.columnLogin {
+  float: left;
+  width: 50%;
+  padding: 10px;
+}
+/* Clear floats after the columns */
+.rowLogin{
+  background-color: white !important;
+  display: inline-block;
+  border-radius: 10px;
+  height: 300px !important;
+  width: 45rem;
+  /* padding-bottom: 30px; */
+}
+.rowLogin:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+#cf {
+  position:relative;
+  height:440px;
+  margin:0 auto;
+}
+
+#cf img {
+  position:absolute;
+  left:0;
+  -webkit-transition: opacity 1s ease-in-out;
+  -moz-transition: opacity 1s ease-in-out;
+  -o-transition: opacity 1s ease-in-out;
+  transition: opacity 1s ease-in-out;
+}
+
+#cf img.top:hover {
+  opacity:0;
+}
+.containerImageLogin img{
+  width: 280px;
+  height: 280px;
+  vertical-align: middle;
+}
+.signLabel{
+  font-size: 1.5rem;
+  margin-top: 10px !important;
+}
+.signLabelLoad{
+  color: white !important;
+  font-size: 1.5rem;
+  margin-top: 10px !important;
+}
+.formLogin input{
+  border-radius: 15px !important;
+  font-weight: bold;
+  background-color: #a4a4a4;
+  font-size: 1rem;
+}
+
+.createAcountLoginLabel{
+  font-size: 1.2rem;
+}
+.createAcountLoginLabel:hover{
+  color: #501c04;
+  box-shadow: 0px 10px 14px -7px #e0150e;
+}
+
+.btnLogin {
+	box-shadow: 0px 10px 14px -7px #732a27;
+	background:linear-gradient(to bottom, #e47070 5%, #9e0606 100%);
+	background-color:#b35959;
+	border-radius:10px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-size:15px;
+	font-weight:bold;
+	padding:8px 25px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #8a693d;
+}
+.loginLoad{
+  position: absolute;
+  top: 250px;
+  left: 870px;
+  z-index: 100;
 }

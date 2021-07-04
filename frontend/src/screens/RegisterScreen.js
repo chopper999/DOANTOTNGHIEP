@@ -34,49 +34,49 @@ export default function RegisterScreen(props) {
     }
   }, [props.history, redirect, userInfo]);
   return (
-    <div className="containerNavbar">
+    <div className="containerNavbar ">
       <form className="form containerForm" onSubmit={submitHandler}>
         <div>
-          <h1 className="centerText">Create Account</h1>
+          <h1 className="centerText">Tạo tài khoản mới</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
         <div>
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">Tên</label>
           <input
             type="text"
             id="name"
-            placeholder="Enter name"
+            placeholder="Nhập tên"
             required
             onChange={(e) => setName(e.target.value)}
           ></input>
         </div>
         <div>
-          <label htmlFor="email">Email address</label>
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             id="email"
-            placeholder="Enter email"
+            placeholder="Nhập email"
             required
             onChange={(e) => setEmail(e.target.value)}
           ></input>
         </div>
         <div>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Mật khẩu</label>
           <input
             type="password"
             id="password"
-            placeholder="Enter password"
+            placeholder="Nhập mật khẩu"
             required
             onChange={(e) => setPassword(e.target.value)}
           ></input>
         </div>
         <div>
-          <label htmlFor="confirmPassword">Confirm Password</label>
+          <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
           <input
             type="password"
             id="confirmPassword"
-            placeholder="Enter confirm password"
+            placeholder="Nhập lại mật khẩu"
             required
             onChange={(e) => setConfirmPassword(e.target.value)}
           ></input>
@@ -88,14 +88,14 @@ export default function RegisterScreen(props) {
                   type="submit"
                   className="block"
                 >
-                  Register
+                  Đăng ký
                 </Button>
         </div>
         <div>
           <label />
           <div>
-            Already have an account? &nbsp; &nbsp; 
-            <Link to={`/signin?redirect=${redirect}`} className="linkText" >Sign-In</Link>
+            Đã có tài khoản? &nbsp; &nbsp; 
+            <Link to={`/signin?redirect=${redirect}`} className="linkText" >Đăng nhập ngay</Link>
           </div>
         </div>
       </form>

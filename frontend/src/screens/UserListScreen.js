@@ -29,11 +29,11 @@ export default function UserListScreen(props) {
   };
   return (
     <div className="containerNavbar">
-      <h1 className="centerText mt-20">Users</h1>
+      <h1 className="centerText mt-20">Khách hàng</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}
       {successDelete && (
-        <MessageBox variant="success">User Deleted Successfully</MessageBox>
+        <MessageBox variant="success">Xóa thành công</MessageBox>
       )}
       {loading ? (
         <LoadingBox></LoadingBox>
@@ -45,10 +45,10 @@ export default function UserListScreen(props) {
           <thead>
             <tr>
               <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>IS ADMIN</th>
-              <th>ACTIONS</th>
+              <th>Tên</th>
+              <th>Email</th>
+              <th>Là admin</th>
+              <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -62,11 +62,11 @@ export default function UserListScreen(props) {
                   <Button
                     primary
                     type="button"
-                    onClick={() => props.history.push(`/user/${user._id}/edit`)}>Edit</Button>
+                    onClick={() => props.history.push(`/user/${user._id}/edit`)}>Chỉnh sửa</Button>
                     <Button
                     color='red'
                     type="button"
-                    onClick={() => deleteHandler(user)}>Delete</Button>
+                    onClick={() => deleteHandler(user)}>Xóa</Button>
                 </td>
               </tr>
             ))}

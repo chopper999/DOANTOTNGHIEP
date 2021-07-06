@@ -420,7 +420,7 @@ function App() {
               <div className="columnFooter">
                 <i className="fa fa-3x fa-facebook-f"></i>
                 <h4>Facebook</h4>
-                <p><a href="https://www.facebook.com/tibbers.annie.75" target="_blank" className="linkWhite">https://www.facebook.com/tibbers.annie.75</a></p>
+                <p><a href="https://www.facebook.com/tibbers.annie.75" target="_blank" rel="noreferrer" className="linkWhite">https://www.facebook.com/tibbers.annie.75</a></p>
               </div>
               <div className="columnFooter">
                 <i className="fa fa-3x fa-phone"></i>

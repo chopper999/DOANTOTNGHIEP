@@ -129,12 +129,12 @@ export default function SupportMessScreen() {
     return (
         <div className="row top full-container">
           <div className="col-1 support-users">
-            {users.filter((x) => x._id !== userInfo._id).length === 0 && (
+            {users.filter((x) => x._id !== userInfo._id && x.name!=="Bạn").length === 0 && (
               <MessageBox>Không có người dùng online</MessageBox>
             )}
             <ul>
               {users
-                .filter((x) => x._id !== userInfo._id)
+                .filter((x) => x._id !== userInfo._id && x.name!== "Bạn")
                 .map((user) => (
                   <li
                     key={user._id}

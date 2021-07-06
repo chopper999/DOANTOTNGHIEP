@@ -60,12 +60,12 @@ export default function ChatBox(props) {
   let config = [{
     regex: /(http|https):\/\/(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
     fn: (key, result) => <span key={key}>
-                             <a target="_blank" href={`${result[1]}://${result[2]}.${result[3]}${result[4]}`}>{result[2]}.{result[3]}{result[4]}</a>{result[5]}
+                             <a target="_blank" rel="noreferrer" href={`${result[1]}://${result[2]}.${result[3]}${result[4]}`}>{result[2]}.{result[3]}{result[4]}</a>{result[5]}
                          </span>
 }, {
     regex: /(\S+)\.([a-z]{2,}?)(.*?)( |\,|$|\.)/gim,
     fn: (key, result) => <span key={key}>
-                             <a target="_blank" href={`http://${result[1]}.${result[2]}${result[3]}`}>{result[1]}.{result[2]}{result[3]}</a>{result[4]}
+                             <a target="_blank" rel="noreferrer" href={`http://${result[1]}.${result[2]}${result[3]}`}>{result[1]}.{result[2]}{result[3]}</a>{result[4]}
                          </span>
 }];
 
@@ -73,8 +73,12 @@ export default function ChatBox(props) {
 const [hello, setHello] = useState("");
 const [helloSound, setHelloSound] = useState("");
 const [helloSoundCheck, setHelloSoundCheck] = useState(true);
+const [visible, setVisible] = useState(true);
 
 useEffect(() => {
+  setTimeout(() => {
+    setVisible(prevState=> !prevState);
+  }, 1000);
   if(userInfo.name ==="Bạn"){
     dispatch(sayHello("")).then((dataHello) =>{
       if (dataHello) {
@@ -103,6 +107,7 @@ useEffect(() => {
     //   });
     // }
       if (socket) {
+        console.log("sock")
         
         socket.emit("onLogin", {
           _id: userInfo._id,
@@ -111,19 +116,20 @@ useEffect(() => {
         });
 
         socket.on('adminOnl', (data) => {
+          console.log("admin")
             setCheckOnl(true);
         })
         socket.on('adminOff', () =>{
           setCheckOnl(false);
         })
         socket.on("message", (data) => {
-          console.log(data)
+          console.log('bbbb')
           if (data.isAdmin) {
             setIsAdminOnline(true);
             setMessages([...messages, { body: data.body, name: data.name , isAd: true }]);//body:data.body
             
           } else {
-            console.log("aaaaaa")
+            console.log("aaa")
             setIsAdminOnline(false);
             let processed = processString(config)(mess); // Hiển thị link trong chuỗi
             setMessages([...messages, { body: processed, name: data.name, isAd: false }]); //body:data.body
@@ -172,21 +178,22 @@ useEffect(() => {
         .join("");
       setMessageBody(transcript);
       
-      if (event.results[0].isFinal){
-        // clearTimeout(setT);
-        var setT = setTimeout(() => {
-          setIsListening(false);
-          // dispatch(submitHandler);
+      // if (event.results[0].isFinal){
+      //   // clearTimeout(setT);
+      //   var setT = setTimeout(() => {
+      //     setIsListening(false);
+      //     // dispatch(submitHandler);
           
           
-        }, 3000);
-      }
+      //   }, 3000);
+      // }
       
     };
   };
   //Mic
 
   const supportHandler = () => {
+    
     if(helloSoundCheck){
       soundPlay(helloSound);
       setHelloSoundCheck(false);
@@ -225,6 +232,7 @@ useEffect(() => {
           try {
             dispatch(textToSpeech(messRemoveLink)).then(speech=>{
               setTimeout(()=>{
+                console.log("soundPlay");
                 soundPlay(speech);
               },2000);
               });
@@ -254,16 +262,17 @@ useEffect(() => {
     }
   };
   const closeHandler = () => {
+    setTimeout(() => {
+      setVisible(prevState=> !prevState);
+    }, 1000);
     setIsOpen(false);
     if(isListening){
       setIsListening(false);
     }
   };
 
-  const [visible, setvisible] = useState(true);
-  setTimeout(() => {
-    setvisible((prevState)=> !prevState);
-  }, 1000);
+  
+
   return (
     <div className="chatbox">
       {!isOpen ? (

@@ -137,15 +137,17 @@ io.on('connection', (socket) => {          //Xử lý khi có connect từ clien
         }
       } else {    //nếu là mess của user gửi cho admin
         const admin = users.find((x) => x.isAdmin && x.online);
-        if (admin) {
-          io.to(admin.socketId).emit('message', message);
+        const UnauthUser= users.find((x) => x._id === message._id && x.online);
+        if (admin && UnauthUser.name!=="Bạn") {
           const user = users.find((x) => x._id === message._id && x.online);
+
+          io.to(admin.socketId).emit("message", message);
           user.messages.push(message);
-        } 
-        else {            //trường hợp admin chưa online
-          io.to(socket.id).emit('message', {
-            name: 'Trợ lý',
-            body: 'Sorry. I am not online right now',
+        } else {
+          //trường hợp admin chưa online
+          io.to(socket.id).emit("message", {
+            name: "Trợ lý",
+            body: "Sorry. I am not online right now",
           });
         }
       }

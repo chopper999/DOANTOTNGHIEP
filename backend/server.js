@@ -76,7 +76,9 @@ io.on('connection', (socket) => {          //Xử lý khi có connect từ clien
         console.log('Offline', user.name);
         if (user.isAdmin){    //Xu ly khi admin offline thi bat flag de chay textToSpeech
           const existUserOnl = users.find((x) => !x.isAdmin && x.online);
-          io.to(existUserOnl.socketId).emit('adminOff');
+          if(existUserOnl){
+            io.to(existUserOnl.socketId).emit('adminOff');
+          }
         }
         
         const admin = users.find((x) => x.isAdmin && x.online);

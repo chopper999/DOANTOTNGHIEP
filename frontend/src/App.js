@@ -27,7 +27,7 @@ import { listProductCategories } from './actions/productActions';
 import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 
-//UI
+
 import { Menu, Button, Segment, Icon, Dropdown, Image, Divider } from 'semantic-ui-react';
 import SupportMessScreen from './screens/SupportMessScreen';
 import ChatBox from './components/ChatBox';
@@ -38,8 +38,6 @@ import DatasetEditScreen from './screens/DatasetEditScreen';
 import { trainQuestion } from './actions/qandaAction';
 import { sk } from './components/soket';
 import DatasetCreateScreen from './screens/DatasetCreateScreen';
-
-
 
 
 
@@ -69,33 +67,62 @@ function App() {
 
   const productCategoryList = useSelector(state => state.productCategoryList);
   const { loading: loadingCategory, error: errorCategory, categories } = productCategoryList;
+
+  const [train, setTrain] = useState(false);
+  
+  const trainFunction = () => {
+    console.log("Trainn");
+    dispatch(trainQuestion());
+  };
+  
+
+    
+  const jobs = [
+        {
+          fn: trainFunction,
+          id: '1',
+          schedule: '5 17 * * *',
+        }
+      ];
+  // window.setInterval(() => {
+  //   if (!train) {
+  //     var date = new Date();
+  //     if (date.getHours() === 12 && date.getMinutes() === 29) {
+  //       console.log("cho 1 phut");
+  //       dispatch(trainQuestion()).then(()=>{
+  //         setTrain(true);
+  //       })
+  //       // setTimeout(() => {
+  //       //   dispatch(trainQuestion());
+  //       //   setTrain(false);
+  //       // }, 6000);
+  //     }
+  //     else{
+
+  //       console.log("Out");
+  //     }
+  //   }
+  // }, 60000);
+
+
+
+
   useEffect(() =>{
     
-
     dispatch(listProductCategories());
   },[dispatch]);
-       
   //UI
   const [activeItem, setActiveItem] = useState('');
   const handleItemClick = ({name} ) => setActiveItem({ activeItem: name});
-  const [train, setTrain] = useState(true);
+  
 
 
-  // window.setInterval(function(){ 
-  //   var date = new Date();
-  //   if(train && date.getHours() === 12 && date.getMinutes() === 52 && date.getSeconds()===1 && (date.getMilliseconds() > 1 && date.getMilliseconds() < 100)){ // Check the time
-  //       console.log("Timeeeeeeeeeeeeeeeeeeee " + date.getMinutes() +" "+date.getSeconds() +" "+date.getMilliseconds());
-  //       dispatch(trainQuestion());
-  //       setTrain(false);
-  //   }
-  //   if(date.getHours() === 13 && date.getMinutes() === 1 && date.getSeconds()===1){
-  //     setTrain(true);
-  //   }
-  // }, 100); // 60000 milliseconds (1 minute)
+
 
   return (
     <BrowserRouter>
       {/* UI */}
+
       <div className="grid-container">
         <div className="menuTop">
           <Segment inverted className="segmentHeader">
@@ -124,7 +151,6 @@ function App() {
                   )}
                 ></Route>
               </Menu.Item>
-
               <Menu.Item className="iconCart">
                 <Link to="/cart">
                   <Icon
@@ -256,6 +282,7 @@ function App() {
               pointing
               size="huge"
             >
+
               <Dropdown item text="Danh mục">
                 <Dropdown.Menu>
                   {loadingCategory ? (
@@ -389,7 +416,7 @@ function App() {
               component={DatasetEditScreen}
               exact
             />
-             <AdminRoute
+            <AdminRoute
               path="/dataset/createEdit"
               component={DatasetCreateScreen}
               exact
@@ -400,11 +427,7 @@ function App() {
           {userInfo && !userInfo.isAdmin && (
             <ChatBox userInfo={userInfo}></ChatBox>
           )}
-          {
-            !userInfo && (
-              <ChatBox userInfo={unauthenticatedUser}></ChatBox>
-            )
-          }
+          {!userInfo && <ChatBox userInfo={unauthenticatedUser}></ChatBox>}
           <div className="footerContainer">
             <div className="row">
               <div className="columnFooter">
@@ -420,7 +443,16 @@ function App() {
               <div className="columnFooter">
                 <i className="fa fa-3x fa-facebook-f"></i>
                 <h4>Facebook</h4>
-                <p><a href="https://www.facebook.com/tibbers.annie.75" target="_blank" rel="noreferrer" className="linkWhite">https://www.facebook.com/tibbers.annie.75</a></p>
+                <p>
+                  <a
+                    href="https://www.facebook.com/tibbers.annie.75"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="linkWhite"
+                  >
+                    https://www.facebook.com/tibbers.annie.75
+                  </a>
+                </p>
               </div>
               <div className="columnFooter">
                 <i className="fa fa-3x fa-phone"></i>

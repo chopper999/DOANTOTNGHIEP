@@ -883,9 +883,9 @@ img.large {
   height: 100%;
   
 }
-.support-users li {
+/* .support-users li {
   background-color: #f8f8f8;
-}
+} */
 .support-users button {
   background-color: transparent;
   border: none;
@@ -894,7 +894,7 @@ img.large {
 .support-users li {
   margin: 0;
   background-color: #f0f0f0;
-  border-bottom: 0.1rem #c0c0c0 solid;
+  border-bottom: 0.1rem;
 }
 
 .support-users li:hover {
@@ -1243,4 +1243,7 @@ img.large {
   top: 250px;
   left: 870px;
   z-index: 100;
+}
+.btnSelectUser{
+  border-radius: 10px !important;
 }

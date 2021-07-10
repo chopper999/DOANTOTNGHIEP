@@ -123,13 +123,11 @@ useEffect(() => {
           setCheckOnl(false);
         })
         socket.on("message", (data) => {
-          console.log('bbbb')
           if (data.isAdmin) {
             setIsAdminOnline(true);
             setMessages([...messages, { body: data.body, name: data.name , isAd: true }]);//body:data.body
             
           } else {
-            console.log("aaa")
             setIsAdminOnline(false);
             let processed = processString(config)(mess); // Hiển thị link trong chuỗi
             setMessages([...messages, { body: processed, name: data.name, isAd: false }]); //body:data.body
@@ -344,7 +342,9 @@ useEffect(() => {
               ))}
             </ReactScrollableFeed>
           </ul>
-          <Divider></Divider>
+          <br/>
+          <Divider className="dividerChatBox"></Divider>
+          
           <div>
             <form className="row" onSubmit={submitHandler}>
               <Input

@@ -127,67 +127,79 @@ export default function SupportMessScreen() {
       };
 
     return (
-        <div className="row top full-container">
-          <div className="col-1 support-users">
-            {users.filter((x) => x._id !== userInfo._id && x.name!=="Bạn").length === 0 && (
-              <MessageBox>Không có người dùng online</MessageBox>
-            )}
-            <ul>
-              {users
-                .filter((x) => x._id !== userInfo._id && x.name!== "Bạn")
-                .map((user) => (
-                  <li
-                    key={user._id}
-                    className={user._id === selectedUser._id ? '  selected' : '  '}
+      <div className="row top full-container">
+        <div className="col-1 support-users">
+          {users.filter((x) => x._id !== userInfo._id && x.name !== "Bạn")
+            .length === 0 && (
+            <MessageBox>Không có người dùng online</MessageBox>
+          )}
+          <ul>
+            {users
+              .filter((x) => x._id !== userInfo._id && x.name !== "Bạn")
+              .map((user) => (
+                <li
+                  key={user._id}
+                  className={
+                    user._id === selectedUser._id ? "  selected" : "  "
+                  }
+                >
+                  <Button
+                    className="block btnSelectUser"
+                    onClick={() => selectUser(user)}
                   >
-                    <Button
-                      className="block"
-                      onClick={() => selectUser(user)}
-                    >
-                      {user.name}
-                      <span
+                    {user.name}
+                    <span
                       className={
-                        user.unread ? 'unread' : user.online ? 'online' : 'offline'
+                        user.unread
+                          ? "unread"
+                          : user.online
+                          ? "online"
+                          : "offline"
                       }
                     />
-                    </Button>
+                  </Button>
+                </li>
+              ))}
+          </ul>
+        </div>
+
+        <div className="col-3 support-messages">
+          {!selectedUser._id ? (
+            <MessageBox>Chọn khách hàng để trò chuyện</MessageBox>
+          ) : (
+            <div>
+              <div className="row">
+                <strong>Trò chuyện với {selectedUser.name} </strong>
+              </div>
+              <ul ref={uiMessagesRef}>
+                {messages.length === 0 && <li>Không có tin nhắn.</li>}
+                {messages.map((msg, index) => (
+                  <li key={index}>
+                  <div> <strong>{`${msg.name}: `}</strong> </div>
+                    <div>
+                     {msg.body}
+                    </div>
                     
                   </li>
                 ))}
-            </ul>
-            
-          </div>
-          
-          <div className="col-3 support-messages">
-            {!selectedUser._id ? (
-              <MessageBox>Chọn khách hàng để trò chuyện</MessageBox>
-            ) : (
+              </ul>
               <div>
-                <div className="row">
-                  <strong>Trò chuyện với {selectedUser.name} </strong>
-                </div>
-                <ul ref={uiMessagesRef}>
-                  {messages.length === 0 && <li>Không có tin nhắn.</li>}
-                  {messages.map((msg, index) => (
-                    <li key={index}>
-                      <strong>{`${msg.name}: `}</strong> {msg.body}
-                    </li>
-                  ))}
-                </ul>
-                <div>
-                  <form onSubmit={submitHandler} className="row">
-                    <Input className="inputMessAdmin"
-                      value={messageBody}
-                      onChange={(e) => setMessageBody(e.target.value)}
-                      type="text"
-                      placeholder="Nhập tin nhắn"
-                    />
-                    <Button color='red' size = 'huge' type="submit">Gửi</Button>
-                  </form>
-                </div>
+                <form onSubmit={submitHandler} className="row">
+                  <Input
+                    className="inputMessAdmin"
+                    value={messageBody}
+                    onChange={(e) => setMessageBody(e.target.value)}
+                    type="text"
+                    placeholder="Nhập tin nhắn"
+                  />
+                  <Button color="red" size="huge" type="submit">
+                    Gửi
+                  </Button>
+                </form>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-      );
+      </div>
+    );
 }

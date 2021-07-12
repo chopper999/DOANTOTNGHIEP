@@ -175,11 +175,7 @@ export default function SupportMessScreen() {
                 {messages.length === 0 && <li>Không có tin nhắn.</li>}
                 {messages.map((msg, index) => (
                   <li key={index}>
-                  <div> <strong>{`${msg.name}: `}</strong> </div>
-                    <div>
-                     {msg.body}
-                    </div>
-                    
+                  <div> <strong>{`${msg.name}: `}</strong> {msg.body} </div>
                   </li>
                 ))}
               </ul>

@@ -124,7 +124,7 @@ function App() {
       {/* UI */}
 
       <div className="grid-container">
-        <div className="menuTop">
+        <div className="menuTop center-top">
           <Segment inverted className="segmentHeader">
             <Menu pointing inverted secondary className="menuHeader">
               <Menu.Item>

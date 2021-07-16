@@ -33,7 +33,12 @@ body {
 }
 menuTop {
   grid-area: menuTop;
+  text-align: center !important;
 
+}
+.center-top{
+  text-align: center;
+  background-color: #2B2E34 !important;
 }
 .navbar{
   grid-area: navbar;
@@ -71,7 +76,8 @@ menuTop {
 main {
   grid-area: main;
   background-color: white;
-  width: 1520px !important;
+  /* width: 1520px !important; */
+  width: 100%;
 }
 footer {
   grid-area: footer;
@@ -201,6 +207,12 @@ a.brand {
   margin-right: 30px;
 }
 
+.content{
+  text-align: center;
+}
+.center-item {
+  justify-content: center;
+}
 /* Image */
 .imgLogo {
   margin-left: 10px;
@@ -230,9 +242,10 @@ img.large {
   max-width: 30rem;
 }
 .carousel{
-  width: 1530px;
+  width: fit-content;
+  max-width: 1530px;
   height: 300px;
-  text-align: center;
+  justify-content: center;
   margin: 0px !important;
   padding: 0px !important;
   
@@ -255,6 +268,9 @@ img.large {
   font-weight: bold;
   color: white;
 
+}
+.justify-center{
+  display: inline-block;
 }
 
 /* Card */
@@ -460,7 +476,7 @@ img.large {
   height: 8.2rem;
   max-width: 100%;
   padding: 0rem !important;
-  
+  display: inline-block !important;
 
   
 }

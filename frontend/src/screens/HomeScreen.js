@@ -40,7 +40,7 @@ export default function HomeScreen() {
     slidesToScroll: 1
   };
   return (
-    <div>
+    <div className="justify-center">
       {loadingTopProduct ? (
         <LoadingBox></LoadingBox>
       ) : errorTopProduct ? (
@@ -51,7 +51,7 @@ export default function HomeScreen() {
             <MessageBox className="topProduct">Không có sản phẩm</MessageBox>
           )}
           {
-            <Slider {...settings}>
+            <Slider {...settings} className="center-item">
             {productsTopList.map((e) => (
                 <div key={e._id} className="imgCRS">
                   <Link to={`/product/${e._id}`}>

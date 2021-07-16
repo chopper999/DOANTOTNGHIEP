@@ -318,14 +318,15 @@ function App() {
                   onClick={handleItemClick}
                 />
               </Link>
-              {/* <Link to="/">
+              <div className="space"></div>
+              <Link to="/">
                 <Menu.Item
-                className="lienHeText"
-                  name="Liên hệ"
+                  name=""
                   active={activeItem === "Liên hệ"}
                   onClick={handleItemClick}
                 />
-              </Link> */}
+              </Link>
+              
             </Menu>
           </Segment>
         </div>

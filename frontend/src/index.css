@@ -70,7 +70,7 @@ menuTop {
   margin-left: 12px !important;
   /* margin-right: 60px !important; */
   font-size: 1.5rem !important ;
-  display: inline-flex !important;
+  /* display: inline-flex !important; */
 
 }
 .space{
@@ -224,7 +224,7 @@ a.brand {
 .imgLogo {
   margin-left: 10px;
   padding: 0.4rem;
-  top: 2px;
+  top: -20px;
 }
 img {
   border-radius: 0.5rem;

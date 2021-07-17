@@ -332,6 +332,7 @@ img.large {
 .reviewArea{
   margin-top: 20px;
   margin-left: 60px;
+  text-align: left;
 }
 /* Rating */
 .rating span {
@@ -596,7 +597,11 @@ img.large {
 }
 
 .cartProductName{
+  
   color:#25262B !important;
+}
+.cartNameContainer{
+  width: 300px !important;
 }
 .selectItem{
   position: absolute;
@@ -802,6 +807,7 @@ img.large {
   padding-bottom: 10px;
   margin-bottom: 20px;
   margin-top: 20px;
+  text-align: left;
 }
 .containerForm label{
  font-weight: bolder;
@@ -827,6 +833,7 @@ img.large {
   background-color: #f8f8f8;
   border-radius: 0.5rem;
   margin: 1rem;
+  text-align: left;
 }
 .card-body-placeorder {
   padding: 1rem;

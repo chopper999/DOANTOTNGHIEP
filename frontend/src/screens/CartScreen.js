@@ -55,7 +55,7 @@ function CartScreen(props) {
                   <Item.Image size="tiny" src={item.image} alt={item.name} />
                   <Item.Content verticalAlign="middle">
                     <div className="row">
-                      <Item.Header as="h3">
+                      <Item.Header as="h3" className="cartNameContainer">
                         <Link
                           className="cartProductName"
                           to={`/product/${item.product}`}

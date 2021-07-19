@@ -229,10 +229,10 @@ useEffect(() => {
           const messRemoveLink = mes.replace(messStr, '');
           try {
             dispatch(textToSpeech(messRemoveLink)).then(speech=>{
-              setTimeout(()=>{
+              // setTimeout(()=>{
                 console.log("soundPlay");
                 soundPlay(speech);
-              },2000);
+              // },100);
               });
           } catch (e) {
             console.log(e);

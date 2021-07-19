@@ -163,7 +163,7 @@ export default function SupportMessScreen() {
           </ul>
         </div>
 
-        <div className="col-3 support-messages">
+        <div className="col-3 support-messages text-left">
           {!selectedUser._id ? (
             <MessageBox>Chọn khách hàng để trò chuyện</MessageBox>
           ) : (

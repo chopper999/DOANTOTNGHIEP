@@ -92,7 +92,7 @@ export default function ProductScreen(props) {
                 <Image size="massive" src={product.image} alt={product.name} />
               </Zoom>
             </div>
-            <div className="col-2 p-3 mr-3">
+            <div className="col-2 p-3 mr-3 text-left">
               <h1>{product.name}</h1>
               <ul>
                 <li>

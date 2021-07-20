@@ -121,7 +121,7 @@ export default function SearchResultScreen(props) {
                 <List.Item key={r}>
                   <Link
                     to={getFilterUrl({ rating: r.rating })}
-                    className={`${r.rating}` === `${rating}` ? "active" : ""}
+                    className={`${r.rating}` === `${rating}` ? "activeName" : ""}
                   >
                     <Rating caption={"trở lên"} rating={r.rating}></Rating>
                   </Link>

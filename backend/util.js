@@ -51,17 +51,17 @@ const isAdmin = (req, res, next) => {
 const mailGun = () => mg({ apiKey: process.env.MAILGUN_API_KEY, domain: process.env.MAILGUN_DOMAIN});
 
 const payOrderEmailTemplate = (order) => {
-  return `<h1>Thanks for shopping</h1>
+  return `<h1>Cảm ơn bạn đã mua hàng</h1>
   <p>
-  Hi ${order.user.name},</p>
-  <p>We have finished processing your order.</p>
-  <h2>[Order ${order._id}] (${order.createdAt.toString().substring(0, 10)})</h2>
+  Chào ${order.user.name},</p>
+  <p>Chúng tôi đã xử lý xong đơn hàng của bạn</p>
+  <h2>[Đơn hàng ${order._id}] (${order.createdAt.toString().substring(0, 10)})</h2>
   <table>
   <thead>
   <tr>
-  <td><strong>Product</strong></td>
-  <td><strong>Quantity</strong></td>
-  <td><strong align="right">Price</strong></td>
+  <td><strong>Sản phẩm</strong></td>
+  <td><strong>Số lượng</strong></td>
+  <td><strong align="right">Giá</strong></td>
   </thead>
   <tbody>
   ${order.orderItems
@@ -70,7 +70,7 @@ const payOrderEmailTemplate = (order) => {
     <tr>
     <td>${item.name}</td>
     <td align="center">${item.qty}</td>
-    <td align="right"> $${item.price.toFixed(2)}</td>
+    <td align="right"> ${item.price.toFixed(2)}$</td>
     </tr>
   `
     )
@@ -78,27 +78,27 @@ const payOrderEmailTemplate = (order) => {
   </tbody>
   <tfoot>
   <tr>
-  <td colspan="2">Items Price:</td>
+  <td colspan="2">Giá:</td>
   <td align="right"> $${order.itemsPrice.toFixed(2)}</td>
   </tr>
   <tr>
-  <td colspan="2">Tax Price:</td>
-  <td align="right"> $${order.taxPrice.toFixed(2)}</td>
+  <td colspan="2"></td>
+  <td align="right"></td>
   </tr>
   <tr>
-  <td colspan="2">Shipping Price:</td>
-  <td align="right"> $${order.shippingPrice.toFixed(2)}</td>
+  <td colspan="2">Giá vận chuyển:</td>
+  <td align="right"> ${order.shippingPrice.toFixed(2)}$</td>
   </tr>
   <tr>
-  <td colspan="2"><strong>Total Price:</strong></td>
-  <td align="right"><strong> $${order.totalPrice.toFixed(2)}</strong></td>
+  <td colspan="2"><strong>Tổng số tiền:</strong></td>
+  <td align="right"><strong> ${order.totalPrice.toFixed(2)}$</strong></td>
   </tr>
   <tr>
-  <td colspan="2">Payment Method:</td>
+  <td colspan="2">Phương thức thanh toán:</td>
   <td align="right">${order.paymentMethod}</td>
   </tr>
   </table>
-  <h2>Shipping address</h2>
+  <h2>Địa chỉ nhận hàng</h2>
   <p>
   ${order.shippingAddress.fullName},<br/>
   ${order.shippingAddress.address},<br/>
@@ -108,7 +108,7 @@ const payOrderEmailTemplate = (order) => {
   </p>
   <hr/>
   <p>
-  Thanks for shopping.
+  Cảm ơn quý khách
   </p>
   `;
 };

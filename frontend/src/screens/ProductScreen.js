@@ -235,7 +235,7 @@ export default function ProductScreen(props) {
                   </Segment>
                 ) : (
                   <MessageBox>
-                    Please <Link to="/signin">Đăng nhập</Link> để nhận xét và đánh giá
+                    Hãy <Link to="/signin">Đăng nhập</Link> để nhận xét và đánh giá
                   </MessageBox>
                 )}
               </li>

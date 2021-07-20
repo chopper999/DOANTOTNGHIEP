@@ -59,7 +59,7 @@ export default function SearchResultScreen(props) {
   return (
     <div>
       <div className="row top">
-        <div className="col-1">
+        <div className="col-1 text-left">
           <div>
             {" "}
             <h1 className="textCategory">Danh mục</h1>
@@ -103,8 +103,8 @@ export default function SearchResultScreen(props) {
                     to={getFilterUrl({ min: p.min, max: p.max })}
                     className={
                       `${p.min}-${p.max}` === `${min}-${max}`
-                        ? "activeName"
-                        : "namePrice"
+                        ? "activeName price-weight"
+                        : "namePrice price-weight"
                     }
                   >
                     {p.name}

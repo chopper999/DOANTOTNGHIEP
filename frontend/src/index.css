@@ -376,7 +376,7 @@ img.large {
   margin: 0 auto;
 }
 .form > div {
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   margin: 1rem;
 }
@@ -1285,4 +1285,8 @@ img.large {
 }
 .price-weight{
   font-size: 1.5rem ;
+}
+.container-table{
+  margin-right: 60px;
+  margin-left: 60px !important;
 }

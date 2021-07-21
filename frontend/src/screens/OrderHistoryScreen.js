@@ -20,7 +20,7 @@ export default function OrderHistoryScreen(props) {
 
 
   return (
-    <div className="containerNavbar mt-20">
+    <div className="containerNavbar mt-20 container-table">
       <h1 className="centerText ">Lịch sử đơn hàng</h1>
       {loading ? (
         <LoadingBox></LoadingBox>

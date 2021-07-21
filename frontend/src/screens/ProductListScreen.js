@@ -48,7 +48,7 @@ export default function ProductListScreen(props) {
       dispatch(createProduct());
   };
   return (
-    <div className="containerNavbar">
+    <div className="containerNavbar container-table">
       <h1 className="centerText mt-20 mb4">Danh sách sản phẩm</h1>
       <div className="btnCreateProduct">
           <Button

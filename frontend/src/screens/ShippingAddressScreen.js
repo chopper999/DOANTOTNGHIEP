@@ -38,7 +38,7 @@ function ShippingAddressScreen(props) {
         <div>
           <h1 className="centerText">Nhập địa chỉ giao hàng</h1>
         </div>  
-        <div>
+        <div className="ui focus input ">
           <label htmlFor="fullName">Họ và tên</label>
           <input
             type="text"
@@ -49,7 +49,7 @@ function ShippingAddressScreen(props) {
             required
           ></input>
         </div>
-        <div>
+        <div className="ui focus input ">
           <label htmlFor="address">Địa chỉ</label>
           <input
             type="text"
@@ -61,7 +61,7 @@ function ShippingAddressScreen(props) {
           ></input>
         </div>
 
-        <div>
+        <div className="ui focus input ">
           <label htmlFor="city">Thành phố</label>
           <input
             type="text"
@@ -73,7 +73,7 @@ function ShippingAddressScreen(props) {
           ></input>
         </div>
 
-        <div>
+        <div className="ui focus input ">
           <label htmlFor="postalCode">Postal Code</label>
           <input
             type="text"
@@ -85,7 +85,7 @@ function ShippingAddressScreen(props) {
           ></input>
         </div>
 
-        <div>
+        <div className="ui focus input ">
           <label htmlFor="country">Quốc gia</label>
           <input
             type="text"
@@ -96,7 +96,7 @@ function ShippingAddressScreen(props) {
             required
           ></input>
         </div>
-        <div>
+        <div className="ui focus input ">
             <label/>
             <Button
                   color="red"

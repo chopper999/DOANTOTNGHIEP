@@ -28,7 +28,7 @@ export default function UserListScreen(props) {
       }
   };
   return (
-    <div className="containerNavbar">
+    <div className="containerNavbar container-table">
       <h1 className="centerText mt-20">Khách hàng</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}

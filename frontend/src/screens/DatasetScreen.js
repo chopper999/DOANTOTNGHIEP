@@ -45,7 +45,7 @@ export default function DatasetScreen(props) {
   }
 
   return (
-    <div className="containerNavbar">
+    <div className="containerNavbar container-table">
       <h1 className="centerText mt-20 mb4">Dữ liệu câu hỏi và trả lời</h1>
       <div className="btnCreateProduct">
               <Button

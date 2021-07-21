@@ -61,7 +61,7 @@ export default function ProfileScreen() {
               {successUpdate && (
                 <MessageBox variant="success">Updated Success</MessageBox>
               )}
-              <div>
+              <div className="ui focus input">
                 <label htmlFor="name">Tên</label>
                 <input
                   id="name"
@@ -71,7 +71,7 @@ export default function ProfileScreen() {
                   onChange={e => setName(e.target.value)}
                 ></input>
               </div>
-              <div>
+              <div className="ui focus input">
                 <label htmlFor="email">Email</label>
                 <input
                   id="email"
@@ -81,7 +81,7 @@ export default function ProfileScreen() {
                   onChange={e => setEmail(e.target.value)}
                 ></input>
               </div>
-              <div>
+              <div className="ui focus input">
                 <label htmlFor="password">Mật khẩu</label>
                 <input
                   id="password"
@@ -90,7 +90,7 @@ export default function ProfileScreen() {
                   onChange={e => setPassword(e.target.value)}
                 ></input>
               </div>
-              <div>
+              <div className="ui focus input">
                 <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
                 <input
                   id="confirmPassword"
@@ -100,7 +100,7 @@ export default function ProfileScreen() {
                 ></input>
               </div>
 
-              <div>
+              <div className="ui focus input">
                 <label />
                 <Button
                   color="red"

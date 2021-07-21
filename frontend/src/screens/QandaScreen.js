@@ -72,7 +72,7 @@ rule.second = 1;
 
 
     return (
-      <div className="containerNavbar">
+      <div className="containerNavbar container-table">
         <h1 className="centerText mt-20 mb4">Câu hỏi và trả lời</h1>
 
         {errorTrain && <MessageBox variant="danger">{errorTrain}</MessageBox>}

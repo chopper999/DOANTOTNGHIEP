@@ -34,14 +34,14 @@ export default function RegisterScreen(props) {
     }
   }, [props.history, redirect, userInfo]);
   return (
-    <div className="containerNavbar ">
+    <div className="containerNavbar">
       <form className="form containerForm" onSubmit={submitHandler}>
         <div>
           <h1 className="centerText">Tạo tài khoản mới</h1>
         </div>
         {loading && <LoadingBox></LoadingBox>}
         {error && <MessageBox variant="danger">{error}</MessageBox>}
-        <div>
+        <div className="ui focus input">
           <label htmlFor="name">Tên</label>
           <input
             type="text"
@@ -51,7 +51,7 @@ export default function RegisterScreen(props) {
             onChange={(e) => setName(e.target.value)}
           ></input>
         </div>
-        <div>
+        <div className="ui focus input">
           <label htmlFor="email">Email</label>
           <input
             type="email"
@@ -61,7 +61,7 @@ export default function RegisterScreen(props) {
             onChange={(e) => setEmail(e.target.value)}
           ></input>
         </div>
-        <div>
+        <div className="ui focus input">
           <label htmlFor="password">Mật khẩu</label>
           <input
             type="password"
@@ -71,7 +71,7 @@ export default function RegisterScreen(props) {
             onChange={(e) => setPassword(e.target.value)}
           ></input>
         </div>
-        <div>
+        <div className="ui focus input">
           <label htmlFor="confirmPassword">Xác nhận mật khẩu</label>
           <input
             type="password"

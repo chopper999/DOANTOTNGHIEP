@@ -35,7 +35,7 @@ export default function OrderListScreen(props) {
     }
   };
   return (
-    <div className="containerNavbar mt-20">
+    <div className="containerNavbar mt-20 container-table">
       <h1 className="centerText">Đơn hàng</h1>
       {loadingDelete && <LoadingBox></LoadingBox>}
       {errorDelete && <MessageBox variant="danger">{errorDelete}</MessageBox>}

@@ -459,7 +459,7 @@ img.large {
   margin-left: 0.5rem;
 }
 .active {
-  color: wheat !important;
+  color: rgb(199, 138, 24) !important;
   font-weight: bold;
   /* font-size: 2rem; */
 }
@@ -630,6 +630,7 @@ img.large {
   font-weight: bolder;
 
 }
+
 .namePrice{
   color: #a02020 !important;
   font-size: 1rem;

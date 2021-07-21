@@ -56,23 +56,23 @@ export default function ProductScreen(props) {
   const ratingOptions = [
     {
       key: '1',
-      text: '1- Poor',
+      text: '1- Rất tệ',
       value: '1'},
     {
       key: '2',
-      text: '2- Fair',
+      text: '2- Tệ',
       value: '2',},
     {
       key: '3',
-      text: '3- Good',
+      text: '3- Tốt',
       value: '3'},
     {
       key: '4',
-      text: '4- Very good',
+      text: '4- Rất tốt',
       value: '4'},
     {
       key: '5',
-      text: '5- Excelent',
+      text: '5- Xuất sắc',
       value: '5'},
   ]
   

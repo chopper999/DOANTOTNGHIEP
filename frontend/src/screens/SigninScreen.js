@@ -8,6 +8,8 @@ import {Input, Icon } from 'semantic-ui-react';
 import { sk } from '../components/soket';
 
 
+
+
 export default function SigninScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -65,7 +67,7 @@ export default function SigninScreen(props) {
             <div>
               <Input iconPosition="left">
                 <Icon name="at" />
-                <input className="iconSignin"
+                <input
                   type="email"
                   id="email"
                   placeholder="Nhập email"

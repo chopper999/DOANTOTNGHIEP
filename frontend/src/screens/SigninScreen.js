@@ -65,7 +65,7 @@ export default function SigninScreen(props) {
             <div>
               <Input iconPosition="left">
                 <Icon name="at" />
-                <input
+                <input className="iconSignin"
                   type="email"
                   id="email"
                   placeholder="Nhập email"

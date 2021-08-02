@@ -1183,6 +1183,9 @@ img.large {
   text-align:center;
   
 }
+.iconSignin{
+  /* padding-left: 4rem !important; */
+}
 
 .formLogin {
   width: 300px; 

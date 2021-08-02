@@ -958,8 +958,7 @@ img.large {
   height: 2rem;
   border-radius: 50%;
   position: absolute;
-  margin-left: 90px;
-  /* margin-top: 10px; */
+  left: 300px;
 }
 .support-users .offline {
   background-color: #808080;
@@ -989,7 +988,7 @@ img.large {
 }
 .btnSelectUser{
   background-color: transparent;
-  text-align: left;
+  /* text-align: left; */
   border-radius: 5px;
 }
 
